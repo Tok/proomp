@@ -1,5 +1,6 @@
 (ns proomp.core
-  (:require [proomp.util.file-util :as file-util]
+  (:require [proomp.constants :as const]
+            [proomp.util.file-util :as file-util]
             [proomp.util.image-util :as image-util]
             [proomp.util.pipe-util :as pipe-util]
             [cambium.core :as log]))
@@ -9,7 +10,11 @@
 
 (defn -main []
   (log/info {:prompt prompt})
-  (let [file-name (file-util/prompt->file-name prompt)
-        pipe (pipe-util/create-pipeline)
-        image (pipe-util/generate-image pipe prompt)]
-    (image-util/save-python-image image file-name)))
+  (let [pipe (pipe-util/create-pipeline)]
+    (doseq [seed const/seed-range]
+      (log/trace {:seed seed})
+      (let [file-name (file-util/->file-name prompt seed)]
+        (if (not (file-util/file-exists? file-name))
+          (let [image (pipe-util/generate-image pipe prompt seed)]
+            (image-util/save-python-image image file-name)))
+        (log/warn {:skipping file-name})))))

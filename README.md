@@ -20,6 +20,11 @@ Install Python 3.9 with Pip https://www.python.org/downloads/.
     git lfs install
     git lfs clone https://huggingface.co/stabilityai/stable-diffusion-2-1
 
+### xFormers (optional)
+Recommended for memory efficient attention.
+
+    pip3 install xformers
+
 ### Leiningen And Clojure
 > &#x2139;  Use JDK 17 or similar, i.e. from https://adoptium.net/
 
