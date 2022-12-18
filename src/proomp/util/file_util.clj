@@ -8,5 +8,8 @@
 (defonce image-format "png")
 (defonce image-suffix (str "." image-format))
 
-(defn ->file-name [prompt seed] (str config/media-path seed "_" prompt image-suffix))
+(defn ->file-name [prompt seed]
+  (let [padded-seed (format "%04d" seed)
+        image-path (str config/media-path prompt "\\")]
+    (str image-path padded-seed "_" prompt image-suffix)))
 (defn file-exists? [file-name] (py. (py/$c pathlib/Path file-name) "is_file"))
