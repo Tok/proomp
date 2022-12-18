@@ -2,7 +2,7 @@
 
 A Clojure workspace for Stable Diffusion.
 
-Runs on top of Python 3.9 using PyTorch with CUDA Toolkit 11.6.
+Runs on top of Python 3.9 using PyTorch with CUDA Toolkit 11.7.
 
 ## Installation
 
@@ -46,4 +46,4 @@ and to check if PyTorch bindings are working.
 
 In case of problems, consider the following:
 - PyTorch needs to be installed with an active cuda toolkit.
-- The console command `nvcc --version` should return something.
+- The console command `nvcc --version` should return `Cuda compilation tools, release 11.7`.
