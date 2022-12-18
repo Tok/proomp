@@ -9,6 +9,7 @@
     <root level="info">
         <appender-ref ref="STDOUT" />
     </root>
+    <logger name="ch.qos.logback" level="WARN"/>
     <logger name="libpython-clj2.python" level="WARN"/>
     <logger name="tech.v3.resource.gc" level="WARN"/>
     <logger name="tech.v3.datatype.nio-buffer" level="WARN"/>

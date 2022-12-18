@@ -10,19 +10,26 @@
 
 (defonce device "cuda")
 
+(defn- send-to-device [pipe]
+  (py. pipe "to" device)
+  (log/debug {:device device}))
+(defn- enable-attention-slicing [pipe]
+  "Save VRAM at the cost of performance."
+  (py. pipe "enable_attention_slicing")
+  (log/debug "Attention slicing enabled."))
+
 (defn create-pipeline []
   (log/debug "Creating pipeline.")
   (cuda/empty_cache)
   (log/debug "Cuda cache cleared.")
   (let [pipe (py. StableDiffusionPipeline "from_pretrained" config/model-path
                   :torch_dtype torch/float16)]
-    (py. pipe "to" device)
-    (log/debug {:device device})
-    (py. pipe "enable_attention_slicing")
-    (log/debug "Attention slicing enabled.")
+    (send-to-device pipe)
+    (enable-attention-slicing pipe)
+    (log/trace {:pipe pipe})
     pipe))
 
-(defn- extract-first-image [result] (nth (py.- result "images") 0))
+(defn- extract-first-image [result] (nth (py.- result :images) 0))
 (defn generate-image [pipe prompt seed]
   (let [generator (py. (py/$c torch/Generator device) "manual_seed" seed)
         result (py/$c pipe prompt

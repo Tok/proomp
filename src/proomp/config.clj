@@ -1,5 +1,6 @@
 (ns proomp.config
-  (:require [cambium.core :as log]
+  (:require [proomp.constants :as const]
+            [cambium.core :as log]
             [libpython-clj2.python :as py]))
 
 (log/info "Loading config.")
@@ -14,7 +15,7 @@
 (log/debug {:model-path model-path})
 (log/debug {:media-path media-path})
 
-
+(log/info {:width const/w :height const/h :iterations const/iterations :scale const/scale})
 
 (py/initialize!
   :library-path (str python-dir "Python39\\python39.dll")

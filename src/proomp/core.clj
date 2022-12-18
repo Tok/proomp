@@ -7,14 +7,18 @@
 
 (def prompt "Caliper Remote")
 
+(defn- do-generation! [pipe seed file-name]
+  (let [image (pipe-util/generate-image pipe prompt seed)]
+    (image-util/save-python-image image file-name)))
+(defn- generate-frame! [pipe seed]
+  (log/trace {:seed seed})
+  (let [file-name (file-util/->file-name prompt seed)]
+    (if (not (file-util/file-exists? file-name))
+      (do-generation! pipe seed file-name)
+      (log/warn {:skip-existing file-name}))))
 
 (defn -main []
   (log/info {:prompt prompt})
   (let [pipe (pipe-util/create-pipeline)]
     (doseq [seed const/seed-range]
-      (log/trace {:seed seed})
-      (let [file-name (file-util/->file-name prompt seed)]
-        (if (not (file-util/file-exists? file-name))
-          (let [image (pipe-util/generate-image pipe prompt seed)]
-            (image-util/save-python-image image file-name)))
-        (log/warn {:skipping file-name})))))
+      (generate-frame! pipe seed))))
