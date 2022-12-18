@@ -1,6 +1,5 @@
 (ns proomp.constants)
 
-(def prompt "Caliper Remote")
 (def scale 7.5)
 (def iterations 50)
 
