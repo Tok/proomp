@@ -1,34 +1,35 @@
 # Proomp
-
 A Clojure workspace for Stable Diffusion.
 
 Runs on top of Python 3.9 using PyTorch with CUDA Toolkit 11.7.
 
 ## Installation
-
 ### Python
-
-Install Python 3.9 with Pip https://www.python.org/downloads/
+Install Python 3.9 with Pip https://www.python.org/downloads/.
 
 ### Hugging Face Diffusers
-
     pip3 install --upgrade git+https://github.com/huggingface/diffusers.git transformers accelerate scipy
 
 ### PyTorch
-
     pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu117
 
 ### Download Stable Diffusion Model
-
-> &#x26a0;&#xfe0f; Requires an account on https://huggingface.co
+> &#x26a0;&#xfe0f; Requires an account on https://huggingface.co.
 
     cd models
     git lfs install
     git lfs clone https://huggingface.co/stabilityai/stable-diffusion-2-1
 
-## Configuration
+### Leiningen And Clojure
+> &#x2139;  Use JDK 17 or similar, i.e. from https://adoptium.net/
 
-- Set your `python-dir` and your `workspace-path` in `proomp.config`
+Install Leiningen from https://leiningen.org/.
+
+The Clojure version is specified Leiningens build file `project.clj`.
+
+
+## Configuration
+Set your `python-dir` and your `workspace-path` in `proomp.config`.
 
 ## Usage
 - Consider tuning the default values in `proomp.constants`
@@ -40,7 +41,6 @@ Run proomp.core with the VM arguments:
     --enable-native-access=ALL-UNNAMED
 
 ## Trouble-Shooting
-
 `proomp.core-test` contains tests to check if Cuda is available
 and to check if PyTorch bindings are working.
 
