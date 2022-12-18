@@ -9,7 +9,7 @@
       <configuration sdkName="" />
     </facet>
   </component>
-  <component name="NewModuleRootManager">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_5">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
@@ -17,17 +17,26 @@
       <sourceFolder url="file://$MODULE_DIR$/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
-      <excludeFolder url="file://$MODULE_DIR$/target" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
       <excludeFolder url="file://$MODULE_DIR$/.idea/libraries" />
       <excludeFolder url="file://$MODULE_DIR$/classes" />
       <excludeFolder url="file://$MODULE_DIR$/models" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: org.clojure:clojure:1.11.1" level="project" />
     <orderEntry type="library" name="Maven: org.clojure:spec.alpha:0.3.218" level="project" />
     <orderEntry type="library" name="Maven: org.clojure:core.specs.alpha:0.2.62" level="project" />
+    <orderEntry type="library" name="Maven: cambium:cambium.core:1.1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.32" level="project" />
+    <orderEntry type="library" name="Maven: org.clojure:tools.logging:1.2.2" level="project" />
+    <orderEntry type="library" name="Maven: cambium:cambium.codec-simple:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: cambium:cambium.logback.core:0.4.5" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.janino:janino:3.1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.janino:commons-compiler:3.1.2" level="project" />
+    <orderEntry type="library" name="Maven: ch.qos.logback:logback-classic:1.2.8" level="project" />
+    <orderEntry type="library" name="Maven: ch.qos.logback:logback-core:1.2.8" level="project" />
     <orderEntry type="library" name="Maven: clj-python:libpython-clj:2.021" level="project" />
     <orderEntry type="library" name="Maven: cnuernber:dtype-next:10.000-beta-2" level="project" />
     <orderEntry type="library" name="Maven: org.ow2.asm:asm:9.0" level="project" />
@@ -41,7 +50,6 @@
     <orderEntry type="library" name="Maven: com.github.wendykierp:JTransforms:3.1" level="project" />
     <orderEntry type="library" name="Maven: pl.edu.icm:JLargeArrays:1.5" level="project" />
     <orderEntry type="library" name="Maven: techascent:tech.resource:5.05" level="project" />
-    <orderEntry type="library" name="Maven: org.clojure:tools.logging:1.1.0" level="project" />
     <orderEntry type="library" name="Maven: com.cnuernber:ham-fisted:1.000-beta-58" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:31.1-jre" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:failureaccess:1.0.1" level="project" />
