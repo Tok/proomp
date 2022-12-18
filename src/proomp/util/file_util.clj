@@ -12,4 +12,12 @@
   (let [padded-seed (format "%04d" seed)
         image-path (str config/media-path prompt "\\")]
     (str image-path padded-seed "_" prompt image-suffix)))
+
+(defn ->animation-frame-directory-name [prompt]
+  (str config/media-path prompt "\\animation\\frames"))
+
+(defn ->frame-name [prompt seed iterations scale]
+  (str ->animation-frame-directory-name "\\"
+       seed "_" scale "_" iterations "_" prompt image-suffix))
+
 (defn file-exists? [file-name] (py. (py/$c pathlib/Path file-name) "is_file"))

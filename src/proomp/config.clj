@@ -9,11 +9,15 @@
 (def ^:private python-dir "\\Users\\Zir\\AppData\\Local\\Programs\\Python\\")
 (log/trace {:python-dir python-dir})
 
-(def ^:private workspace-path "C:\\Users\\Zir\\Documents\\workspace\\proomp\\")
-(def model-path (str workspace-path "models\\stable-diffusion-2-1\\"))
-(def media-path (str workspace-path "generated-media\\"))
+(defonce ^:private workspace-path "C:\\Users\\Zir\\Documents\\workspace\\proomp\\")
+(defonce model-path (str workspace-path "models\\stable-diffusion-2-1\\"))
 (log/debug {:model-path model-path})
+
+(defonce media-path (str workspace-path "generated-media\\"))
 (log/debug {:media-path media-path})
+
+(defonce image-path (str workspace-path "images\\"))
+(log/debug {:image-path image-path})
 
 (log/info {:width const/w :height const/h :iterations const/iterations :scale const/scale})
 

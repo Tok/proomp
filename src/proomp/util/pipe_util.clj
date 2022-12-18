@@ -6,10 +6,13 @@
             [libpython-clj2.python :refer [py. py.-] :as py]))
 
 (require-python 'torch '[torch.cuda :as cuda] 'transformers)
-(require-python '[diffusers :refer [StableDiffusionPipeline]])
+(require-python '[diffusers :refer [StableDiffusionPipeline StableDiffusionImg2ImgPipeline]])
 
 (defonce device "cuda")
 
+(defn- clear-cuda-cache []
+  (cuda/empty_cache)
+  (log/debug "Cuda cache cleared."))
 (defn- send-to-device [pipe]
   (py. pipe "to" device)
   (log/debug {:device device}))
@@ -18,16 +21,19 @@
   (py. pipe "enable_attention_slicing")
   (log/debug "Attention slicing enabled."))
 
-(defn create-pipeline []
-  (log/debug "Creating pipeline.")
-  (cuda/empty_cache)
-  (log/debug "Cuda cache cleared.")
-  (let [pipe (py. StableDiffusionPipeline "from_pretrained" config/model-path
-                  :torch_dtype torch/float16)]
+(defn- ->pipeline [type]
+  (log/debug (str "Creating pipeline:" type))
+  (clear-cuda-cache)
+  (let [pipe (py. type "from_pretrained" config/model-path :torch_dtype torch/float16)]
     (send-to-device pipe)
     (enable-attention-slicing pipe)
     (log/trace {:pipe pipe})
     pipe))
+
+(defn ->text-to-image-pipeline [] (->pipeline StableDiffusionPipeline))
+(defn ->image-to-image-pipeline [] (->pipeline StableDiffusionImg2ImgPipeline))
+
+
 
 (defn- extract-first-image [result] (nth (py.- result :images) 0))
 (defn generate-image [pipe prompt seed]

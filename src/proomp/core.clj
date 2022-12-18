@@ -19,6 +19,6 @@
 
 (defn -main []
   (log/info {:prompt prompt})
-  (let [pipe (pipe-util/create-pipeline)]
+  (let [pipe (pipe-util/->text-to-image-pipeline)]
     (doseq [seed const/seed-range]
       (generate-frame! pipe seed))))

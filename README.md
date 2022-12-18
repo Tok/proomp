@@ -13,6 +13,10 @@ Install Python 3.9 with Pip https://www.python.org/downloads/.
 ### PyTorch
     pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu117
 
+### Additional Dependencies
+
+    pip3 install scikit-image ftfy pillow imageio
+
 ### Download Stable Diffusion Model
 > &#x26a0;&#xfe0f; Requires an account on https://huggingface.co.
 
@@ -26,7 +30,6 @@ Install Python 3.9 with Pip https://www.python.org/downloads/.
 Install Leiningen from https://leiningen.org/.
 
 The Clojure version is specified Leiningens build file `project.clj`.
-
 
 ## Configuration
 Set your `python-dir` and your `workspace-path` in `proomp.config`.

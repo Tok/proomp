@@ -1,5 +1,6 @@
 /models/
 /generated_media/
+/generated_media/**
 
 .idea/workspace.xml
 .idea/vcs.xml
@@ -15,3 +16,4 @@ pom.xml.asc
 *.class
 /.lein-*
 /.nrepl-port
+generated-media/
