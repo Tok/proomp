@@ -6,7 +6,7 @@
   </component>
   <component name="FacetManager">
     <facet type="Python" name="Python">
-      <configuration sdkName="" />
+      <configuration sdkName="Python 3.9 (proomp)" />
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_5">
@@ -24,7 +24,7 @@
       <excludeFolder url="file://$MODULE_DIR$/target" />
       <excludeFolder url="file://$MODULE_DIR$/generated-media" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="temurin-17" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: org.clojure:clojure:1.11.1" level="project" />
     <orderEntry type="library" name="Maven: org.clojure:spec.alpha:0.3.218" level="project" />
@@ -62,5 +62,6 @@
     <orderEntry type="library" name="Maven: it.unimi.dsi:fastutil-core:8.5.8" level="project" />
     <orderEntry type="library" name="Maven: net.java.dev.jna:jna:5.12.1" level="project" />
     <orderEntry type="library" name="Maven: org.clojure:data.json:1.0.0" level="project" />
+    <orderEntry type="library" name="Python 3.9 (proomp) interpreter library" level="application" />
   </component>
 </module>
