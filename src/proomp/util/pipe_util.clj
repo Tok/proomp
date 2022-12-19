@@ -34,11 +34,12 @@
 (defn ->image-to-image-pipeline [] (->pipeline StableDiffusionImg2ImgPipeline))
 
 
-
 (defn- extract-first-image [result] (nth (py.- result :images) 0))
-(defn generate-image [pipe prompt seed]
+(defn generate-image [pipe prompt neg-prompt seed]
   (let [generator (py. (py/$c torch/Generator device) "manual_seed" seed)
-        result (py/$c pipe prompt
+        full-prompt (str prompt const/prompt-addition)
+        result (py/$c pipe full-prompt
+                      :negative_prompt (str neg-prompt const/neg-prompt-addition)
                       :generator generator
                       :height const/h :width const/w
                       :num_inference_steps const/iterations

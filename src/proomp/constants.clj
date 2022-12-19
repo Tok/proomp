@@ -9,3 +9,7 @@
 (def ^:private start-seed 0)
 (def ^:private repetitions 100)
 (def seed-range (range start-seed (+ start-seed repetitions)))
+
+(def prompt-addition "((photorealistic)) (photo) focused professional")
+
+(def neg-prompt-addition "(blurry) (drawing) comic bad grayscale deformed disfigured")
