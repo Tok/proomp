@@ -30,7 +30,7 @@
     pipe))
 
 (defn ->text-to-image-pipeline [] (->pipeline StableDiffusionPipeline config/model-path))
-(defn ->image-to-image-pipeline [] (->pipeline StableDiffusionImg2ImgPipeline config/ani-model-path))
+(defn ->image-to-image-pipeline [] (->pipeline StableDiffusionImg2ImgPipeline config/model-path))
 ;FIXME make i2i work with newer models
 
 (defn- ->generator [seed] (py. (py/$c torch/Generator device) "manual_seed" seed))

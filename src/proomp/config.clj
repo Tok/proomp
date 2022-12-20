@@ -11,8 +11,6 @@
 (defonce ^:private workspace-path "C:\\Users\\Zir\\Documents\\workspace\\proomp\\")
 (defonce model-path (str workspace-path "models\\stable-diffusion-2-1\\"))
 (log/debug {:model-path model-path})
-(defonce ani-model-path (str workspace-path "models\\stable-diffusion-v1-5\\"))
-(log/debug {:animation-model-path ani-model-path})
 
 (defonce media-path (str workspace-path "generated-media\\"))
 (log/debug {:media-path media-path})

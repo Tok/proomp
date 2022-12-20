@@ -17,13 +17,25 @@ Install Python 3.9 with Pip https://www.python.org/downloads/.
 
     pip3 install scikit-image ftfy pillow imageio
 
-### Download Stable Diffusion Models
+### Download and prepare Stable Diffusion model
 > &#x26a0;&#xfe0f; Requires an account on https://huggingface.co.
 
     cd models
     git lfs install
     git lfs clone https://huggingface.co/stabilityai/stable-diffusion-2-1
+
+Workaround to prevent a ValueError when instantiating the Stable Diffusion i2i pipeline.
+Provide feature_extractor and safety_checker from a v1-5 model:
+
     git lfs clone https://huggingface.co/runwayml/stable-diffusion-v1-5
+
+Move feature_extractor and safety_checker to 2-1, then delete v1-5 again.
+Bump diffusers version and set the missing features in stable-diffusion-2-1/model_index.json:
+
+    "_diffusers_version": "0.12.0",
+    "feature_extractor": ["transformers", "CLIPFeatureExtractor"],
+    "safety_checker": ["stable_diffusion", "StableDiffusionSafetyChecker"],
+
 
 ### Leiningen And Clojure
 > &#x2139;  Use JDK 17 or similar, i.e. from https://adoptium.net/
