@@ -24,25 +24,12 @@ Install Python 3.9 with Pip https://www.python.org/downloads/.
     git lfs install
     git lfs clone https://huggingface.co/stabilityai/stable-diffusion-2-1
 
-Workaround to prevent a ValueError when instantiating the Stable Diffusion i2i pipeline.
-Provide feature_extractor and safety_checker from a v1-5 model:
-
-    git lfs clone https://huggingface.co/runwayml/stable-diffusion-v1-5
-
-Move feature_extractor and safety_checker to 2-1, then delete v1-5 again.
-Bump diffusers version and set the missing features in stable-diffusion-2-1/model_index.json:
-
-    "_diffusers_version": "0.12.0",
-    "feature_extractor": ["transformers", "CLIPFeatureExtractor"],
-    "safety_checker": ["stable_diffusion", "StableDiffusionSafetyChecker"],
-
-
 ### Leiningen And Clojure
 > &#x2139;  Use JDK 17 or similar, i.e. from https://adoptium.net/
 
 Install Leiningen from https://leiningen.org/.
 
-The Clojure version is specified Leiningens build file `project.clj`.
+The Clojure version is set in Leiningens build file `project.clj`.
 
 ## Configuration
 Set your `python-dir` and your `workspace-path` in `proomp.config`.
@@ -63,3 +50,16 @@ and to check if PyTorch bindings are working.
 In case of problems, consider the following:
 - PyTorch needs to be installed with an active cuda toolkit.
 - The console command `nvcc --version` should return `Cuda compilation tools, release 11.7`.
+
+
+### Workaround for ValueError when instantiating the Stable Diffusion i2i pipeline
+
+Provide feature_extractor and safety_checker from a v1-5 model:
+
+    git lfs clone https://huggingface.co/runwayml/stable-diffusion-v1-5
+
+Move `feature_extractor` and `safety_checker` to 2-1, then delete v1-5 again.
+Set the missing features in stable-diffusion-2-1/model_index.json:
+
+    "feature_extractor": ["transformers", "CLIPFeatureExtractor"],
+    "safety_checker": ["stable_diffusion", "StableDiffusionSafetyChecker"],
