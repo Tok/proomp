@@ -17,12 +17,13 @@ Install Python 3.9 with Pip https://www.python.org/downloads/.
 
     pip3 install scikit-image ftfy pillow imageio
 
-### Download Stable Diffusion Model
+### Download Stable Diffusion Models
 > &#x26a0;&#xfe0f; Requires an account on https://huggingface.co.
 
     cd models
     git lfs install
     git lfs clone https://huggingface.co/stabilityai/stable-diffusion-2-1
+    git lfs clone https://huggingface.co/runwayml/stable-diffusion-v1-5
 
 ### Leiningen And Clojure
 > &#x2139;  Use JDK 17 or similar, i.e. from https://adoptium.net/

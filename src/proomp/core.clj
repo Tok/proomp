@@ -1,5 +1,6 @@
 (ns proomp.core
   (:require [proomp.constants :as const]
+            [proomp.config :as config]
             [proomp.animator :as animator]
             [proomp.util.file-util :as file-util]
             [proomp.util.image-util :as image-util]
@@ -11,7 +12,7 @@
 
 (defn- do-generation! [pipe seed file-name]
   (let [image (pipe-util/generate-image pipe prompt neg-prompt seed)]
-    (image-util/save-python-image image file-name)))
+    (image-util/save-py-image image file-name)))
 
 (defn- generate-image! [pipe seed]
   (log/trace {:seed seed})
@@ -26,7 +27,7 @@
   (log/info {:mode mode :prompt prompt})
   (if (= mode :animation)
     (let [pipe (pipe-util/->image-to-image-pipeline)]
-      (animator/animate pipe prompt neg-prompt const/start-seed)) ;FIXME
+      (animator/animate pipe prompt neg-prompt const/start-seed))
     (let [pipe (pipe-util/->text-to-image-pipeline)]
       (doseq [seed const/seed-range]
         (generate-image! pipe seed)))))

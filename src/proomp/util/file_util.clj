@@ -17,7 +17,7 @@
   (str config/media-path prompt "\\animation\\frames"))
 
 (defn ->frame-name [prompt seed iterations scale]
-  (str ->animation-frame-directory-name "\\"
+  (str (->animation-frame-directory-name prompt) "\\"
        seed "_" scale "_" iterations "_" prompt image-suffix))
 
 (defn file-exists? [file-name] (py. (py/$c pathlib/Path file-name) "is_file"))
