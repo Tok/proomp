@@ -8,16 +8,15 @@
 (defonce image-format "png")
 (defonce image-suffix (str "." image-format))
 
-(defn ->file-name [prompt seed]
-  (let [padded-seed (format "%04d" seed)
-        image-path (str config/media-path prompt "\\")]
-    (str image-path padded-seed "_" prompt image-suffix)))
+(defn- image-dir [prompt] (str config/media-path prompt "\\"))
+(defn animation-frame-dir [prompt] (str (image-dir prompt) "frames\\"))
 
-(defn ->animation-frame-directory-name [prompt]
-  (str config/media-path prompt "\\animation\\frames"))
+(defn file-name [prompt seed]
+  (let [padded-seed (format "%04d" seed)]
+    (str (image-dir prompt) padded-seed "_" prompt image-suffix)))
 
-(defn ->frame-name [prompt seed iterations scale]
-  (str (->animation-frame-directory-name prompt) "\\"
+(defn frame-name [prompt seed iterations scale]
+  (str (animation-frame-dir prompt) "\\"
        seed "_" scale "_" iterations "_" prompt image-suffix))
 
 (defn file-exists? [file-name] (py. (py/$c pathlib/Path file-name) "is_file"))

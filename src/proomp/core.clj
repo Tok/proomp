@@ -12,11 +12,11 @@
 
 (defn- do-generation! [pipe seed file-name]
   (let [image (pipe-util/generate-image pipe prompt neg-prompt seed)]
-    (image-util/save-py-image image file-name)))
+    (image-util/save-py-image! image file-name)))
 
 (defn- generate-image! [pipe seed]
   (log/trace {:seed seed})
-  (let [file-name (file-util/->file-name prompt seed)]
+  (let [file-name (file-util/file-name prompt seed)]
     (if (not (file-util/file-exists? file-name))
       (do-generation! pipe seed file-name)
       (log/warn {:skip-existing file-name}))))

@@ -7,7 +7,7 @@
 (def iterations 40)                                         ;default 40
 
 
-(def start-seed 40)
+(def start-seed 0)
 (def ^:private repetitions 100)
 (def seed-range (range start-seed (+ start-seed repetitions)))
 

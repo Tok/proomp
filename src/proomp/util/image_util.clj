@@ -4,6 +4,7 @@
             [libpython-clj2.python :refer [py. py.-] :as py]
             [libpython-clj2.require :refer [require-python]]
             [proomp.config :as config]
+            [proomp.constants :as const]
             [proomp.util.file-util :as file-util]))
 
 (require-python 'PIL '[PIL.Image :as pilimg])
@@ -13,7 +14,7 @@
 
 (defn new-py-image [w h] (PIL.Image/new "RGB" [w h]))
 (defn open-py-image [file-name] (py. (PIL.Image/open file-name) "convert" "RGB"))
-(defn save-py-image [image file-name]
+(defn save-py-image! [image file-name]
   (if (file-util/file-exists? file-name)
     (log/warn {"File exists. Skipping." file-name})
     (do
@@ -47,7 +48,7 @@
 
 (def ^:private fix-color-palette-to-1st-frame? false)       ;otherwise use reference image
 
-(defn select-reference-image [image w h]
+(defn prepare-reference-image [image]
   (let [ref-file (str config/image-path "DefaultHistogramReference.png")
         ref-img (py. (pilimg/open ref-file) "convert" "RGB")]
-    (resize (if fix-color-palette-to-1st-frame? image ref-img) w h)))
+    (resize (if fix-color-palette-to-1st-frame? image ref-img) const/ani-w const/ani-h)))
