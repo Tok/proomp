@@ -16,11 +16,11 @@
 (def dim {:w 960 :h 540})                                   ;19:6 aspect ratio, half of "Full HD"
 (def frame-count (* 3600 5))
 
-(def rotation-degree -2.0)
+(def rotation-degree -0.0)
 (def x-offset -0)
 (def y-offset 0)
-(def zoom 1.015)
-(def apply-transformations? false)
+(def zoom 1.050)
+(def apply-transformations? true)
 
 (defn- initial-frame [prompt start-seed]
   (let [initial-frame-file-name (file-util/file-name prompt start-seed)]
@@ -33,7 +33,7 @@
                  resized)))))
 
 (defn- apply-transformations [image]
-  ;TODO skip transformations for the initial image and test
+  ;TODO skip transformations for the initial image
   (if apply-transformations?
     (let [rotated (py. image "rotate" rotation-degree)
           chopped (chops/offset rotated x-offset y-offset)]
@@ -47,10 +47,11 @@
           resized (image-util/resize sample const/ani-w const/ani-h)]
       (image-util/save-py-image! resized frame-file-name))))
 
-(defn- generate-frame [image ref-image pipe prompt neg-prompt start-seed]
+(defn- generate-frames [image ref-image pipe prompt neg-prompt start-seed]
   (doseq [frame-number (range 0 frame-count)]
     (let [new-seed (+ start-seed frame-number)
-          frame-file-name (file-util/frame-name prompt new-seed const/iterations const/ani-scale)]
+          frame-file-name (file-util/frame-name prompt new-seed const/ani-iterations const/ani-scale)]
+      ;(log/info {:frame frame-number :seed new-seed :file frame-file-name})
       (if (file-util/file-exists? frame-file-name)
         (log/warn {:skip-existing frame-file-name})
         (generate-image! image ref-image pipe prompt neg-prompt new-seed frame-file-name)))))
@@ -63,4 +64,4 @@
     (let [image (initial-frame prompt start-seed)]
       (log/info "Loading reference image.")
       (let [ref-image (image-util/prepare-reference-image image)]
-        (generate-frame image ref-image pipe prompt neg-prompt start-seed)))))
+        (generate-frames image ref-image pipe prompt neg-prompt start-seed)))))

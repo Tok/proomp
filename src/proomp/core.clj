@@ -1,14 +1,22 @@
 (ns proomp.core
   (:require [proomp.constants :as const]
-            [proomp.config :as config]
+            [proomp.config :as config]                      ;don't remove this
             [proomp.animator :as animator]
             [proomp.util.file-util :as file-util]
             [proomp.util.image-util :as image-util]
             [proomp.util.pipe-util :as pipe-util]
+            [proomp.util.video-util :as video-util]
             [cambium.core :as log]))
+(defonce ^:private modes [::animation ::images ::video])
 
-(def prompt "Caliper Remote")
-(def neg-prompt "")
+(defonce prompt "Caliper Remote")
+(defonce neg-prompt "")
+(defonce animation-start-seed 63) ;choose a good seed by generating ::images first
+
+;;select mode:
+;(defonce mode ::images)
+(defonce mode ::animation)
+;(defonce mode ::video)
 
 (defn- do-generation! [pipe seed file-name]
   (let [image (pipe-util/generate-image pipe prompt neg-prompt seed)]
@@ -21,13 +29,13 @@
       (do-generation! pipe seed file-name)
       (log/warn {:skip-existing file-name}))))
 
-(defonce ^:private modes [:images :animation])
-(defonce ^:private mode :images)
 (defn -main []
   (log/info {:mode mode :prompt prompt})
-  (if (= mode :animation)
+  (if (= mode ::animation)
     (let [pipe (pipe-util/->image-to-image-pipeline)]
-      (animator/animate pipe prompt neg-prompt const/start-seed))
-    (let [pipe (pipe-util/->text-to-image-pipeline)]
-      (doseq [seed const/seed-range]
-        (generate-image! pipe seed)))))
+      (animator/animate pipe prompt neg-prompt animation-start-seed))
+    (if (= mode ::images)
+      (let [pipe (pipe-util/->text-to-image-pipeline)]
+        (doseq [seed (const/seed-range animation-start-seed)]
+          (generate-image! pipe seed)))
+      (video-util/generate-video-from-frames prompt))))

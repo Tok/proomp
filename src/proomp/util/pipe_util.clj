@@ -52,5 +52,5 @@
            :init_image init-image
            :strength const/ani-noise
            :generator (->generator seed)
-           :num_inference_steps (* 2 const/ani-iterations)  ;why * 2?
+           :num_inference_steps const/ani-iterations
            :guidance_scale const/ani-scale)))

@@ -8,7 +8,7 @@
 (defonce image-format "png")
 (defonce image-suffix (str "." image-format))
 
-(defn- image-dir [prompt] (str config/media-path prompt "\\"))
+(defn image-dir [prompt] (str config/media-path prompt "\\"))
 (defn animation-frame-dir [prompt] (str (image-dir prompt) "frames\\"))
 
 (defn file-name [prompt seed]

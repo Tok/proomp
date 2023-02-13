@@ -21,14 +21,16 @@
       <excludeFolder url="file://$MODULE_DIR$/.idea/libraries" />
       <excludeFolder url="file://$MODULE_DIR$/classes" />
       <excludeFolder url="file://$MODULE_DIR$/models" />
-      <excludeFolder url="file://$MODULE_DIR$/target" />
       <excludeFolder url="file://$MODULE_DIR$/generated-media" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="jdk" jdkName="temurin-17" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Python 3.9 (proomp) interpreter library" level="application" />
     <orderEntry type="library" name="Maven: org.clojure:clojure:1.11.1" level="project" />
     <orderEntry type="library" name="Maven: org.clojure:spec.alpha:0.3.218" level="project" />
     <orderEntry type="library" name="Maven: org.clojure:core.specs.alpha:0.2.62" level="project" />
+    <orderEntry type="library" name="Maven: clojure-interop:javax.imageio:1.0.5" level="project" />
     <orderEntry type="library" name="Maven: cambium:cambium.core:1.1.1" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.32" level="project" />
     <orderEntry type="library" name="Maven: org.clojure:tools.logging:1.2.2" level="project" />
@@ -62,6 +64,7 @@
     <orderEntry type="library" name="Maven: it.unimi.dsi:fastutil-core:8.5.8" level="project" />
     <orderEntry type="library" name="Maven: net.java.dev.jna:jna:5.12.1" level="project" />
     <orderEntry type="library" name="Maven: org.clojure:data.json:1.0.0" level="project" />
-    <orderEntry type="library" name="Python 3.9 (proomp) interpreter library" level="application" />
+    <orderEntry type="library" name="Maven: org.jcodec:jcodec:0.2.5" level="project" />
+    <orderEntry type="library" name="Maven: org.jcodec:jcodec-javase:0.2.5" level="project" />
   </component>
 </module>

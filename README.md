@@ -35,11 +35,16 @@ The Clojure version is set in Leiningens build file `project.clj`.
 Set your `python-dir` and your `workspace-path` in `proomp.config`.
 
 ## Usage
-- Consider tuning the default values in `proomp.constants`
-- Check and adjust the parameters in `proomp.core`.
+* Consider tuning the default values in `proomp.constants`
+* Check and adjust the parameters in `proomp.core`.
+  * Set a `prompt`.
+  * Optionally set a `negative-prompt`.
+  * Choose a `mode`
+    * `::images` Generates different images from a prompt. Can be used to find a good start seed.
+    * `::animation` Generates frames for a prompt and a start seed.
+    * `::video` Creates a video from the generated frames.
 
-Run proomp.core with the VM arguments:
-
+Run proomp.core in the context of Leiningen or with the VM arguments:
     --add-modules jdk.incubator.foreign,jdk.incubator.vector
     --enable-native-access=ALL-UNNAMED
 
