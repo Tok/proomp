@@ -45,23 +45,28 @@
     (let [color-corrected (image-util/fix-colors pic reference-image)
           sample (pipe-util/generate-i2i pipe prompt neg-prompt new-seed color-corrected)
           resized (image-util/resize sample const/ani-w const/ani-h)]
-      (image-util/save-py-image! resized frame-file-name))))
+      (image-util/save-py-image! resized frame-file-name)
+      resized)))
 
+(def last-frame (atom (image-util/->pil-image 1 1)))        ;todo refactor
 (defn- generate-frames [image ref-image pipe prompt neg-prompt start-seed]
+  (reset! last-frame image)
   (doseq [frame-number (range 0 frame-count)]
     (let [new-seed (+ start-seed frame-number)
           frame-file-name (file-util/frame-name prompt new-seed const/ani-iterations const/ani-scale)]
-      ;(log/info {:frame frame-number :seed new-seed :file frame-file-name})
       (if (file-util/file-exists? frame-file-name)
         (log/warn {:skip-existing frame-file-name})
-        (generate-image! image ref-image pipe prompt neg-prompt new-seed frame-file-name)))))
+
+        ;fixme: pass new image in each iteration
+        (let [next-frame (generate-image! @last-frame ref-image pipe prompt neg-prompt new-seed frame-file-name)]
+          (reset! last-frame next-frame))))))
 
 (defn animate [pipe prompt neg-prompt start-seed]
   (log/info {:dimensions dim :frame-count frame-count})
   (let [result-dir (file-util/animation-frame-dir prompt)]
     (log/debug {:result-path result-dir})
     (io/make-parents result-dir)
-    (let [image (initial-frame prompt start-seed)]
+    (let [first-image (initial-frame prompt start-seed)]
       (log/info "Loading reference image.")
-      (let [ref-image (image-util/prepare-reference-image image)]
-        (generate-frames image ref-image pipe prompt neg-prompt start-seed)))))
+      (let [ref-image (image-util/prepare-reference-image first-image)]
+        (generate-frames first-image ref-image pipe prompt neg-prompt start-seed)))))

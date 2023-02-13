@@ -40,35 +40,8 @@
 
 (defn resize [image w h]
   (py. image "resize" (py/->py-tuple [w h])))
-
-(comment defn zoom-center [image zoom]
-         (if (> zoom 1.0)
-           (let [w (first (py.- image :size))
-                 h (second (py.- image :size))
-                 ratio (min w h)
-                 x-offset (- (/ w 2) (/ ratio zoom))
-                 y-offset (- (/ h 2) (/ ratio zoom))
-                 left (int (* x-offset zoom))
-                 top (int (* y-offset zoom))
-                 right (int (+ left ratio))
-                 bottom (int (+ top ratio))]
-             (py. image "crop" [left top right bottom]))
-           image))
-
-(defn zoom-center [image zoom]
-  (let [w (first (py.- image :size))
-        h (second (py.- image :size))
-        x (* w 0.5)
-        y (* h 0.5)
-        cropped-width (/ w zoom)
-        cropped-height (/ h zoom)
-        left (int (- x (/ cropped-width 2)))
-        top (int (- y (/ cropped-height 2)))
-        right (int (+ x (/ cropped-width 2)))
-        bottom (int (+ y (/ cropped-height 2)))
-        cropped-image (py. image "crop" [left top right bottom])]
-    (py. cropped-image "resize" [w h])))
-
+(defn crop [image left top right bottom]
+  (py. image "crop" (py/->py-tuple [left top right bottom])))
 
 (defn pil->numpy [pil-image] (py/$c np/array pil-image :dtype np/uint8))
 (defn numpy->pil [np-image] (PIL.Image/fromarray (py. np-image "astype" "uint8") "RGB"))
@@ -85,8 +58,8 @@
         ref-img (py. (pilimg/open ref-file) "convert" "RGB")]
     (resize (if fix-color-palette-to-1st-frame? image ref-img) const/ani-w const/ani-h)))
 
-(defn ^RenderedImage ->image [w h]
-  (BufferedImage. w h BufferedImage/TYPE_INT_RGB))
+(defn ^RenderedImage ->image [w h] (BufferedImage. w h BufferedImage/TYPE_INT_RGB))
+(defn ^RenderedImage ->pil-image [w h] (PIL.Image/new "RGB" [w h]))
 
 (defn image-from-template [source]
   (let [w (.getWidth source)
@@ -130,3 +103,17 @@
           (io/delete-file file-name)
           (catch IOException e (.getMessage e)))
         buffered-image))))
+
+(defn zoom-center [image zoom]
+  (let [w (first (py.- image :size))
+        h (second (py.- image :size))
+        x (* w 0.5)
+        y (* h 0.5)
+        cropped-width (/ w zoom)
+        cropped-height (/ h zoom)
+        left (int (- x (/ cropped-width 2)))
+        top (int (- y (/ cropped-height 2)))
+        right (int (+ x (/ cropped-width 2)))
+        bottom (int (+ y (/ cropped-height 2)))
+        cropped-image (crop image left top right bottom)]
+    (resize cropped-image w h)))
