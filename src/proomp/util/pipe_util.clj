@@ -3,7 +3,7 @@
             [proomp.constants :as const]
             [cambium.core :as log]
             [libpython-clj2.require :refer [require-python]]
-            [libpython-clj2.python :refer [py. py.- py*] :as py]))
+            [libpython-clj2.python :refer [py. py.-] :as py]))
 
 (require-python 'torch '[torch.cuda :as cuda] 'transformers)
 (require-python '[diffusers :refer [StableDiffusionPipeline StableDiffusionImg2ImgPipeline]])
@@ -31,7 +31,6 @@
 
 (defn ->text-to-image-pipeline [] (->pipeline StableDiffusionPipeline config/model-path))
 (defn ->image-to-image-pipeline [] (->pipeline StableDiffusionImg2ImgPipeline config/model-path))
-;FIXME make i2i work with newer models
 
 (defn- ->generator [seed] (py. (py/$c torch/Generator device) "manual_seed" seed))
 

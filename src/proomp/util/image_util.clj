@@ -34,9 +34,9 @@
        (log/warn {"File exists. Skipping." file-name})
        (do-py-image-save! image file-name)))))
 
-(defn ^BufferedImage open-buffered-image-file [file] (ImageIO/read file))
-(defn ^BufferedImage open-buffered-image [file-name]
-  (open-buffered-image-file (java.io.File. file-name)))
+(defn ^BufferedImage open-buffered-image-file [^File file] (ImageIO/read file))
+(defn ^BufferedImage open-buffered-image [^String file-name]
+  (open-buffered-image-file (File. file-name)))
 
 (defn resize [image w h]
   (py. image "resize" (py/->py-tuple [w h])))

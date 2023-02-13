@@ -16,10 +16,10 @@
 (def dim {:w 960 :h 540})                                   ;19:6 aspect ratio, half of "Full HD"
 (def frame-count (* 3600 5))
 
-(def rotation-degree -0.0)
-(def x-offset -0)
-(def y-offset 0)
-(def zoom 1.050)
+(def rotation-degree -0.0)                                  ;per frame
+(def x-offset -0)                                           ;pixels per frame
+(def y-offset 0)                                            ;pixels per frame
+(def zoom 1.020)                                            ;should be >= 1.000
 (def apply-transformations? true)
 
 (defn- initial-frame [prompt start-seed]
@@ -48,16 +48,16 @@
       (image-util/save-py-image! resized frame-file-name)
       resized)))
 
-(def last-frame (atom (image-util/->pil-image 1 1)))        ;todo refactor
+(def last-frame (atom (image-util/->pil-image 1 1)))        ;todo refactor to remove atom
 (defn- generate-frames [image ref-image pipe prompt neg-prompt start-seed]
   (reset! last-frame image)
   (doseq [frame-number (range 0 frame-count)]
     (let [new-seed (+ start-seed frame-number)
           frame-file-name (file-util/frame-name prompt new-seed const/ani-iterations const/ani-scale)]
       (if (file-util/file-exists? frame-file-name)
-        (log/warn {:skip-existing frame-file-name})
-
-        ;fixme: pass new image in each iteration
+        (do
+          (log/warn {:skip-existing frame-file-name})
+          (reset! last-frame (image-util/open-py-image frame-file-name)))
         (let [next-frame (generate-image! @last-frame ref-image pipe prompt neg-prompt new-seed frame-file-name)]
           (reset! last-frame next-frame))))))
 

@@ -1,6 +1,5 @@
 (ns proomp.image-util-test
   (:require
-    [cambium.core :as log]
     [proomp.config]
     [clojure.test :refer :all]
     [proomp.util.image-util :as image-util]))

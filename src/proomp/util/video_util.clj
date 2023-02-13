@@ -66,7 +66,7 @@
     (.close ios)
     (.toByteArray os)))
 
-(def ^:const frames-per-second 30)
+(def ^:const frames-per-second 60)
 (def ^:const ani-step-h264 (/ 1.0 frames-per-second))
 (defn animate-gif [frames]
   "Creates an animated GIF from the frames."
