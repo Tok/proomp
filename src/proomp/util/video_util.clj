@@ -17,6 +17,8 @@
     (org.jcodec.common.model ColorSpace Rational)
     (org.w3c.dom Node)))
 
+(def ^:const frames-per-second 30)
+
 (defn- gce? [^Node node] (-> node .getNodeName (= "GraphicControlExtension")))
 (defn- find-gce [child] (if (gce? child) child (-> child .getNextSibling recur)))
 (defn- find-gc-extension [root] (-> root .getFirstChild find-gce))
@@ -66,7 +68,6 @@
     (.close ios)
     (.toByteArray os)))
 
-(def ^:const frames-per-second 60)
 (def ^:const ani-step-h264 (/ 1.0 frames-per-second))
 (defn animate-gif [frames]
   "Creates an animated GIF from the frames."
@@ -76,9 +77,9 @@
   "Creates a soundless H.264/MPEG-4 AVC video from the frames."
   (let [output (File. file-name)                            ;assert .mp4
         channel (NIOUtils/writableChannel output)
-        fps config/frames-per-second-h264
-        encoder (SequenceEncoder/createWithFps channel (Rational. fps 1))]
-    (log/info {:frames-per-second fps})
+        rat (Rational. frames-per-second 1)
+        encoder (SequenceEncoder/createWithFps channel rat)]
+    (log/info {:frames-per-second frames-per-second})
     (doseq [^BufferedImage frame frames]
       (.encodeNativeFrame
         encoder
@@ -97,5 +98,4 @@
     (log/info {:frame-path frame-path})
     (log/info {:output-file-name output-file-name})
     (animate-h264 frames output-file-name)
-    (log/info {:done "Video generation completed."})
-    (System/exit 0)))
+    (log/info {:done "Video generation completed."})))

@@ -21,8 +21,6 @@
 (defonce image-path (str workspace-path "images\\"))
 (log/debug {:image-path image-path})
 
-(defonce frames-per-second-h264 30)
-
 (py/initialize!
   :library-path (str python-dir "Python39\\python39.dll")
   :python-executable (str python-dir "Python39\\python.exe")

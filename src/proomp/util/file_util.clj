@@ -17,6 +17,6 @@
 
 (defn frame-name [prompt seed iterations scale]
   (str (animation-frame-dir prompt) "\\"
-       seed "_" scale "_" iterations "_" prompt image-suffix))
+       (format "%06d" seed) "_" scale "_" iterations "_" prompt image-suffix))
 
 (defn file-exists? [file-name] (py. (py/$c pathlib/Path file-name) "is_file"))
