@@ -17,7 +17,7 @@
     (org.jcodec.common.model ColorSpace Rational)
     (org.w3c.dom Node)))
 
-(def ^:const frames-per-second 30)
+(def ^:const frames-per-second 60)
 
 (defn- gce? [^Node node] (-> node .getNodeName (= "GraphicControlExtension")))
 (defn- find-gce [child] (if (gce? child) child (-> child .getNextSibling recur)))

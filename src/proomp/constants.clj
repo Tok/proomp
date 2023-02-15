@@ -11,9 +11,9 @@
 (defn seed-range [start-seed] (range start-seed (+ start-seed repetitions)))
 
 ;; Prompt Constants
-(def prompt-addition "((photorealistic)) (photo) focused professional")
+(def prompt-addition "((photorealistic)) (photo) sharp focused")
 
-(def neg-prompt-addition "(blurry) (drawing) comic bad grayscale deformed disfigured")
+(def neg-prompt-addition "((blurry)) (drawing) grayscale deformed disfigured")
 
 
 ;; Animation Constants
@@ -22,7 +22,7 @@
 (defonce ani-h 540)                                         ;default 540
 (def ani-scale 7.5)                                         ;default 7.5
 (def ani-noise 0.55)                                        ;default 0.55
-(def ani-iterations 30)                                     ;default 40
+(def ani-iterations 40)                                     ;default 40
 
 (log/debug {:width w :height h :iterations iterations :scale scale})
 (log/debug {:ani-width ani-w :ani-height ani-h :ani-scale ani-scale})

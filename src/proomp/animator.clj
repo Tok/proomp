@@ -19,8 +19,9 @@
 (def rotation-degree -0.0)                                  ;per frame
 (def x-offset -0)                                           ;pixels per frame
 (def y-offset 0)                                            ;pixels per frame
-(def zoom 1.020)                                            ;should be >= 1.000
+(def zoom 1.050)                                            ;should be >= 1.000
 (def apply-transformations? true)
+(def apply-color-correction? false)
 
 (defn- initial-frame [prompt start-seed]
   (let [initial-frame-file-name (file-util/file-name prompt start-seed)]
@@ -33,17 +34,16 @@
                  resized)))))
 
 (defn- apply-transformations [image]
-  ;TODO skip transformations for the initial image
   (if apply-transformations?
     (let [rotated (py. image "rotate" rotation-degree)
           chopped (chops/offset rotated x-offset y-offset)]
       (image-util/zoom-center chopped zoom))
     image))
 
-(defn- generate-image! [image reference-image pipe prompt neg-prompt new-seed frame-file-name]
-  (let [pic (apply-transformations image)]
-    (let [color-corrected (image-util/fix-colors pic reference-image)
-          sample (pipe-util/generate-i2i pipe prompt neg-prompt new-seed color-corrected)
+(defn- generate-image! [image reference-image pipe prompt neg-prompt new-seed frame-file-name first-image?]
+  (let [pic (if (not first-image?) (apply-transformations image) image)]
+    (let [corrected (if apply-color-correction? (image-util/fix-colors pic reference-image) pic)
+          sample (pipe-util/generate-i2i pipe prompt neg-prompt new-seed corrected)
           resized (image-util/resize sample const/ani-w const/ani-h)]
       (image-util/save-py-image! resized frame-file-name)
       resized)))
@@ -53,12 +53,13 @@
   (reset! last-frame image)
   (doseq [frame-number (range 0 frame-count)]
     (let [new-seed (+ start-seed frame-number)
-          frame-file-name (file-util/frame-name prompt new-seed const/ani-iterations const/ani-scale)]
+          frame-file-name (file-util/frame-name prompt new-seed const/ani-iterations const/ani-scale)
+          first-image? (= frame-number 0)]
       (if (file-util/file-exists? frame-file-name)
         (do
           (log/warn {:skip-existing frame-file-name})
           (reset! last-frame (image-util/open-py-image frame-file-name)))
-        (let [next-frame (generate-image! @last-frame ref-image pipe prompt neg-prompt new-seed frame-file-name)]
+        (let [next-frame (generate-image! @last-frame ref-image pipe prompt neg-prompt new-seed frame-file-name first-image?)]
           (reset! last-frame next-frame))))))
 
 (defn animate [pipe prompt neg-prompt start-seed]

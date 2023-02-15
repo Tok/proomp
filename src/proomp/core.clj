@@ -10,8 +10,8 @@
 (defonce ^:private modes [::animation ::images ::video])
 
 (defonce prompt "Caliper Remote")
-(defonce neg-prompt "")
-(defonce animation-start-seed 63) ;choose a good seed by generating ::images first
+(defonce neg-prompt "") ;also see additions in proomp.constants
+(defonce animation-start-seed 0) ;choose a good seed by generating ::images first
 
 ;;select mode:
 ;(defonce mode ::images)
