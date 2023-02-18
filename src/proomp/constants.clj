@@ -1,8 +1,9 @@
 (ns proomp.constants
-  (:require [cambium.core :as log]))
+  (:require [proomp.domain.resolution :as res]
+            [cambium.core :as log])
+  (:import (proomp.domain.resolution Resolution)))
 
-(defonce w 768)                                             ;default 768
-(defonce h 768)                                             ;default 768
+(defonce ^Resolution image-resolution (res/resolutions :HD-landscape))
 (def scale 7.5)                                             ;default 7.5
 (def iterations 40)                                         ;default 40
 
@@ -18,11 +19,13 @@
 
 ;; Animation Constants
 ; 960 and 540 is a 19:6 aspect ratio, half of "Full HD"
-(defonce ani-w 960)                                         ;default 960
-(defonce ani-h 540)                                         ;default 540
-(def ani-scale 7.5)                                         ;default 7.5
-(def ani-noise 0.55)                                        ;default 0.55
+(defonce ^Resolution animation-resolution (res/resolutions :HD-landscape))
 (def ani-iterations 40)                                     ;default 40
+(def ani-scale 7.5)                                         ;default 7.5
+(def ani-noise 0.50)                                        ;default 0.55
 
-(log/debug {:width w :height h :iterations iterations :scale scale})
-(log/debug {:ani-width ani-w :ani-height ani-h :ani-scale ani-scale})
+
+(log/debug {:image-resolution image-resolution})
+(log/debug {:iterations iterations :scale scale})
+(log/debug {:animation-resolution animation-resolution})
+(log/debug {:ani-iterations ani-iterations :ani-scale ani-scale :ani-noise :ani-noise})

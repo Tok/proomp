@@ -1,4 +1,4 @@
-(ns proomp.util.pipe-util
+(ns proomp.util.pipe-utils
   (:require [proomp.config :as config]
             [proomp.constants :as const]
             [cambium.core :as log]
@@ -36,13 +36,14 @@
 
 (defn- extract-first-image [result] (nth (py.- result :images) 0))
 (defn generate-image [pipe prompt neg-prompt seed]
-  (extract-first-image
-    (py/$c pipe (str prompt const/prompt-addition)
-           :negative_prompt (str neg-prompt const/neg-prompt-addition)
-           :generator (->generator seed)
-           :height const/h :width const/w
-           :num_inference_steps const/iterations
-           :guidance_scale const/scale)))
+  (let [res const/image-resolution]
+    (extract-first-image
+      (py/$c pipe (str prompt const/prompt-addition)
+             :negative_prompt (str neg-prompt const/neg-prompt-addition)
+             :generator (->generator seed)
+             :height (:h res) :width (:w res)
+             :num_inference_steps const/iterations
+             :guidance_scale const/scale))))
 
 (defn generate-i2i [pipe prompt neg-prompt seed init-image]
   (extract-first-image

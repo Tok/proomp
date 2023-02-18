@@ -5,31 +5,31 @@
     [libpython-clj2.python :refer [py.] :as py]
     [libpython-clj2.require :refer [require-python]]
     [proomp.constants :as const]
-    [proomp.util.file-util :as file-util]
-    [proomp.util.image-util :as image-util]
-    [proomp.util.pipe-util :as pipe-util]))
+    [proomp.util.file-utils :as file-utils]
+    [proomp.util.image-utils :as image-utils]
+    [proomp.util.pipe-utils :as pipe-utils]))
 
 (require-python 'torch '[torch.cuda :as cuda] 'transformers)
 (require-python '[PIL.Image :refer [open new]])
 (require-python '[PIL.ImageChops :as chops])
 
-(def dim {:w 960 :h 540})                                   ;19:6 aspect ratio, half of "Full HD"
 (def frame-count (* 3600 5))
 
 (def rotation-degree -0.0)                                  ;per frame
 (def x-offset -0)                                           ;pixels per frame
 (def y-offset 0)                                            ;pixels per frame
-(def zoom 1.050)                                            ;should be >= 1.000
-(def apply-transformations? true)
+(def zoom 1.000)                                            ;should be >= 1.000
+(def apply-transformations? false)
 (def apply-color-correction? false)
 
 (defn- initial-frame [prompt start-seed]
-  (let [initial-frame-file-name (file-util/file-name prompt start-seed)]
-    (if (not (file-util/file-exists? initial-frame-file-name))
+  (let [res const/animation-resolution
+        initial-frame-file-name (file-utils/file-name prompt start-seed)]
+    (if (not (file-utils/file-exists? initial-frame-file-name))
       (log/error {:initial-frame-missing initial-frame-file-name})
-      (py/with [image (image-util/open-py-image initial-frame-file-name)]
-               (let [resized (image-util/resize image const/ani-w const/ani-h)]
-                 (image-util/save-py-image! resized initial-frame-file-name)
+      (py/with [image (image-utils/open-py-image initial-frame-file-name)]
+               (let [resized (image-utils/resize image (:w res) (:h res))]
+                 (image-utils/save-py-image! resized initial-frame-file-name)
                  (log/info {:initial-frame-saved initial-frame-file-name})
                  resized)))))
 
@@ -37,37 +37,36 @@
   (if apply-transformations?
     (let [rotated (py. image "rotate" rotation-degree)
           chopped (chops/offset rotated x-offset y-offset)]
-      (image-util/zoom-center chopped zoom))
+      (image-utils/zoom-center chopped zoom))
     image))
 
 (defn- generate-image! [image reference-image pipe prompt neg-prompt new-seed frame-file-name first-image?]
   (let [pic (if (not first-image?) (apply-transformations image) image)]
-    (let [corrected (if apply-color-correction? (image-util/fix-colors pic reference-image) pic)
-          sample (pipe-util/generate-i2i pipe prompt neg-prompt new-seed corrected)
-          resized (image-util/resize sample const/ani-w const/ani-h)]
-      (image-util/save-py-image! resized frame-file-name)
-      resized)))
+    (let [corrected (if apply-color-correction? (image-utils/fix-colors pic reference-image) pic)
+          sample (pipe-utils/generate-i2i pipe prompt neg-prompt new-seed corrected)]
+      (image-utils/save-py-image! sample frame-file-name)
+      sample)))
 
-(def last-frame (atom (image-util/->pil-image 1 1)))        ;todo refactor to remove atom
+(def last-frame (atom (image-utils/->pil-image 1 1)))       ;todo refactor to remove atom
 (defn- generate-frames [image ref-image pipe prompt neg-prompt start-seed]
   (reset! last-frame image)
   (doseq [frame-number (range 0 frame-count)]
     (let [new-seed (+ start-seed frame-number)
-          frame-file-name (file-util/frame-name prompt new-seed const/ani-iterations const/ani-scale)
+          frame-file-name (file-utils/frame-name prompt new-seed const/ani-iterations const/ani-scale)
           first-image? (= frame-number 0)]
-      (if (file-util/file-exists? frame-file-name)
+      (if (file-utils/file-exists? frame-file-name)
         (do
           (log/warn {:skip-existing frame-file-name})
-          (reset! last-frame (image-util/open-py-image frame-file-name)))
+          (reset! last-frame (image-utils/open-py-image frame-file-name)))
         (let [next-frame (generate-image! @last-frame ref-image pipe prompt neg-prompt new-seed frame-file-name first-image?)]
           (reset! last-frame next-frame))))))
 
 (defn animate [pipe prompt neg-prompt start-seed]
-  (log/info {:dimensions dim :frame-count frame-count})
-  (let [result-dir (file-util/animation-frame-dir prompt)]
+  (log/info {:resolution const/animation-resolution :frame-count frame-count})
+  (let [result-dir (file-utils/animation-frame-dir prompt)]
     (log/debug {:result-path result-dir})
     (io/make-parents result-dir)
     (let [first-image (initial-frame prompt start-seed)]
       (log/info "Loading reference image.")
-      (let [ref-image (image-util/prepare-reference-image first-image)]
+      (let [ref-image (image-utils/prepare-reference-image first-image)]
         (generate-frames first-image ref-image pipe prompt neg-prompt start-seed)))))

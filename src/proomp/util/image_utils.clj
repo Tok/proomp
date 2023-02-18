@@ -1,11 +1,11 @@
-(ns proomp.util.image-util
+(ns proomp.util.image-utils
   (:require [cambium.core :as log]
             [clojure.java.io :as io]
             [libpython-clj2.python :refer [py. py.-] :as py]
             [libpython-clj2.require :refer [require-python]]
             [proomp.config :as config]
             [proomp.constants :as const]
-            [proomp.util.file-util :as file-util])
+            [proomp.util.file-utils :as file-utils])
   (:import (java.awt RenderingHints)
            (java.awt.image BufferedImage RenderedImage)
            (java.io ByteArrayOutputStream File IOException)
@@ -30,7 +30,7 @@
   ([image file-name overwrite?]
    (if overwrite?
      (do-py-image-save! image file-name)
-     (if (file-util/file-exists? file-name)
+     (if (file-utils/file-exists? file-name)
        (log/warn {"File exists. Skipping." file-name})
        (do-py-image-save! image file-name)))))
 
@@ -52,11 +52,11 @@
     (numpy->pil np-corrected)))
 
 (def ^:private fix-color-palette-to-1st-frame? false)       ;otherwise use reference image
-
 (defn prepare-reference-image [image]
-  (let [ref-file (str config/image-path "DefaultHistogramReference.png")
+  (let [res const/animation-resolution
+        ref-file (str config/image-path "DefaultHistogramReference.png")
         ref-img (py. (pilimg/open ref-file) "convert" "RGB")]
-    (resize (if fix-color-palette-to-1st-frame? image ref-img) const/ani-w const/ani-h)))
+    (resize (if fix-color-palette-to-1st-frame? image ref-img) (:w res) (:h res))))
 
 (defn ^RenderedImage ->image [w h] (BufferedImage. w h BufferedImage/TYPE_INT_RGB))
 (defn ^RenderedImage ->pil-image [w h] (PIL.Image/new "RGB" [w h]))

@@ -1,10 +1,10 @@
-(ns proomp.util.video-util
+(ns proomp.util.video-utils
   (:require
     [cambium.core :as log]
     [clojure.java.io :as io]
     [proomp.config :as config]
-    [proomp.util.file-util :as file-util]
-    [proomp.util.image-util :as image-util])
+    [proomp.util.file-utils :as file-utils]
+    [proomp.util.image-utils :as image-utils])
   (:import
     (java.awt.image BufferedImage)
     (java.io ByteArrayOutputStream File)
@@ -90,10 +90,10 @@
 
 (defn generate-video-from-frames [prompt]
   "Generates a video from the frame directory, matching the current prompt."
-  (let [frame-path (file-util/animation-frame-dir prompt)
+  (let [frame-path (file-utils/animation-frame-dir prompt)
         frame-dir (clojure.java.io/file frame-path)
-        frames (map image-util/open-buffered-image-file (.listFiles (io/file frame-dir)))
-        output-file-name (str (file-util/image-dir prompt) prompt ".mp4")]
+        frames (map image-utils/open-buffered-image-file (.listFiles (io/file frame-dir)))
+        output-file-name (str (file-utils/image-dir prompt) prompt ".mp4")]
     (log/info {:prompt prompt})
     (log/info {:frame-path frame-path})
     (log/info {:output-file-name output-file-name})

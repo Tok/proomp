@@ -1,4 +1,4 @@
-(ns proomp.util.file-util
+(ns proomp.util.file-utils
   (:require [proomp.config :as config]
             [libpython-clj2.require :refer [require-python]]
             [libpython-clj2.python :refer [py.] :as py]))

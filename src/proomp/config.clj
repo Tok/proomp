@@ -3,8 +3,6 @@
             [libpython-clj2.python :as py]))
 
 (log/info "Loading config.")
-
-
 (def ^:private python-dir "C:\\Users\\Zir\\AppData\\Local\\Programs\\Python\\")
 (log/trace {:python-dir python-dir})
 
