@@ -1,12 +1,12 @@
 (ns proomp.domain.resolution-test
-  (:require [proomp.domain.resolution :refer :all]
+  (:require [proomp.domain.image.resolution :refer :all]
             [clojure.test :refer :all]))
 
 (deftest swap-keyword-test
   (testing "Swap aspect keyword"
-    (is (= (#'proomp.domain.resolution/swap-keyword :16:9) :9:16)))
+    (is (= (#'proomp.domain.image.resolution/swap-keyword :16:9) :9:16)))
   (testing "Preserve 1:1 aspect"
-    (is (= (#'proomp.domain.resolution/swap-keyword :1:1) :1:1))))
+    (is (= (#'proomp.domain.image.resolution/swap-keyword :1:1) :1:1))))
 
 (deftest divisible-by-8-test
   (doseq [[k v] resolutions]

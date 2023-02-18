@@ -1,4 +1,4 @@
-(ns proomp.domain.image-format)
+(ns proomp.domain.image.image-format)
 
 (defrecord ImageFormat [file-suffix])
 

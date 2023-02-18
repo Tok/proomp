@@ -3,7 +3,8 @@
             [proomp.constants :as const]
             [cambium.core :as log]
             [libpython-clj2.require :refer [require-python]]
-            [libpython-clj2.python :refer [py. py.-] :as py]))
+            [libpython-clj2.python :refer [py. py.-] :as py])
+  (:import (proomp.domain.image.resolution Resolution)))
 
 (require-python 'torch '[torch.cuda :as cuda] 'transformers)
 (require-python '[diffusers :refer [StableDiffusionPipeline StableDiffusionImg2ImgPipeline]])
@@ -36,7 +37,7 @@
 
 (defn- extract-first-image [result] (nth (py.- result :images) 0))
 (defn generate-image [pipe prompt neg-prompt seed]
-  (let [res const/image-resolution]
+  (let [^Resolution res const/image-resolution]
     (extract-first-image
       (py/$c pipe (str prompt const/prompt-addition)
              :negative_prompt (str neg-prompt const/neg-prompt-addition)

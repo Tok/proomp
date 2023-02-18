@@ -1,4 +1,4 @@
-(ns proomp.domain.resolution
+(ns proomp.domain.image.resolution
   (:import (clojure.lang MapEntry)))
 
 (def ^:private orientations [::landscape ::portrait ::square])
