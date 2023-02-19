@@ -33,7 +33,7 @@ Set your `python-dir` and your `workspace-path` in `proomp.config`.
 
 ## Usage
 * Check and adjust the parameters in `proomp.core`.
-  * Set a [active-mode](https://github.com/Tok/proomp/blob/main/src/proomp/core.clj#L11).
+  * Set an [active-mode](https://github.com/Tok/proomp/blob/main/src/proomp/core.clj#L11).
       * `::images` Generates different images from a prompt. Can be used to find a good start seed.
       * `::animation` Generates frames for a prompt and a start seed.
       * `::video` Creates a video from the generated frames.
@@ -61,5 +61,5 @@ Provide feature_extractor and safety_checker from a v1-5 model:
 Move `feature_extractor` and `safety_checker` to 2-1, then delete v1-5 again.
 Set the missing features in stable-diffusion-2-1/model_index.json:
 
-    "feature_extractor": ["transformers", "CLIPFeatureExtractor"],
+    "feature_extractor": ["transformers", "CLIPImageProcessor"],
     "safety_checker": ["stable_diffusion", "StableDiffusionSafetyChecker"],
