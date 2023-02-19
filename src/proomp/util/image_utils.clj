@@ -17,7 +17,7 @@
 (require-python '[numpy :as np])
 (require-python '[numpy.ndarray :as ndarray])
 (require-python '[skimage.exposure :refer [match_histograms]])
-(defn new-py-image [w h] (PIL.Image/new "RGB" [w h]))
+
 (defn open-py-image [file-name] (py. (PIL.Image/open file-name) "convert" "RGB"))
 
 (defn- do-py-image-save! [image file-name]
@@ -61,9 +61,11 @@
 (defn ^RenderedImage ->image [w h] (BufferedImage. w h BufferedImage/TYPE_INT_RGB))
 (defn ^RenderedImage ->pil-image [w h] (PIL.Image/new "RGB" [w h]))
 
+(defn image->w [buffered-image] (.getWidth buffered-image))
+(defn image->h [buffered-image] (.getHeight buffered-image))
 (defn image-from-template [source]
-  (let [w (.getWidth source)
-        h (.getHeight source)
+  (let [w (image->w source)
+        h (image->h source)
         type (.getType source)]
     (BufferedImage. w h type)))
 
@@ -104,9 +106,11 @@
           (catch IOException e (.getMessage e)))
         buffered-image))))
 
-(defn zoom-center [image zoom]
-  (let [w (first (py.- image :size))
-        h (second (py.- image :size))
+(defn pil->w [pil-image] (first (py.- pil-image :size)))
+(defn pil->h [pil-image] (second (py.- pil-image :size)))
+(defn zoom-center [pil-image zoom]
+  (let [w (pil->w pil-image)
+        h (pil->h pil-image)
         x (* w 0.5)
         y (* h 0.5)
         cropped-width (/ w zoom)
@@ -115,5 +119,5 @@
         top (int (- y (/ cropped-height 2)))
         right (int (+ x (/ cropped-width 2)))
         bottom (int (+ y (/ cropped-height 2)))
-        cropped-image (crop image left top right bottom)]
+        cropped-image (crop pil-image left top right bottom)]
     (resize cropped-image w h)))

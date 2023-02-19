@@ -2,7 +2,6 @@
   (:require
     [cambium.core :as log]
     [clojure.java.io :as io]
-    [proomp.config :as config]
     [proomp.util.file-utils :as file-utils]
     [proomp.util.image-utils :as image-utils])
   (:import

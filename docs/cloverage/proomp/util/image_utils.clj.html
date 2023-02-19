@@ -4,7 +4,7 @@
   <link rel="stylesheet" href="../../coverage.css"/>  <title> proomp/util/image_utils.clj </title>
  </head>
  <body>
-<span class="partial" title="1 out of 262 forms covered">
+<span class="partial" title="1 out of 126 forms covered">
                 001&nbsp;&nbsp;(ns&nbsp;proomp.util.image-utils
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
@@ -61,8 +61,8 @@
 <span class="covered" title="3 out of 3 forms covered">
                 019&nbsp;&nbsp;(require-python&nbsp;&#x27;[skimage.exposure&nbsp;:refer&nbsp;[match_histograms]])
                 </span><br/>
-<span class="covered" title="7 out of 7 forms covered">
-                020&nbsp;&nbsp;(defn&nbsp;new-py-image&nbsp;[w&nbsp;h]&nbsp;(PIL.Image&#x2F;new&nbsp;&quot;RGB&quot;&nbsp;[w&nbsp;h]))
+<span class="blank" title="0 out of 0 forms covered">
+                020&nbsp;&nbsp;
                 </span><br/>
 <span class="partial" title="1 out of 10 forms covered">
                 021&nbsp;&nbsp;(defn&nbsp;open-py-image&nbsp;[file-name]&nbsp;(py.&nbsp;(PIL.Image&#x2F;open&nbsp;file-name)&nbsp;&quot;convert&quot;&nbsp;&quot;RGB&quot;))
@@ -70,13 +70,13 @@
 <span class="blank" title="0 out of 0 forms covered">
                 022&nbsp;&nbsp;
                 </span><br/>
-<span class="partial" title="1 out of 2 forms covered">
+<span class="covered" title="1 out of 1 forms covered">
                 023&nbsp;&nbsp;(defn-&nbsp;do-py-image-save!&nbsp;[image&nbsp;file-name]
                 </span><br/>
-<span class="not-covered" title="0 out of 6 forms covered">
+<span class="not-covered" title="0 out of 3 forms covered">
                 024&nbsp;&nbsp;&nbsp;&nbsp;(io&#x2F;make-parents&nbsp;file-name)
                 </span><br/>
-<span class="not-covered" title="0 out of 3051 forms covered">
+<span class="not-covered" title="0 out of 1332 forms covered">
                 025&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;debug&nbsp;{&quot;Saving&nbsp;image.&quot;&nbsp;file-name})
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
@@ -85,25 +85,25 @@
 <span class="blank" title="0 out of 0 forms covered">
                 027&nbsp;&nbsp;
                 </span><br/>
-<span class="partial" title="1 out of 2 forms covered">
+<span class="covered" title="1 out of 1 forms covered">
                 028&nbsp;&nbsp;(defn&nbsp;save-py-image!
                 </span><br/>
-<span class="not-covered" title="0 out of 10 forms covered">
+<span class="not-covered" title="0 out of 5 forms covered">
                 029&nbsp;&nbsp;&nbsp;&nbsp;([image&nbsp;file-name]&nbsp;(save-py-image!&nbsp;image&nbsp;file-name&nbsp;false))
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
                 030&nbsp;&nbsp;&nbsp;&nbsp;([image&nbsp;file-name&nbsp;overwrite?]
                 </span><br/>
-<span class="not-covered" title="0 out of 4 forms covered">
+<span class="not-covered" title="0 out of 2 forms covered">
                 031&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(if&nbsp;overwrite?
                 </span><br/>
-<span class="not-covered" title="0 out of 8 forms covered">
+<span class="not-covered" title="0 out of 4 forms covered">
                 032&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(do-py-image-save!&nbsp;image&nbsp;file-name)
                 </span><br/>
-<span class="not-covered" title="0 out of 8 forms covered">
+<span class="not-covered" title="0 out of 4 forms covered">
                 033&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(if&nbsp;(file-utils&#x2F;file-exists?&nbsp;file-name)
                 </span><br/>
-<span class="not-covered" title="0 out of 3180 forms covered">
+<span class="not-covered" title="0 out of 1644 forms covered">
                 034&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;warn&nbsp;{&quot;File&nbsp;exists.&nbsp;Skipping.&quot;&nbsp;file-name})
                 </span><br/>
 <span class="not-covered" title="0 out of 1 forms covered">
@@ -127,22 +127,22 @@
 <span class="covered" title="1 out of 1 forms covered">
                 041&nbsp;&nbsp;(defn&nbsp;resize&nbsp;[image&nbsp;w&nbsp;h]
                 </span><br/>
-<span class="not-covered" title="0 out of 11 forms covered">
+<span class="covered" title="11 out of 11 forms covered">
                 042&nbsp;&nbsp;&nbsp;&nbsp;(py.&nbsp;image&nbsp;&quot;resize&quot;&nbsp;(py&#x2F;-&gt;py-tuple&nbsp;[w&nbsp;h])))
                 </span><br/>
 <span class="covered" title="1 out of 1 forms covered">
                 043&nbsp;&nbsp;(defn&nbsp;crop&nbsp;[image&nbsp;left&nbsp;top&nbsp;right&nbsp;bottom]
                 </span><br/>
-<span class="not-covered" title="0 out of 13 forms covered">
+<span class="covered" title="13 out of 13 forms covered">
                 044&nbsp;&nbsp;&nbsp;&nbsp;(py.&nbsp;image&nbsp;&quot;crop&quot;&nbsp;(py&#x2F;-&gt;py-tuple&nbsp;[left&nbsp;top&nbsp;right&nbsp;bottom])))
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
                 045&nbsp;&nbsp;
                 </span><br/>
-<span class="partial" title="1 out of 9 forms covered">
+<span class="covered" title="9 out of 9 forms covered">
                 046&nbsp;&nbsp;(defn&nbsp;pil-&gt;numpy&nbsp;[pil-image]&nbsp;(py&#x2F;$c&nbsp;np&#x2F;array&nbsp;pil-image&nbsp;:dtype&nbsp;np&#x2F;uint8))
                 </span><br/>
-<span class="partial" title="1 out of 11 forms covered">
+<span class="covered" title="11 out of 11 forms covered">
                 047&nbsp;&nbsp;(defn&nbsp;numpy-&gt;pil&nbsp;[np-image]&nbsp;(PIL.Image&#x2F;fromarray&nbsp;(py.&nbsp;np-image&nbsp;&quot;astype&quot;&nbsp;&quot;uint8&quot;)&nbsp;&quot;RGB&quot;))
                 </span><br/>
 <span class="covered" title="1 out of 1 forms covered">
@@ -184,7 +184,7 @@
 <span class="blank" title="0 out of 0 forms covered">
                 060&nbsp;&nbsp;
                 </span><br/>
-<span class="partial" title="1 out of 5 forms covered">
+<span class="covered" title="5 out of 5 forms covered">
                 061&nbsp;&nbsp;(defn&nbsp;^RenderedImage&nbsp;-&gt;image&nbsp;[w&nbsp;h]&nbsp;(BufferedImage.&nbsp;w&nbsp;h&nbsp;BufferedImage&#x2F;TYPE_INT_RGB))
                 </span><br/>
 <span class="covered" title="7 out of 7 forms covered">
@@ -193,173 +193,185 @@
 <span class="blank" title="0 out of 0 forms covered">
                 063&nbsp;&nbsp;
                 </span><br/>
+<span class="partial" title="1 out of 2 forms covered">
+                064&nbsp;&nbsp;(defn&nbsp;image-&gt;w&nbsp;[buffered-image]&nbsp;(.getWidth&nbsp;buffered-image))
+                </span><br/>
+<span class="partial" title="1 out of 2 forms covered">
+                065&nbsp;&nbsp;(defn&nbsp;image-&gt;h&nbsp;[buffered-image]&nbsp;(.getHeight&nbsp;buffered-image))
+                </span><br/>
 <span class="covered" title="1 out of 1 forms covered">
-                064&nbsp;&nbsp;(defn&nbsp;image-from-template&nbsp;[source]
-                </span><br/>
-<span class="not-covered" title="0 out of 2 forms covered">
-                065&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[w&nbsp;(.getWidth&nbsp;source)
-                </span><br/>
-<span class="not-covered" title="0 out of 1 forms covered">
-                066&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;(.getHeight&nbsp;source)
-                </span><br/>
-<span class="not-covered" title="0 out of 1 forms covered">
-                067&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;(.getType&nbsp;source)]
+                066&nbsp;&nbsp;(defn&nbsp;image-from-template&nbsp;[source]
                 </span><br/>
 <span class="not-covered" title="0 out of 4 forms covered">
-                068&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(BufferedImage.&nbsp;w&nbsp;h&nbsp;type)))
+                067&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[w&nbsp;(image-&gt;w&nbsp;source)
+                </span><br/>
+<span class="not-covered" title="0 out of 3 forms covered">
+                068&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;(image-&gt;h&nbsp;source)
+                </span><br/>
+<span class="not-covered" title="0 out of 1 forms covered">
+                069&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;(.getType&nbsp;source)]
+                </span><br/>
+<span class="not-covered" title="0 out of 4 forms covered">
+                070&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(BufferedImage.&nbsp;w&nbsp;h&nbsp;type)))
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
-                069&nbsp;&nbsp;
+                071&nbsp;&nbsp;
                 </span><br/>
 <span class="covered" title="1 out of 1 forms covered">
-                070&nbsp;&nbsp;(defn&nbsp;perform-op&nbsp;[source&nbsp;op]
+                072&nbsp;&nbsp;(defn&nbsp;perform-op&nbsp;[source&nbsp;op]
                 </span><br/>
 <span class="not-covered" title="0 out of 4 forms covered">
-                071&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[target&nbsp;(image-from-template&nbsp;source)]
+                073&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[target&nbsp;(image-from-template&nbsp;source)]
                 </span><br/>
 <span class="not-covered" title="0 out of 3 forms covered">
-                072&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(.filter&nbsp;op&nbsp;source&nbsp;target)
+                074&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(.filter&nbsp;op&nbsp;source&nbsp;target)
                 </span><br/>
 <span class="not-covered" title="0 out of 1 forms covered">
-                073&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;target))
+                075&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;target))
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
-                074&nbsp;&nbsp;
+                076&nbsp;&nbsp;
                 </span><br/>
 <span class="covered" title="1 out of 1 forms covered">
-                075&nbsp;&nbsp;(defn&nbsp;^RenderedImage&nbsp;scale&nbsp;[image&nbsp;factor]
+                077&nbsp;&nbsp;(defn&nbsp;^RenderedImage&nbsp;scale&nbsp;[image&nbsp;factor]
                 </span><br/>
 <span class="not-covered" title="0 out of 2 forms covered">
-                076&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[w&nbsp;(.getWidth&nbsp;image)
+                078&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[w&nbsp;(.getWidth&nbsp;image)
                 </span><br/>
 <span class="not-covered" title="0 out of 1 forms covered">
-                077&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;(.getHeight&nbsp;image)
+                079&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;(.getHeight&nbsp;image)
                 </span><br/>
 <span class="not-covered" title="0 out of 1 forms covered">
-                078&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;(.getType&nbsp;image)
+                080&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;(.getType&nbsp;image)
                 </span><br/>
 <span class="not-covered" title="0 out of 3 forms covered">
-                079&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scaled-w&nbsp;(*&nbsp;factor&nbsp;w)
+                081&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scaled-w&nbsp;(*&nbsp;factor&nbsp;w)
                 </span><br/>
 <span class="not-covered" title="0 out of 3 forms covered">
-                080&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scaled-h&nbsp;(*&nbsp;factor&nbsp;h)
+                082&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scaled-h&nbsp;(*&nbsp;factor&nbsp;h)
                 </span><br/>
 <span class="not-covered" title="0 out of 4 forms covered">
-                081&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scaled&nbsp;(BufferedImage.&nbsp;scaled-w&nbsp;scaled-h&nbsp;type)
+                083&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scaled&nbsp;(BufferedImage.&nbsp;scaled-w&nbsp;scaled-h&nbsp;type)
                 </span><br/>
 <span class="not-covered" title="0 out of 1 forms covered">
-                082&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ctx&nbsp;(.createGraphics&nbsp;scaled)
+                084&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ctx&nbsp;(.createGraphics&nbsp;scaled)
                 </span><br/>
 <span class="not-covered" title="0 out of 1 forms covered">
-                083&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;render-key&nbsp;RenderingHints&#x2F;KEY_INTERPOLATION
+                085&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;render-key&nbsp;RenderingHints&#x2F;KEY_INTERPOLATION
                 </span><br/>
 <span class="not-covered" title="0 out of 1 forms covered">
-                084&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;render-value&nbsp;RenderingHints&#x2F;VALUE_INTERPOLATION_BILINEAR]
+                086&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;render-value&nbsp;RenderingHints&#x2F;VALUE_INTERPOLATION_BILINEAR]
                 </span><br/>
 <span class="not-covered" title="0 out of 3 forms covered">
-                085&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(.setRenderingHint&nbsp;ctx&nbsp;render-key&nbsp;render-value)
+                087&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(.setRenderingHint&nbsp;ctx&nbsp;render-key&nbsp;render-value)
                 </span><br/>
 <span class="not-covered" title="0 out of 11 forms covered">
-                086&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(.drawImage&nbsp;ctx&nbsp;image&nbsp;0&nbsp;0&nbsp;scaled-w&nbsp;scaled-h&nbsp;0&nbsp;0&nbsp;w&nbsp;h&nbsp;nil)
+                088&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(.drawImage&nbsp;ctx&nbsp;image&nbsp;0&nbsp;0&nbsp;scaled-w&nbsp;scaled-h&nbsp;0&nbsp;0&nbsp;w&nbsp;h&nbsp;nil)
                 </span><br/>
 <span class="not-covered" title="0 out of 1 forms covered">
-                087&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(.dispose&nbsp;ctx)
+                089&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(.dispose&nbsp;ctx)
                 </span><br/>
 <span class="not-covered" title="0 out of 1 forms covered">
-                088&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scaled))
+                090&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scaled))
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
-                089&nbsp;&nbsp;
+                091&nbsp;&nbsp;
                 </span><br/>
 <span class="covered" title="1 out of 1 forms covered">
-                090&nbsp;&nbsp;(defn&nbsp;image-&gt;bytes&nbsp;[^RenderedImage&nbsp;image]
+                092&nbsp;&nbsp;(defn&nbsp;image-&gt;bytes&nbsp;[^RenderedImage&nbsp;image]
                 </span><br/>
 <span class="not-covered" title="0 out of 2 forms covered">
-                091&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[os&nbsp;(ByteArrayOutputStream.)]
+                093&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[os&nbsp;(ByteArrayOutputStream.)]
                 </span><br/>
 <span class="not-covered" title="0 out of 4 forms covered">
-                092&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(ImageIO&#x2F;write&nbsp;image&nbsp;&quot;png&quot;&nbsp;os)
+                094&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(ImageIO&#x2F;write&nbsp;image&nbsp;&quot;png&quot;&nbsp;os)
                 </span><br/>
 <span class="not-covered" title="0 out of 1 forms covered">
-                093&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(.toByteArray&nbsp;os)))
+                095&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(.toByteArray&nbsp;os)))
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
-                094&nbsp;&nbsp;
+                096&nbsp;&nbsp;
                 </span><br/>
 <span class="covered" title="1 out of 1 forms covered">
-                095&nbsp;&nbsp;(defn&nbsp;pil-&gt;bi&nbsp;[pil-image]
+                097&nbsp;&nbsp;(defn&nbsp;pil-&gt;bi&nbsp;[pil-image]
                 </span><br/>
 <span class="covered" title="3 out of 3 forms covered">
-                096&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[temp-dir&nbsp;(new&nbsp;File&nbsp;config&#x2F;temp-media-path)]
+                098&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[temp-dir&nbsp;(new&nbsp;File&nbsp;config&#x2F;temp-media-path)]
                 </span><br/>
 <span class="covered" title="1 out of 1 forms covered">
-                097&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(.mkdir&nbsp;temp-dir)
+                099&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(.mkdir&nbsp;temp-dir)
                 </span><br/>
 <span class="covered" title="5 out of 5 forms covered">
-                098&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[file&nbsp;(File&#x2F;createTempFile&nbsp;&quot;temp&quot;&nbsp;&quot;.png&quot;&nbsp;temp-dir)
+                100&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[file&nbsp;(File&#x2F;createTempFile&nbsp;&quot;temp&quot;&nbsp;&quot;.png&quot;&nbsp;temp-dir)
                 </span><br/>
 <span class="covered" title="1 out of 1 forms covered">
-                099&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file-name&nbsp;(.getPath&nbsp;file)]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;todo&nbsp;rewrite&nbsp;without&nbsp;temp&nbsp;file.
+                101&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file-name&nbsp;(.getPath&nbsp;file)]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;todo&nbsp;rewrite&nbsp;without&nbsp;temp&nbsp;file.
                 </span><br/>
 <span class="covered" title="5 out of 5 forms covered">
-                100&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(save-py-image!&nbsp;pil-image&nbsp;file-name&nbsp;true)
+                102&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(save-py-image!&nbsp;pil-image&nbsp;file-name&nbsp;true)
                 </span><br/>
 <span class="covered" title="4 out of 4 forms covered">
-                101&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[buffered-image&nbsp;(open-buffered-image&nbsp;file-name)]
+                103&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[buffered-image&nbsp;(open-buffered-image&nbsp;file-name)]
                 </span><br/>
 <span class="covered" title="1 out of 1 forms covered">
-                102&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(try
+                104&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(try
                 </span><br/>
 <span class="covered" title="3 out of 3 forms covered">
-                103&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(io&#x2F;delete-file&nbsp;file-name)
+                105&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(io&#x2F;delete-file&nbsp;file-name)
                 </span><br/>
 <span class="not-covered" title="0 out of 1 forms covered">
-                104&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(catch&nbsp;IOException&nbsp;e&nbsp;(.getMessage&nbsp;e)))
+                106&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(catch&nbsp;IOException&nbsp;e&nbsp;(.getMessage&nbsp;e)))
                 </span><br/>
 <span class="covered" title="1 out of 1 forms covered">
-                105&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buffered-image))))
+                107&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buffered-image))))
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
-                106&nbsp;&nbsp;
+                108&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="7 out of 7 forms covered">
+                109&nbsp;&nbsp;(defn&nbsp;pil-&gt;w&nbsp;[pil-image]&nbsp;(first&nbsp;(py.-&nbsp;pil-image&nbsp;:size)))
+                </span><br/>
+<span class="covered" title="7 out of 7 forms covered">
+                110&nbsp;&nbsp;(defn&nbsp;pil-&gt;h&nbsp;[pil-image]&nbsp;(second&nbsp;(py.-&nbsp;pil-image&nbsp;:size)))
                 </span><br/>
 <span class="covered" title="1 out of 1 forms covered">
-                107&nbsp;&nbsp;(defn&nbsp;zoom-center&nbsp;[image&nbsp;zoom]
+                111&nbsp;&nbsp;(defn&nbsp;zoom-center&nbsp;[pil-image&nbsp;zoom]
                 </span><br/>
-<span class="not-covered" title="0 out of 7 forms covered">
-                108&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[w&nbsp;(first&nbsp;(py.-&nbsp;image&nbsp;:size))
+<span class="covered" title="4 out of 4 forms covered">
+                112&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[w&nbsp;(pil-&gt;w&nbsp;pil-image)
                 </span><br/>
-<span class="not-covered" title="0 out of 6 forms covered">
-                109&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;(second&nbsp;(py.-&nbsp;image&nbsp;:size))
+<span class="covered" title="3 out of 3 forms covered">
+                113&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;(pil-&gt;h&nbsp;pil-image)
                 </span><br/>
-<span class="not-covered" title="0 out of 3 forms covered">
-                110&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;(*&nbsp;w&nbsp;0.5)
+<span class="covered" title="3 out of 3 forms covered">
+                114&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;(*&nbsp;w&nbsp;0.5)
                 </span><br/>
-<span class="not-covered" title="0 out of 3 forms covered">
-                111&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;(*&nbsp;h&nbsp;0.5)
+<span class="covered" title="3 out of 3 forms covered">
+                115&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;(*&nbsp;h&nbsp;0.5)
                 </span><br/>
-<span class="not-covered" title="0 out of 3 forms covered">
-                112&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cropped-width&nbsp;(&#x2F;&nbsp;w&nbsp;zoom)
+<span class="covered" title="3 out of 3 forms covered">
+                116&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cropped-width&nbsp;(&#x2F;&nbsp;w&nbsp;zoom)
                 </span><br/>
-<span class="not-covered" title="0 out of 3 forms covered">
-                113&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cropped-height&nbsp;(&#x2F;&nbsp;h&nbsp;zoom)
+<span class="covered" title="3 out of 3 forms covered">
+                117&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cropped-height&nbsp;(&#x2F;&nbsp;h&nbsp;zoom)
                 </span><br/>
-<span class="not-covered" title="0 out of 6 forms covered">
-                114&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;left&nbsp;(int&nbsp;(-&nbsp;x&nbsp;(&#x2F;&nbsp;cropped-width&nbsp;2)))
+<span class="covered" title="6 out of 6 forms covered">
+                118&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;left&nbsp;(int&nbsp;(-&nbsp;x&nbsp;(&#x2F;&nbsp;cropped-width&nbsp;2)))
                 </span><br/>
-<span class="not-covered" title="0 out of 6 forms covered">
-                115&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;top&nbsp;(int&nbsp;(-&nbsp;y&nbsp;(&#x2F;&nbsp;cropped-height&nbsp;2)))
+<span class="covered" title="6 out of 6 forms covered">
+                119&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;top&nbsp;(int&nbsp;(-&nbsp;y&nbsp;(&#x2F;&nbsp;cropped-height&nbsp;2)))
                 </span><br/>
-<span class="not-covered" title="0 out of 6 forms covered">
-                116&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;right&nbsp;(int&nbsp;(+&nbsp;x&nbsp;(&#x2F;&nbsp;cropped-width&nbsp;2)))
+<span class="covered" title="6 out of 6 forms covered">
+                120&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;right&nbsp;(int&nbsp;(+&nbsp;x&nbsp;(&#x2F;&nbsp;cropped-width&nbsp;2)))
                 </span><br/>
-<span class="not-covered" title="0 out of 6 forms covered">
-                117&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bottom&nbsp;(int&nbsp;(+&nbsp;y&nbsp;(&#x2F;&nbsp;cropped-height&nbsp;2)))
+<span class="covered" title="6 out of 6 forms covered">
+                121&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bottom&nbsp;(int&nbsp;(+&nbsp;y&nbsp;(&#x2F;&nbsp;cropped-height&nbsp;2)))
                 </span><br/>
-<span class="not-covered" title="0 out of 7 forms covered">
-                118&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cropped-image&nbsp;(crop&nbsp;image&nbsp;left&nbsp;top&nbsp;right&nbsp;bottom)]
+<span class="covered" title="7 out of 7 forms covered">
+                122&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cropped-image&nbsp;(crop&nbsp;pil-image&nbsp;left&nbsp;top&nbsp;right&nbsp;bottom)]
                 </span><br/>
-<span class="not-covered" title="0 out of 5 forms covered">
-                119&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(resize&nbsp;cropped-image&nbsp;w&nbsp;h)))
+<span class="covered" title="5 out of 5 forms covered">
+                123&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(resize&nbsp;cropped-image&nbsp;w&nbsp;h)))
                 </span><br/>
  </body>
 </html>

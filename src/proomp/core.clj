@@ -26,7 +26,8 @@
 
 (defn- do-generation! [pipe seed file-name]
   (let [image (pipe-utils/generate-image pipe full-prompt seed)]
-    (image-utils/save-py-image! image file-name)))
+    (image-utils/save-py-image! image file-name)
+    image))
 
 (defn- generate-image! [pipe seed]
   (log/trace {:seed seed})
@@ -37,8 +38,9 @@
 
 (defn -main []
   (if (= active-mode ::animation)
-    (let [pipe (pipe-utils/->image-to-image-pipeline)]
-      (seed-space-animator/animate pipe full-prompt animation-start-seed))
+    (let [pipe (pipe-utils/->image-to-image-pipeline)
+          frame-count (* 3600 5)]
+      (seed-space-animator/animate pipe full-prompt animation-start-seed frame-count))
     (if (= active-mode ::images)
       (let [pipe (pipe-utils/->text-to-image-pipeline)]
         (doseq [seed (range start-seed (+ start-seed number-of-images-to-generate))]
