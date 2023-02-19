@@ -1,7 +1,7 @@
 (ns proomp.core
   (:require [proomp.constants :as const]
             [proomp.config :as config]                      ;don't remove this
-            [proomp.animator :as animator]
+            [proomp.animator.seed-space-animator :as seed-space-animator]
             [proomp.domain.prompt.prompt :as prompt]
             [proomp.util.file-utils :as file-utils]
             [proomp.util.image-utils :as image-utils]
@@ -36,7 +36,7 @@
 (defn -main []
   (if (= active-mode ::animation)
     (let [pipe (pipe-utils/->image-to-image-pipeline)]
-      (animator/animate pipe full-prompt animation-start-seed))
+      (seed-space-animator/animate pipe full-prompt animation-start-seed))
     (if (= active-mode ::images)
       (let [pipe (pipe-utils/->text-to-image-pipeline)]
         (doseq [seed (const/seed-range animation-start-seed)]

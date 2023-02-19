@@ -1,7 +1,5 @@
 (ns proomp.constants
-  (:require [proomp.domain.image.resolution :as res]
-            [cambium.core :as log])
-  (:import (proomp.domain.image.resolution Resolution)))
+  (:require  [cambium.core :as log]))
 
 ;; Prompt to Image Constants
 (def iterations 40)                                         ;default 40

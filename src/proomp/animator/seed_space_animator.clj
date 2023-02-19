@@ -1,4 +1,4 @@
-(ns proomp.animator
+(ns proomp.animator.seed-space-animator
   (:require
     [cambium.core :as log]
     [clojure.java.io :as io]
