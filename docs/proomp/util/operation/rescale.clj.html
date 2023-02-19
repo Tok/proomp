@@ -1,0 +1,35 @@
+<html>
+ <head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" href="../../../coverage.css"/>  <title> proomp/util/operation/rescale.clj </title>
+ </head>
+ <body>
+<span class="covered" title="1 out of 1 forms covered">
+                001&nbsp;&nbsp;(ns&nbsp;proomp.util.operation.rescale
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                002&nbsp;&nbsp;&nbsp;&nbsp;(:import&nbsp;(java.awt.image&nbsp;RescaleOp)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                003&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(java.awt&nbsp;RenderingHints)))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                004&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                005&nbsp;&nbsp;(defn&nbsp;rescale&nbsp;[s1&nbsp;s2&nbsp;s3&nbsp;o1&nbsp;o2&nbsp;o3]
+                </span><br/>
+<span class="not-covered" title="0 out of 6 forms covered">
+                006&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[scale-factors&nbsp;(float-array&nbsp;[s1&nbsp;s2&nbsp;s3])
+                </span><br/>
+<span class="not-covered" title="0 out of 5 forms covered">
+                007&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offsets&nbsp;(float-array&nbsp;[o1&nbsp;o2&nbsp;o3])
+                </span><br/>
+<span class="not-covered" title="0 out of 2 forms covered">
+                008&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hints&nbsp;(RenderingHints.&nbsp;{})]
+                </span><br/>
+<span class="not-covered" title="0 out of 4 forms covered">
+                009&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(RescaleOp.&nbsp;scale-factors&nbsp;offsets&nbsp;hints)))
+                </span><br/>
+ </body>
+</html>

@@ -1,0 +1,233 @@
+<html>
+ <head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" href="../../coverage.css"/>  <title> proomp/animator/seed_space_animator.clj </title>
+ </head>
+ <body>
+<span class="partial" title="1 out of 62 forms covered">
+                001&nbsp;&nbsp;(ns&nbsp;proomp.animator.seed-space-animator
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                002&nbsp;&nbsp;&nbsp;&nbsp;(:require
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                003&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[cambium.core&nbsp;:as&nbsp;log]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                004&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[clojure.java.io&nbsp;:as&nbsp;io]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                005&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[libpython-clj2.python&nbsp;:refer&nbsp;[py.]&nbsp;:as&nbsp;py]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                006&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[libpython-clj2.require&nbsp;:refer&nbsp;[require-python]]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                007&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[proomp.domain.image.resolution&nbsp;:as&nbsp;res]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                008&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[proomp.domain.pipe.pipe-setup&nbsp;:as&nbsp;pipe-setup]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                009&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[proomp.util.file-utils&nbsp;:as&nbsp;file-utils]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                010&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[proomp.util.image-utils&nbsp;:as&nbsp;image-utils]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                011&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[proomp.util.pipe-utils&nbsp;:as&nbsp;pipe-utils]))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                012&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="5 out of 5 forms covered">
+                013&nbsp;&nbsp;(require-python&nbsp;&#x27;torch&nbsp;&#x27;[torch.cuda&nbsp;:as&nbsp;cuda]&nbsp;&#x27;transformers)
+                </span><br/>
+<span class="covered" title="3 out of 3 forms covered">
+                014&nbsp;&nbsp;(require-python&nbsp;&#x27;[PIL.Image&nbsp;:refer&nbsp;[open&nbsp;new]])
+                </span><br/>
+<span class="covered" title="3 out of 3 forms covered">
+                015&nbsp;&nbsp;(require-python&nbsp;&#x27;[PIL.ImageChops&nbsp;:as&nbsp;chops])
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                016&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="4 out of 4 forms covered">
+                017&nbsp;&nbsp;(def&nbsp;frame-count&nbsp;(*&nbsp;3600&nbsp;5))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                018&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="2 out of 2 forms covered">
+                019&nbsp;&nbsp;(def&nbsp;rotation-degree&nbsp;-0.0)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;per&nbsp;frame
+                </span><br/>
+<span class="covered" title="2 out of 2 forms covered">
+                020&nbsp;&nbsp;(def&nbsp;x-offset&nbsp;-0)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;pixels&nbsp;per&nbsp;frame
+                </span><br/>
+<span class="covered" title="2 out of 2 forms covered">
+                021&nbsp;&nbsp;(def&nbsp;y-offset&nbsp;0)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;pixels&nbsp;per&nbsp;frame
+                </span><br/>
+<span class="covered" title="2 out of 2 forms covered">
+                022&nbsp;&nbsp;(def&nbsp;zoom&nbsp;1.000)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;should&nbsp;be&nbsp;&gt;=&nbsp;1.000
+                </span><br/>
+<span class="covered" title="2 out of 2 forms covered">
+                023&nbsp;&nbsp;(def&nbsp;apply-transformations?&nbsp;false)
+                </span><br/>
+<span class="covered" title="2 out of 2 forms covered">
+                024&nbsp;&nbsp;(def&nbsp;apply-color-correction?&nbsp;false)
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                025&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                026&nbsp;&nbsp;(defn-&nbsp;initial-frame&nbsp;[prompt&nbsp;start-seed]
+                </span><br/>
+<span class="not-covered" title="0 out of 2 forms covered">
+                027&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[resolution&nbsp;res&#x2F;active-animation-resolution
+                </span><br/>
+<span class="not-covered" title="0 out of 6 forms covered">
+                028&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initial-frame-file-name&nbsp;(file-utils&#x2F;file-name&nbsp;(:text&nbsp;prompt)&nbsp;start-seed)]
+                </span><br/>
+<span class="not-covered" title="0 out of 6 forms covered">
+                029&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(if&nbsp;(not&nbsp;(file-utils&#x2F;file-exists?&nbsp;initial-frame-file-name))
+                </span><br/>
+<span class="not-covered" title="0 out of 1452 forms covered">
+                030&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;error&nbsp;{:initial-frame-missing&nbsp;initial-frame-file-name})
+                </span><br/>
+<span class="not-covered" title="0 out of 1 forms covered">
+                031&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(py&#x2F;with&nbsp;[image&nbsp;(image-utils&#x2F;open-py-image&nbsp;initial-frame-file-name)]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                032&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[resized&nbsp;(image-utils&#x2F;resize&nbsp;image&nbsp;(:w&nbsp;resolution)&nbsp;(:h&nbsp;resolution))]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                033&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(image-utils&#x2F;save-py-image!&nbsp;resized&nbsp;initial-frame-file-name)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                034&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;info&nbsp;{:initial-frame-saved&nbsp;initial-frame-file-name})
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                035&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resized)))))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                036&nbsp;&nbsp;
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                037&nbsp;&nbsp;(defn-&nbsp;apply-transformations&nbsp;[image]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                038&nbsp;&nbsp;&nbsp;&nbsp;(if&nbsp;apply-transformations?
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                039&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[rotated&nbsp;(py.&nbsp;image&nbsp;&quot;rotate&quot;&nbsp;rotation-degree)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                040&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chopped&nbsp;(chops&#x2F;offset&nbsp;rotated&nbsp;x-offset&nbsp;y-offset)]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                041&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(image-utils&#x2F;zoom-center&nbsp;chopped&nbsp;zoom))
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                042&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                043&nbsp;&nbsp;
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                044&nbsp;&nbsp;(defn-&nbsp;generate-image!&nbsp;[image&nbsp;reference-image&nbsp;pipe&nbsp;prompt&nbsp;new-seed&nbsp;frame-file-name&nbsp;first-image?]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                045&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[pic&nbsp;(if&nbsp;(not&nbsp;first-image?)&nbsp;(apply-transformations&nbsp;image)&nbsp;image)]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                046&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[corrected&nbsp;(if&nbsp;apply-color-correction?&nbsp;(image-utils&#x2F;fix-colors&nbsp;pic&nbsp;reference-image)&nbsp;pic)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                047&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sample&nbsp;(pipe-utils&#x2F;generate-i2i&nbsp;pipe&nbsp;prompt&nbsp;new-seed&nbsp;corrected)]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                048&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(image-utils&#x2F;save-py-image!&nbsp;sample&nbsp;frame-file-name)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                049&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sample)))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                050&nbsp;&nbsp;
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                051&nbsp;&nbsp;(def&nbsp;last-frame&nbsp;(atom&nbsp;(image-utils&#x2F;-&gt;pil-image&nbsp;1&nbsp;1)))&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;todo&nbsp;refactor&nbsp;to&nbsp;remove&nbsp;atom
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                052&nbsp;&nbsp;(defn-&nbsp;generate-frames&nbsp;[image&nbsp;ref-image&nbsp;pipe&nbsp;prompt&nbsp;start-seed]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                053&nbsp;&nbsp;&nbsp;&nbsp;(reset!&nbsp;last-frame&nbsp;image)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                054&nbsp;&nbsp;&nbsp;&nbsp;(doseq&nbsp;[frame-number&nbsp;(range&nbsp;0&nbsp;frame-count)]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                055&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[new-seed&nbsp;(+&nbsp;start-seed&nbsp;frame-number)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                056&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iterations&nbsp;(:iterations&nbsp;pipe-setup&#x2F;i2i-pipe-setup)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                057&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scale&nbsp;(:scale&nbsp;pipe-setup&#x2F;i2i-pipe-setup)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                058&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;frame-file-name&nbsp;(file-utils&#x2F;frame-name&nbsp;(:text&nbsp;prompt)&nbsp;new-seed&nbsp;iterations&nbsp;scale)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                059&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;first-image?&nbsp;(=&nbsp;frame-number&nbsp;0)]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                060&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(if&nbsp;(file-utils&#x2F;file-exists?&nbsp;frame-file-name)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                061&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(do
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                062&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;warn&nbsp;{:skip-existing&nbsp;frame-file-name})
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                063&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(reset!&nbsp;last-frame&nbsp;(image-utils&#x2F;open-py-image&nbsp;frame-file-name)))
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                064&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[next-frame&nbsp;(generate-image!&nbsp;@last-frame&nbsp;ref-image&nbsp;pipe&nbsp;prompt&nbsp;new-seed&nbsp;frame-file-name&nbsp;first-image?)]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                065&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(reset!&nbsp;last-frame&nbsp;next-frame))))))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                066&nbsp;&nbsp;
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                067&nbsp;&nbsp;(defn&nbsp;animate&nbsp;[pipe&nbsp;prompt&nbsp;start-seed]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                068&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;info&nbsp;{:resolution&nbsp;res&#x2F;active-animation-resolution&nbsp;:frame-count&nbsp;frame-count})
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                069&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[result-dir&nbsp;(file-utils&#x2F;animation-frame-dir&nbsp;(:text&nbsp;prompt))]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                070&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;debug&nbsp;{:result-path&nbsp;result-dir})
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                071&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(io&#x2F;make-parents&nbsp;result-dir)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                072&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[first-image&nbsp;(initial-frame&nbsp;prompt&nbsp;start-seed)]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                073&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;info&nbsp;&quot;Loading&nbsp;reference&nbsp;image.&quot;)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                074&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[ref-image&nbsp;(image-utils&#x2F;prepare-reference-image&nbsp;first-image)]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                075&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(generate-frames&nbsp;first-image&nbsp;ref-image&nbsp;pipe&nbsp;prompt&nbsp;start-seed)))))
+                </span><br/>
+ </body>
+</html>

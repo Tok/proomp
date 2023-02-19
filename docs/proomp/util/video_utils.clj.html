@@ -1,0 +1,311 @@
+<html>
+ <head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" href="../../coverage.css"/>  <title> proomp/util/video_utils.clj </title>
+ </head>
+ <body>
+<span class="partial" title="1 out of 265 forms covered">
+                001&nbsp;&nbsp;(ns&nbsp;proomp.util.video-utils
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                002&nbsp;&nbsp;&nbsp;&nbsp;(:require
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                003&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[cambium.core&nbsp;:as&nbsp;log]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                004&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[clojure.java.io&nbsp;:as&nbsp;io]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                005&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[proomp.config&nbsp;:as&nbsp;config]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                006&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[proomp.util.file-utils&nbsp;:as&nbsp;file-utils]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                007&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[proomp.util.image-utils&nbsp;:as&nbsp;image-utils])
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                008&nbsp;&nbsp;&nbsp;&nbsp;(:import
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                009&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(java.awt.image&nbsp;BufferedImage)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                010&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(java.io&nbsp;ByteArrayOutputStream&nbsp;File)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                011&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(java.nio.file&nbsp;Files)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                012&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(javax.imageio&nbsp;IIOImage&nbsp;ImageIO&nbsp;ImageTypeSpecifier&nbsp;ImageWriter)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                013&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(javax.imageio.metadata&nbsp;IIOMetadataNode&nbsp;IIOMetadata)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                014&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(org.jcodec.scale&nbsp;AWTUtil)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                015&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(org.jcodec.api&nbsp;SequenceEncoder)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                016&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(org.jcodec.common.io&nbsp;NIOUtils)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                017&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(org.jcodec.common.model&nbsp;ColorSpace&nbsp;Rational)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                018&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(org.w3c.dom&nbsp;Node)))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                019&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="2 out of 2 forms covered">
+                020&nbsp;&nbsp;(def&nbsp;^:const&nbsp;frames-per-second&nbsp;60)
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                021&nbsp;&nbsp;
+                </span><br/>
+<span class="partial" title="1 out of 4 forms covered">
+                022&nbsp;&nbsp;(defn-&nbsp;gce?&nbsp;[^Node&nbsp;node]&nbsp;(-&gt;&nbsp;node&nbsp;.getNodeName&nbsp;(=&nbsp;&quot;GraphicControlExtension&quot;)))
+                </span><br/>
+<span class="partial" title="1 out of 7 forms covered">
+                023&nbsp;&nbsp;(defn-&nbsp;find-gce&nbsp;[child]&nbsp;(if&nbsp;(gce?&nbsp;child)&nbsp;child&nbsp;(-&gt;&nbsp;child&nbsp;.getNextSibling&nbsp;recur)))
+                </span><br/>
+<span class="partial" title="1 out of 4 forms covered">
+                024&nbsp;&nbsp;(defn-&nbsp;find-gc-extension&nbsp;[root]&nbsp;(-&gt;&nbsp;root&nbsp;.getFirstChild&nbsp;find-gce))
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                025&nbsp;&nbsp;(defn-&nbsp;app-extensions&nbsp;[]
+                </span><br/>
+<span class="not-covered" title="0 out of 3 forms covered">
+                026&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[aes&nbsp;(IIOMetadataNode.&nbsp;&quot;ApplicationExtensions&quot;)
+                </span><br/>
+<span class="not-covered" title="0 out of 2 forms covered">
+                027&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ae&nbsp;(IIOMetadataNode.&nbsp;&quot;ApplicationExtension&quot;)
+                </span><br/>
+<span class="not-covered" title="0 out of 8 forms covered">
+                028&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uo&nbsp;(byte-array&nbsp;[(byte&nbsp;0x1)&nbsp;(byte&nbsp;0x0)&nbsp;(byte&nbsp;0x0)])]
+                </span><br/>
+<span class="not-covered" title="0 out of 3 forms covered">
+                029&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(.setAttribute&nbsp;ae&nbsp;&quot;applicationID&quot;&nbsp;&quot;NETSCAPE&quot;)
+                </span><br/>
+<span class="not-covered" title="0 out of 3 forms covered">
+                030&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(.setAttribute&nbsp;ae&nbsp;&quot;authenticationCode&quot;&nbsp;&quot;2.0&quot;)
+                </span><br/>
+<span class="not-covered" title="0 out of 2 forms covered">
+                031&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(.setUserObject&nbsp;ae&nbsp;uo)
+                </span><br/>
+<span class="not-covered" title="0 out of 2 forms covered">
+                032&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(.appendChild&nbsp;aes&nbsp;ae)
+                </span><br/>
+<span class="not-covered" title="0 out of 1 forms covered">
+                033&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;aes))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                034&nbsp;&nbsp;
+                </span><br/>
+<span class="partial" title="1 out of 5 forms covered">
+                035&nbsp;&nbsp;(defn-&nbsp;not-gif?&nbsp;[mf]&nbsp;(not=&nbsp;&quot;javax_imageio_gif_image_1.0&quot;&nbsp;mf))
+                </span><br/>
+<span class="partial" title="1 out of 5 forms covered">
+                036&nbsp;&nbsp;(defn-&nbsp;msg&nbsp;[mf]&nbsp;(str&nbsp;&quot;Metadata&nbsp;format&nbsp;unknown:&nbsp;&quot;&nbsp;mf))
+                </span><br/>
+<span class="partial" title="1 out of 5 forms covered">
+                037&nbsp;&nbsp;(defn-&nbsp;iae&nbsp;[mf]&nbsp;(IllegalArgumentException.&nbsp;^String&nbsp;(msg&nbsp;mf)))
+                </span><br/>
+<span class="partial" title="1 out of 9 forms covered">
+                038&nbsp;&nbsp;(defn-&nbsp;check-mf&nbsp;[mf]&nbsp;(if&nbsp;(not-gif?&nbsp;mf)&nbsp;(-&gt;&nbsp;mf&nbsp;iae&nbsp;throw)))
+                </span><br/>
+<span class="partial" title="1 out of 4 forms covered">
+                039&nbsp;&nbsp;(defn-&nbsp;first-frame?&nbsp;[image-index]&nbsp;(=&nbsp;image-index&nbsp;0))
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                040&nbsp;&nbsp;(defn-&nbsp;configure&nbsp;[^IIOMetadata&nbsp;meta-data&nbsp;delay&nbsp;image-index]
+                </span><br/>
+<span class="not-covered" title="0 out of 2 forms covered">
+                041&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[metadata-format&nbsp;(.getNativeMetadataFormatName&nbsp;meta-data)]
+                </span><br/>
+<span class="not-covered" title="0 out of 3 forms covered">
+                042&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(check-mf&nbsp;metadata-format)
+                </span><br/>
+<span class="not-covered" title="0 out of 3 forms covered">
+                043&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[root&nbsp;(.getAsTree&nbsp;meta-data&nbsp;metadata-format)
+                </span><br/>
+<span class="not-covered" title="0 out of 3 forms covered">
+                044&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gce&nbsp;(find-gc-extension&nbsp;root)]
+                </span><br/>
+<span class="not-covered" title="0 out of 3 forms covered">
+                045&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(.setAttribute&nbsp;gce&nbsp;&quot;userDelay&quot;&nbsp;&quot;FALSE&quot;)
+                </span><br/>
+<span class="not-covered" title="0 out of 3 forms covered">
+                046&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(.setAttribute&nbsp;gce&nbsp;&quot;delayTime&quot;&nbsp;delay)
+                </span><br/>
+<span class="not-covered" title="0 out of 7 forms covered">
+                047&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(if&nbsp;(first-frame?&nbsp;image-index)&nbsp;(.appendChild&nbsp;root&nbsp;(app-extensions)))
+                </span><br/>
+<span class="not-covered" title="0 out of 3 forms covered">
+                048&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(.setFromTree&nbsp;meta-data&nbsp;metadata-format&nbsp;root))))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                049&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                050&nbsp;&nbsp;(defn-&nbsp;write-frame&nbsp;[^BufferedImage&nbsp;src&nbsp;^ImageWriter&nbsp;iw&nbsp;delay&nbsp;image-index]
+                </span><br/>
+<span class="not-covered" title="0 out of 2 forms covered">
+                051&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[iwp&nbsp;(.getDefaultWriteParam&nbsp;iw)
+                </span><br/>
+<span class="not-covered" title="0 out of 2 forms covered">
+                052&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type-spec&nbsp;(ImageTypeSpecifier.&nbsp;src)
+                </span><br/>
+<span class="not-covered" title="0 out of 3 forms covered">
+                053&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;metadata&nbsp;(.getDefaultImageMetadata&nbsp;iw&nbsp;type-spec&nbsp;iwp)]
+                </span><br/>
+<span class="not-covered" title="0 out of 5 forms covered">
+                054&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(configure&nbsp;metadata&nbsp;delay&nbsp;image-index)
+                </span><br/>
+<span class="not-covered" title="0 out of 5 forms covered">
+                055&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[ii&nbsp;(IIOImage.&nbsp;src&nbsp;nil&nbsp;metadata)]
+                </span><br/>
+<span class="not-covered" title="0 out of 3 forms covered">
+                056&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(.writeToSequence&nbsp;iw&nbsp;ii&nbsp;nil))))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                057&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                058&nbsp;&nbsp;(defn-&nbsp;save-animate&nbsp;[frames&nbsp;delay]
+                </span><br/>
+<span class="not-covered" title="0 out of 2 forms covered">
+                059&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[format&nbsp;&quot;mp4&quot;
+                </span><br/>
+<span class="not-covered" title="0 out of 3 forms covered">
+                060&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^ImageWriter&nbsp;iw&nbsp;(-&gt;&nbsp;format&nbsp;ImageIO&#x2F;getImageWritersByFormatName&nbsp;.next)
+                </span><br/>
+<span class="not-covered" title="0 out of 1 forms covered">
+                061&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;os&nbsp;(ByteArrayOutputStream.)
+                </span><br/>
+<span class="not-covered" title="0 out of 2 forms covered">
+                062&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ios&nbsp;(ImageIO&#x2F;createImageOutputStream&nbsp;os)]
+                </span><br/>
+<span class="not-covered" title="0 out of 2 forms covered">
+                063&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(.setOutput&nbsp;iw&nbsp;ios)
+                </span><br/>
+<span class="not-covered" title="0 out of 2 forms covered">
+                064&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(.prepareWriteSequence&nbsp;iw&nbsp;nil)
+                </span><br/>
+<span class="not-covered" title="0 out of 34 forms covered">
+                065&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(doseq&nbsp;[index&nbsp;(range&nbsp;(count&nbsp;frames))]
+                </span><br/>
+<span class="not-covered" title="0 out of 16 forms covered">
+                066&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(write-frame&nbsp;(nth&nbsp;frames&nbsp;index)&nbsp;iw&nbsp;delay&nbsp;index))
+                </span><br/>
+<span class="not-covered" title="0 out of 1 forms covered">
+                067&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(.endWriteSequence&nbsp;iw)
+                </span><br/>
+<span class="not-covered" title="0 out of 1 forms covered">
+                068&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(.close&nbsp;ios)
+                </span><br/>
+<span class="not-covered" title="0 out of 1 forms covered">
+                069&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(.toByteArray&nbsp;os)))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                070&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="4 out of 4 forms covered">
+                071&nbsp;&nbsp;(def&nbsp;^:const&nbsp;ani-step-h264&nbsp;(&#x2F;&nbsp;1.0&nbsp;frames-per-second))
+                </span><br/>
+<span class="partial" title="1 out of 2 forms covered">
+                072&nbsp;&nbsp;(defn&nbsp;animate-gif&nbsp;[frames]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                073&nbsp;&nbsp;&nbsp;&nbsp;&quot;Creates&nbsp;an&nbsp;animated&nbsp;GIF&nbsp;from&nbsp;the&nbsp;frames.&quot;
+                </span><br/>
+<span class="not-covered" title="0 out of 4 forms covered">
+                074&nbsp;&nbsp;&nbsp;&nbsp;(save-animate&nbsp;frames&nbsp;ani-step-h264))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                075&nbsp;&nbsp;
+                </span><br/>
+<span class="partial" title="1 out of 4 forms covered">
+                076&nbsp;&nbsp;(defn&nbsp;animate-h264&nbsp;[frames&nbsp;^String&nbsp;file-name]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                077&nbsp;&nbsp;&nbsp;&nbsp;&quot;Creates&nbsp;a&nbsp;soundless&nbsp;H.264&#x2F;MPEG-4&nbsp;AVC&nbsp;video&nbsp;from&nbsp;the&nbsp;frames.&quot;
+                </span><br/>
+<span class="not-covered" title="0 out of 6 forms covered">
+                078&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[output&nbsp;(File.&nbsp;file-name)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;assert&nbsp;.mp4
+                </span><br/>
+<span class="not-covered" title="0 out of 4 forms covered">
+                079&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;channel&nbsp;(NIOUtils&#x2F;writableChannel&nbsp;output)
+                </span><br/>
+<span class="not-covered" title="0 out of 6 forms covered">
+                080&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rat&nbsp;(Rational.&nbsp;frames-per-second&nbsp;1)
+                </span><br/>
+<span class="not-covered" title="0 out of 6 forms covered">
+                081&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;encoder&nbsp;(SequenceEncoder&#x2F;createWithFps&nbsp;channel&nbsp;rat)]
+                </span><br/>
+<span class="not-covered" title="0 out of 3034 forms covered">
+                082&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;info&nbsp;{:frames-per-second&nbsp;frames-per-second})
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                083&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(doseq&nbsp;[^BufferedImage&nbsp;frame&nbsp;frames]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                084&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(.encodeNativeFrame
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                085&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;encoder
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                086&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(AWTUtil&#x2F;fromBufferedImage&nbsp;frame&nbsp;ColorSpace&#x2F;RGB)))
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                087&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(.finish&nbsp;encoder)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                088&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(NIOUtils&#x2F;closeQuietly&nbsp;channel)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                089&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Files&#x2F;readAllBytes&nbsp;(.toPath&nbsp;(.getAbsoluteFile&nbsp;output)))))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                090&nbsp;&nbsp;
+                </span><br/>
+<span class="partial" title="1 out of 4 forms covered">
+                091&nbsp;&nbsp;(defn&nbsp;generate-video-from-frames&nbsp;[prompt-text]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                092&nbsp;&nbsp;&nbsp;&nbsp;&quot;Generates&nbsp;a&nbsp;video&nbsp;from&nbsp;the&nbsp;frame&nbsp;directory,&nbsp;matching&nbsp;the&nbsp;current&nbsp;prompt.&quot;
+                </span><br/>
+<span class="not-covered" title="0 out of 8 forms covered">
+                093&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[frame-path&nbsp;(file-utils&#x2F;animation-frame-dir&nbsp;prompt-text)
+                </span><br/>
+<span class="not-covered" title="0 out of 6 forms covered">
+                094&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;frame-dir&nbsp;(clojure.java.io&#x2F;file&nbsp;frame-path)
+                </span><br/>
+<span class="not-covered" title="0 out of 14 forms covered">
+                095&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;frames&nbsp;(map&nbsp;image-utils&#x2F;open-buffered-image-file&nbsp;(.listFiles&nbsp;(io&#x2F;file&nbsp;frame-dir)))
+                </span><br/>
+<span class="not-covered" title="0 out of 14 forms covered">
+                096&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output-file-name&nbsp;(str&nbsp;(file-utils&#x2F;image-dir&nbsp;prompt-text)&nbsp;prompt-text&nbsp;&quot;.mp4&quot;)]
+                </span><br/>
+<span class="not-covered" title="0 out of 3280 forms covered">
+                097&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;info&nbsp;{:prompt-text&nbsp;prompt-text})
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                098&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;info&nbsp;{:frame-path&nbsp;frame-path})
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                099&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;info&nbsp;{:output-file-name&nbsp;output-file-name})
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                100&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(animate-h264&nbsp;frames&nbsp;output-file-name)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                101&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;info&nbsp;{:done&nbsp;&quot;Video&nbsp;generation&nbsp;completed.&quot;})))
+                </span><br/>
+ </body>
+</html>

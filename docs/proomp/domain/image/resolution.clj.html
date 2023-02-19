@@ -1,0 +1,149 @@
+<html>
+ <head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" href="../../../coverage.css"/>  <title> proomp/domain/image/resolution.clj </title>
+ </head>
+ <body>
+<span class="covered" title="1 out of 1 forms covered">
+                001&nbsp;&nbsp;(ns&nbsp;proomp.domain.image.resolution
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                002&nbsp;&nbsp;&nbsp;&nbsp;(:import&nbsp;(clojure.lang&nbsp;MapEntry)))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                003&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="5 out of 5 forms covered">
+                004&nbsp;&nbsp;(def&nbsp;^:private&nbsp;orientations&nbsp;[::landscape&nbsp;::portrait&nbsp;::square])
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                005&nbsp;&nbsp;(defprotocol&nbsp;Oriented&nbsp;(orientation&nbsp;[this]))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                006&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                007&nbsp;&nbsp;(defrecord&nbsp;Resolution&nbsp;[name&nbsp;w&nbsp;h&nbsp;aspect]
+                </span><br/>
+<span class="not-covered" title="0 out of 12 forms covered">
+                008&nbsp;&nbsp;&nbsp;&nbsp;Oriented&nbsp;(orientation&nbsp;[this]&nbsp;(cond&nbsp;(&gt;&nbsp;w&nbsp;h)&nbsp;::landscape&nbsp;(&lt;&nbsp;w&nbsp;h)&nbsp;::portrait&nbsp;:else&nbsp;::square)))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                009&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="2 out of 2 forms covered">
+                010&nbsp;&nbsp;(defn-&nbsp;swap-keyword&nbsp;[kw]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                011&nbsp;&nbsp;&nbsp;&nbsp;&quot;Swaps&nbsp;the&nbsp;orientation&nbsp;of&nbsp;resolution&nbsp;keywords.&nbsp;Eg.&nbsp;:16:9&nbsp;into&nbsp;:9:16.&quot;
+                </span><br/>
+<span class="covered" title="13 out of 13 forms covered">
+                012&nbsp;&nbsp;&nbsp;&nbsp;(-&gt;&gt;&nbsp;(-&gt;&nbsp;(name&nbsp;kw)&nbsp;(clojure.string&#x2F;split&nbsp;#&quot;:&quot;)&nbsp;reverse)&nbsp;(clojure.string&#x2F;join&nbsp;&quot;:&quot;)&nbsp;keyword))
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                013&nbsp;&nbsp;(defn&nbsp;change-keyword-orientation&nbsp;[kw]
+                </span><br/>
+<span class="covered" title="7 out of 7 forms covered">
+                014&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[parts&nbsp;(clojure.string&#x2F;split&nbsp;(name&nbsp;kw)&nbsp;#&quot;-&quot;)]
+                </span><br/>
+<span class="covered" title="6 out of 6 forms covered">
+                015&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(if&nbsp;(=&nbsp;&quot;landscape&quot;&nbsp;(last&nbsp;parts))
+                </span><br/>
+<span class="covered" title="15 out of 15 forms covered">
+                016&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(keyword&nbsp;(apply&nbsp;str&nbsp;(interpose&nbsp;&quot;-&quot;&nbsp;(concat&nbsp;(butlast&nbsp;parts)&nbsp;[&quot;portrait&quot;]))))
+                </span><br/>
+<span class="not-covered" title="0 out of 15 forms covered">
+                017&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(keyword&nbsp;(apply&nbsp;str&nbsp;(interpose&nbsp;&quot;-&quot;&nbsp;(concat&nbsp;(butlast&nbsp;parts)&nbsp;[&quot;landscape&quot;])))))))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                018&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                019&nbsp;&nbsp;(defn-&nbsp;flip-orientation&nbsp;[^Resolution&nbsp;res]
+                </span><br/>
+<span class="covered" title="16 out of 16 forms covered">
+                020&nbsp;&nbsp;&nbsp;&nbsp;(-&gt;Resolution&nbsp;(:name&nbsp;res)&nbsp;(:h&nbsp;res)&nbsp;(:w&nbsp;res)&nbsp;(swap-keyword&nbsp;(:aspect&nbsp;res))))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                021&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                022&nbsp;&nbsp;(def&nbsp;^:private&nbsp;square-resolutions
+                </span><br/>
+<span class="covered" title="15 out of 15 forms covered">
+                023&nbsp;&nbsp;&nbsp;&nbsp;{:highest&nbsp;(-&gt;Resolution&nbsp;&quot;Highest&quot;&nbsp;1440&nbsp;1440&nbsp;:1:1)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;requires&nbsp;more&nbsp;than&nbsp;10GB&nbsp;VRAM
+                </span><br/>
+<span class="covered" title="6 out of 6 forms covered">
+                024&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:higher&nbsp;&nbsp;(-&gt;Resolution&nbsp;&quot;Higher&quot;&nbsp;1280&nbsp;1280&nbsp;:1:1)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;may&nbsp;require&nbsp;more&nbsp;than&nbsp;10GB&nbsp;VRAM
+                </span><br/>
+<span class="covered" title="6 out of 6 forms covered">
+                025&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:high&nbsp;&nbsp;&nbsp;&nbsp;(-&gt;Resolution&nbsp;&quot;High&quot;&nbsp;1080&nbsp;1080&nbsp;:1:1)
+                </span><br/>
+<span class="covered" title="6 out of 6 forms covered">
+                026&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:default&nbsp;(-&gt;Resolution&nbsp;&quot;Default&quot;&nbsp;960&nbsp;960&nbsp;:1:1)
+                </span><br/>
+<span class="covered" title="6 out of 6 forms covered">
+                027&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:reduced&nbsp;(-&gt;Resolution&nbsp;&quot;Reduced&quot;&nbsp;768&nbsp;768&nbsp;:1:1)
+                </span><br/>
+<span class="covered" title="6 out of 6 forms covered">
+                028&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:low&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(-&gt;Resolution&nbsp;&quot;Low&quot;&nbsp;720&nbsp;720&nbsp;:1:1)
+                </span><br/>
+<span class="covered" title="6 out of 6 forms covered">
+                029&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:lower&nbsp;&nbsp;&nbsp;(-&gt;Resolution&nbsp;&quot;Lower&quot;&nbsp;512&nbsp;512&nbsp;:1:1)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;may&nbsp;work&nbsp;with&nbsp;6GB&nbsp;VRAM
+                </span><br/>
+<span class="covered" title="6 out of 6 forms covered">
+                030&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:lowest&nbsp;&nbsp;(-&gt;Resolution&nbsp;&quot;Lowest&quot;&nbsp;360&nbsp;360&nbsp;:1:1)})&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;should&nbsp;work&nbsp;with&nbsp;6GB&nbsp;VRAM
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                031&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                032&nbsp;&nbsp;(def&nbsp;^:private&nbsp;sixteen-to-nine-resolutions
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                033&nbsp;&nbsp;&nbsp;&nbsp;&quot;See&nbsp;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Graphics_display_resolution&quot;
+                </span><br/>
+<span class="covered" title="13 out of 13 forms covered">
+                034&nbsp;&nbsp;&nbsp;&nbsp;{:4K-UHD-landscape&nbsp;&nbsp;(-&gt;Resolution&nbsp;&quot;4K&nbsp;UHD&quot;&nbsp;3840&nbsp;2160&nbsp;:16:9)&nbsp;;requires&nbsp;more&nbsp;than&nbsp;10GB&nbsp;VRAM
+                </span><br/>
+<span class="covered" title="6 out of 6 forms covered">
+                035&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:QHD-landscape&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(-&gt;Resolution&nbsp;&quot;QHD&quot;&nbsp;2560&nbsp;1440&nbsp;:16:9)&nbsp;&nbsp;;may&nbsp;require&nbsp;more&nbsp;than&nbsp;10GB&nbsp;VRAM
+                </span><br/>
+<span class="covered" title="6 out of 6 forms covered">
+                036&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:Full-HD-landscape&nbsp;(-&gt;Resolution&nbsp;&quot;Full&nbsp;HD&quot;&nbsp;1920&nbsp;1080&nbsp;:16:9)&nbsp;;may&nbsp;not&nbsp;work&nbsp;with&nbsp;10GB&nbsp;VRAM
+                </span><br/>
+<span class="covered" title="6 out of 6 forms covered">
+                037&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:HD-landscape&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(-&gt;Resolution&nbsp;&quot;HD&quot;&nbsp;1280&nbsp;720&nbsp;:16:9)
+                </span><br/>
+<span class="covered" title="6 out of 6 forms covered">
+                038&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:WSVGA-landscape&nbsp;&nbsp;&nbsp;(-&gt;Resolution&nbsp;&quot;WSVGA&quot;&nbsp;1024&nbsp;576&nbsp;:16:9)
+                </span><br/>
+<span class="covered" title="6 out of 6 forms covered">
+                039&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:NHD-landscape&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(-&gt;Resolution&nbsp;&quot;nHD&quot;&nbsp;640&nbsp;360&nbsp;:16:9)})&nbsp;&nbsp;;may&nbsp;work&nbsp;with&nbsp;6GB&nbsp;VRAM
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                040&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="9 out of 9 forms covered">
+                041&nbsp;&nbsp;(def&nbsp;^:private&nbsp;switch-orientation&nbsp;(fn&nbsp;[[k&nbsp;v]]&nbsp;(MapEntry.&nbsp;(change-keyword-orientation&nbsp;k)&nbsp;(flip-orientation&nbsp;v))))
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                042&nbsp;&nbsp;(def&nbsp;resolutions
+                </span><br/>
+<span class="covered" title="8 out of 8 forms covered">
+                043&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[nine-to-sixteen-resolutions&nbsp;(into&nbsp;{}&nbsp;(map&nbsp;switch-orientation&nbsp;sixteen-to-nine-resolutions))]
+                </span><br/>
+<span class="covered" title="5 out of 5 forms covered">
+                044&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(merge&nbsp;square-resolutions&nbsp;sixteen-to-nine-resolutions&nbsp;nine-to-sixteen-resolutions)))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                045&nbsp;&nbsp;
+                </span><br/>
+<span class="partial" title="9 out of 10 forms covered">
+                046&nbsp;&nbsp;(defonce&nbsp;^Resolution&nbsp;active-image-resolution&nbsp;(resolutions&nbsp;:HD-portrait))
+                </span><br/>
+<span class="partial" title="9 out of 10 forms covered">
+                047&nbsp;&nbsp;(defonce&nbsp;^Resolution&nbsp;active-animation-resolution&nbsp;(resolutions&nbsp;:HD-portrait))
+                </span><br/>
+ </body>
+</html>

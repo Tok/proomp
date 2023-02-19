@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="REPL" type="ClojureREPL" factoryName="Local" activateToolWindowBeforeRun="false">
+    <module name="proomp" />
+    <setting name="displayName" value="REPL" />
+    <setting name="replType" value="NREPL" />
+    <setting name="execution" value="LEININGEN" />
+    <setting name="jvmArgs" value="--add-modules jdk.incubator.foreign,jdk.incubator.vector --enable-native-access=ALL-UNNAMED" />
+    <setting name="parameters" value="" />
+    <setting name="workingDir" value="$PROJECT_DIR$" />
+    <setting name="profiles" value="" />
+    <setting name="aliases" value="" />
+    <setting name="fixLineNumbers" value="false" />
+    <setting name="focusEditor" value="false" />
+    <method v="2" />
+  </configuration>
+</component>
