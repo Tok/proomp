@@ -14,6 +14,7 @@
 (require-python '[builtins :as python])
 (require-python '[io :as pyio])
 (require-python 'PIL '[PIL.Image :as pilimg])
+(require-python '[PIL.ImageChops :as chops])
 (require-python '[numpy :as np])
 (require-python '[numpy.ndarray :as ndarray])
 (require-python '[skimage.exposure :refer [match_histograms]])
@@ -121,3 +122,12 @@
         bottom (int (+ y (/ cropped-height 2)))
         cropped-image (crop pil-image left top right bottom)]
     (resize cropped-image w h)))
+
+(defn apply-transformations [pil-image transform]
+  (let [rotation-degree (:rotation-degree transform)
+        rotated (py. pil-image "rotate" rotation-degree)
+        x-offset (:x-offset-pixels transform)
+        y-offset (:y-offset-pixels transform)
+        chopped (chops/offset rotated x-offset y-offset)
+        zoom (:zoom transform)]
+    (zoom-center chopped zoom)))

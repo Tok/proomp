@@ -1,0 +1,113 @@
+<html>
+ <head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" href="../../../coverage.css"/>  <title> proomp/domain/animation/frame_transformation.clj </title>
+ </head>
+ <body>
+<span class="covered" title="1 out of 1 forms covered">
+                001&nbsp;&nbsp;(ns&nbsp;proomp.domain.animation.frame-transformation
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                002&nbsp;&nbsp;&nbsp;&nbsp;(:import&nbsp;(clojure.lang&nbsp;MapEntry)))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                003&nbsp;&nbsp;
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                004&nbsp;&nbsp;;;Transformations&nbsp;are&nbsp;applied&nbsp;between&nbsp;generating&nbsp;animation&nbsp;frames.
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                005&nbsp;&nbsp;(defrecord&nbsp;FrameTransformation
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                006&nbsp;&nbsp;&nbsp;&nbsp;[zoom&nbsp;rotation-degree&nbsp;x-offset-pixels&nbsp;y-offset-pixels&nbsp;apply-color-correction?])
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                007&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                008&nbsp;&nbsp;(def&nbsp;^:private&nbsp;transformation-templates
+                </span><br/>
+<span class="covered" title="19 out of 19 forms covered">
+                009&nbsp;&nbsp;&nbsp;&nbsp;{::none&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(-&gt;FrameTransformation&nbsp;1.0&nbsp;0.0&nbsp;0&nbsp;0&nbsp;false)
+                </span><br/>
+<span class="covered" title="5 out of 5 forms covered">
+                010&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::color-corrected&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(map-&gt;FrameTransformation&nbsp;{:apply-color-correction?&nbsp;true})
+                </span><br/>
+<span class="covered" title="5 out of 5 forms covered">
+                011&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::slow-zoom&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(map-&gt;FrameTransformation&nbsp;{:zoom&nbsp;1.020})
+                </span><br/>
+<span class="covered" title="5 out of 5 forms covered">
+                012&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::default-zoom&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(map-&gt;FrameTransformation&nbsp;{:zoom&nbsp;1.050})
+                </span><br/>
+<span class="covered" title="5 out of 5 forms covered">
+                013&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::fast-zoom&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(map-&gt;FrameTransformation&nbsp;{:zoom&nbsp;1.100})
+                </span><br/>
+<span class="covered" title="5 out of 5 forms covered">
+                014&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::clockwise-rotation&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(map-&gt;FrameTransformation&nbsp;{:rotation-degree&nbsp;-1.0})
+                </span><br/>
+<span class="covered" title="5 out of 5 forms covered">
+                015&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::counter-clockwise-rotation&nbsp;(map-&gt;FrameTransformation&nbsp;{:rotation-degree&nbsp;1.0})
+                </span><br/>
+<span class="covered" title="5 out of 5 forms covered">
+                016&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::move-left&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(map-&gt;FrameTransformation&nbsp;{:x-offset-pixels&nbsp;-5})
+                </span><br/>
+<span class="covered" title="5 out of 5 forms covered">
+                017&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::move-right&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(map-&gt;FrameTransformation&nbsp;{:x-offset-pixels&nbsp;5})
+                </span><br/>
+<span class="covered" title="5 out of 5 forms covered">
+                018&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::move-up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(map-&gt;FrameTransformation&nbsp;{:y-offset-pixels&nbsp;-5})
+                </span><br/>
+<span class="covered" title="5 out of 5 forms covered">
+                019&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::move-down&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(map-&gt;FrameTransformation&nbsp;{:y-offset-pixels&nbsp;5})})
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                020&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                021&nbsp;&nbsp;(defn-&nbsp;merge-with-default&nbsp;[entry]
+                </span><br/>
+<span class="covered" title="2 out of 2 forms covered">
+                022&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[[k&nbsp;v]&nbsp;entry
+                </span><br/>
+<span class="covered" title="10 out of 10 forms covered">
+                023&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;zoom&nbsp;(min&nbsp;(or&nbsp;(:zoom&nbsp;v)&nbsp;1.000)&nbsp;1.000)
+                </span><br/>
+<span class="covered" title="3 out of 3 forms covered">
+                024&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rd&nbsp;(:rotation-degree&nbsp;v)
+                </span><br/>
+<span class="covered" title="8 out of 8 forms covered">
+                025&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;deg&nbsp;(if&nbsp;(not&nbsp;(nil?&nbsp;rd))&nbsp;rd&nbsp;0.0)
+                </span><br/>
+<span class="covered" title="4 out of 4 forms covered">
+                026&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rot&nbsp;(mod&nbsp;deg&nbsp;360.0)
+                </span><br/>
+<span class="covered" title="8 out of 8 forms covered">
+                027&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x-off&nbsp;(or&nbsp;(:x-offset-pixels&nbsp;v)&nbsp;0)
+                </span><br/>
+<span class="covered" title="8 out of 8 forms covered">
+                028&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y-off&nbsp;(or&nbsp;(:y-offset-pixels&nbsp;v)&nbsp;0)
+                </span><br/>
+<span class="covered" title="6 out of 6 forms covered">
+                029&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;correct?&nbsp;(if&nbsp;(:apply-color-correction?&nbsp;v)&nbsp;true&nbsp;false)]
+                </span><br/>
+<span class="covered" title="9 out of 9 forms covered">
+                030&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(MapEntry.&nbsp;k&nbsp;(-&gt;FrameTransformation&nbsp;zoom&nbsp;rot&nbsp;x-off&nbsp;y-off&nbsp;correct?))))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                031&nbsp;&nbsp;
+                </span><br/>
+<span class="partial" title="10 out of 11 forms covered">
+                032&nbsp;&nbsp;(defonce&nbsp;transformations&nbsp;(map&nbsp;merge-with-default&nbsp;transformation-templates))
+                </span><br/>
+<span class="covered" title="4 out of 4 forms covered">
+                033&nbsp;&nbsp;(def&nbsp;active-transformation&nbsp;(::slow-zoom&nbsp;transformations))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                034&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="8 out of 8 forms covered">
+                035&nbsp;&nbsp;(def&nbsp;apply-transformations?&nbsp;(not&nbsp;(=&nbsp;active-transformation&nbsp;(::none&nbsp;transformations))))
+                </span><br/>
+ </body>
+</html>

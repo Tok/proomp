@@ -5,6 +5,7 @@
     [clojure.java.io :as io]
     [libpython-clj2.python :refer [py.] :as py]
     [libpython-clj2.require :refer [require-python]]
+    [proomp.domain.animation.frame-transformation :as trans]
     [proomp.domain.image.resolution :as res]
     [proomp.domain.pipe.pipe-setup :as pipe-setup]
     [proomp.util.file-utils :as file-utils]
@@ -13,16 +14,8 @@
 
 (require-python 'torch '[torch.cuda :as cuda] 'transformers)
 (require-python '[PIL.Image :refer [open new]])
-(require-python '[PIL.ImageChops :as chops])
 
-(def rotation-degree -0.0)                                  ;per frame
-(def x-offset -0)                                           ;pixels per frame
-(def y-offset 0)                                            ;pixels per frame
-(def zoom 1.000)                                            ;should be >= 1.000
-(def apply-transformations? false)
-(def apply-color-correction? false)
-
-(defn- initial-frame [prompt start-seed initial-frame-file-name]
+(defn- initial-frame [initial-frame-file-name]
   (let [resolution res/active-animation-resolution]
     (if (not (file-utils/file-exists? initial-frame-file-name))
       (log/error {:initial-frame-missing initial-frame-file-name})
@@ -32,15 +25,12 @@
                  (log/info {:initial-frame-saved initial-frame-file-name})
                  resized)))))
 
-(defn- apply-transformations [pil-image]
-  (let [rotated (py. pil-image "rotate" rotation-degree)
-        chopped (chops/offset rotated x-offset y-offset)]
-    (image-utils/zoom-center chopped zoom)))
-
 (defn- generate-image! [pil-image reference-image pipe prompt seed frame-file-name first-image?]
-  (let [pic (if (and (not first-image?) apply-transformations?)
-              (apply-transformations pil-image) pil-image)]
-    (let [corrected (if apply-color-correction? (image-utils/fix-colors pic reference-image) pic)
+  (let [pic (if (and (not first-image?) trans/apply-transformations?)
+              (image-utils/apply-transformations pil-image trans/active-transformation)
+              pil-image)]
+    (let [do-correct? (:apply-color-correction? trans/active-transformation)
+          corrected (if do-correct? (image-utils/fix-colors pic reference-image) pic)
           sample (pipe-utils/generate-i2i pipe prompt seed corrected)]
       (image-utils/save-py-image! sample frame-file-name)
       sample)))
@@ -67,7 +57,7 @@
     (log/debug {:result-path result-dir})
     (io/make-parents result-dir)
     (let [initial-frame-file-name (file-utils/file-name (:text prompt) start-seed)
-          first-image (initial-frame prompt start-seed initial-frame-file-name)]
+          first-image (initial-frame initial-frame-file-name)]
       (log/info "Loading reference image.")
       (let [ref-image (image-utils/prepare-reference-image first-image)]
         (generate-frames first-image ref-image pipe prompt start-seed frame-count)))))

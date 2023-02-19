@@ -5,13 +5,43 @@
  </head>
  <body>
 <span class="covered" title="1 out of 1 forms covered">
-                001&nbsp;&nbsp;(ns&nbsp;proomp.domain.animation.animation-settings)
+                001&nbsp;&nbsp;(ns&nbsp;proomp.domain.animation.animation-settings
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                002&nbsp;&nbsp;&nbsp;&nbsp;(:require&nbsp;[proomp.domain.animation.histogram-reference-image&nbsp;:as&nbsp;ref-img]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                003&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[proomp.domain.animation.start-image&nbsp;:as&nbsp;start-img]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                004&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[proomp.domain.animation.frame-transformation&nbsp;:as&nbsp;trans]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                005&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[proomp.domain.image.resolution&nbsp;:as&nbsp;res]))
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
-                002&nbsp;&nbsp;
+                006&nbsp;&nbsp;
                 </span><br/>
 <span class="covered" title="1 out of 1 forms covered">
-                003&nbsp;&nbsp;(defrecord&nbsp;AnimationSettings&nbsp;[reference-image&nbsp;transformation])
+                007&nbsp;&nbsp;(defrecord&nbsp;AnimationSettings&nbsp;[resolution&nbsp;start-image&nbsp;reference-image&nbsp;transformation])
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                008&nbsp;&nbsp;(def&nbsp;active-animation-settings
+                </span><br/>
+<span class="covered" title="2 out of 2 forms covered">
+                009&nbsp;&nbsp;&nbsp;&nbsp;(-&gt;AnimationSettings
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                010&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;res&#x2F;active-animation-resolution
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                011&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;start-img&#x2F;active-start-image
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                012&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ref-img&#x2F;active-reference-image
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                013&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;trans&#x2F;active-transformation))
                 </span><br/>
  </body>
 </html>
