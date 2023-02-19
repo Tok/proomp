@@ -43,5 +43,5 @@
   (let [nine-to-sixteen-resolutions (into {} (map switch-orientation sixteen-to-nine-resolutions))]
     (merge square-resolutions sixteen-to-nine-resolutions nine-to-sixteen-resolutions)))
 
-(defonce ^Resolution active-image-resolution (resolutions :HD-portrait))
-(defonce ^Resolution active-animation-resolution (resolutions :HD-portrait))
+(defonce ^Resolution active-image-resolution (resolutions :HD-landscape))
+(defonce ^Resolution active-animation-resolution (resolutions :HD-landscape))

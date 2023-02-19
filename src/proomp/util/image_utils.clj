@@ -47,7 +47,8 @@
 (defn pil->numpy [pil-image] (py/$c np/array pil-image :dtype np/uint8))
 (defn numpy->pil [np-image] (PIL.Image/fromarray (py. np-image "astype" "uint8") "RGB"))
 (defn fix-colors [pil-image reference-image]
-  (let [np-image (pil->numpy pil-image)
+  (let [resolution res/active-animation-resolution
+        np-image (pil->numpy (resize pil-image (:w resolution) (:h resolution)))
         np-reference (pil->numpy reference-image)
         np-corrected (py/$c match_histograms np-image np-reference :channel_axis 0)]
     (numpy->pil np-corrected)))
@@ -124,10 +125,11 @@
     (resize cropped-image w h)))
 
 (defn apply-transformations [pil-image transform]
-  (let [rotation-degree (:rotation-degree transform)
-        rotated (py. pil-image "rotate" rotation-degree)
-        x-offset (:x-offset-pixels transform)
-        y-offset (:y-offset-pixels transform)
-        chopped (chops/offset rotated x-offset y-offset)
+  (let [rot (:rotation-degree transform)
+        rotated (py. pil-image "rotate" rot)
+        x-off (:x-offset-pixels transform)
+        y-off (:y-offset-pixels transform)
+        chopped (chops/offset rotated x-off y-off)
         zoom (:zoom transform)]
+    (log/debug {:zoom zoom :rotation-degree rot :x-off x-off :y-off y-off})
     (zoom-center chopped zoom)))

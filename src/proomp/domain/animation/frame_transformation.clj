@@ -1,4 +1,5 @@
 (ns proomp.domain.animation.frame-transformation
+  (:require [cambium.core :as log])
   (:import (clojure.lang MapEntry)))
 
 ;;Transformations are applied between generating animation frames.
@@ -8,15 +9,21 @@
 (def ^:private transformation-templates
   {::none                       (->FrameTransformation 1.0 0.0 0 0 false)
    ::color-corrected            (map->FrameTransformation {:apply-color-correction? true})
+   ::slowest-zoom               (map->FrameTransformation {:zoom 1.005})
+   ::very-slow-zoom             (map->FrameTransformation {:zoom 1.010})
    ::slow-zoom                  (map->FrameTransformation {:zoom 1.020})
    ::default-zoom               (map->FrameTransformation {:zoom 1.050})
    ::fast-zoom                  (map->FrameTransformation {:zoom 1.100})
-   ::clockwise-rotation         (map->FrameTransformation {:rotation-degree -1.0})
-   ::counter-clockwise-rotation (map->FrameTransformation {:rotation-degree 1.0})
-   ::move-left                  (map->FrameTransformation {:x-offset-pixels -5})
-   ::move-right                 (map->FrameTransformation {:x-offset-pixels 5})
-   ::move-up                    (map->FrameTransformation {:y-offset-pixels -5})
-   ::move-down                  (map->FrameTransformation {:y-offset-pixels 5})})
+   ::clockwise-rotation         (map->FrameTransformation {:rotation-degree -0.5})
+   ::counter-clockwise-rotation (map->FrameTransformation {:rotation-degree 0.5})
+   ::move-left-slow             (map->FrameTransformation {:x-offset-pixels -5})
+   ::move-right-slow            (map->FrameTransformation {:x-offset-pixels 5})
+   ::move-up-slow               (map->FrameTransformation {:y-offset-pixels -5})
+   ::move-down-slow             (map->FrameTransformation {:y-offset-pixels 5})
+   ::move-left                  (map->FrameTransformation {:x-offset-pixels -10})
+   ::move-right                 (map->FrameTransformation {:x-offset-pixels 10})
+   ::move-up                    (map->FrameTransformation {:y-offset-pixels -10})
+   ::move-down                  (map->FrameTransformation {:y-offset-pixels 10})})
 
 (defn- merge-with-default [entry]
   (let [[k v] entry
@@ -29,7 +36,8 @@
         correct? (if (:apply-color-correction? v) true false)]
     (MapEntry. k (->FrameTransformation zoom rot x-off y-off correct?))))
 
-(defonce transformations (map merge-with-default transformation-templates))
-(def active-transformation (::slow-zoom transformations))
+(def transformations (into {} (map merge-with-default transformation-templates)))
+(defn active-transformation [] (::move-left transformations))
 
-(def apply-transformations? (not (= active-transformation (::none transformations))))
+(defn apply-transformations? [trans]
+  (not (= trans (::none transformations))))

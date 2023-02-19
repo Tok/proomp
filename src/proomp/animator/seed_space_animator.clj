@@ -26,10 +26,10 @@
                  resized)))))
 
 (defn- generate-image! [pil-image reference-image pipe prompt seed frame-file-name first-image?]
-  (let [pic (if (and (not first-image?) trans/apply-transformations?)
-              (image-utils/apply-transformations pil-image trans/active-transformation)
-              pil-image)]
-    (let [do-correct? (:apply-color-correction? trans/active-transformation)
+  (let [t (trans/active-transformation)
+        do-trans? (and (not first-image?) (trans/apply-transformations? t))
+        pic (if do-trans? (image-utils/apply-transformations pil-image t) pil-image)]
+    (let [do-correct? (:apply-color-correction? t)
           corrected (if do-correct? (image-utils/fix-colors pic reference-image) pic)
           sample (pipe-utils/generate-i2i pipe prompt seed corrected)]
       (image-utils/save-py-image! sample frame-file-name)
@@ -42,13 +42,13 @@
     (let [new-seed (+ start-seed frame-number)
           iterations (:iterations pipe-setup/i2i-pipe-setup)
           scale (:scale pipe-setup/i2i-pipe-setup)
-          frame-file-name (file-utils/frame-name (:text prompt) new-seed iterations scale)
-          first-image? (= frame-number 0)]
+          frame-file-name (file-utils/frame-name (:text prompt) new-seed iterations scale)]
       (if (file-utils/file-exists? frame-file-name)
         (do
           (log/warn {:skip-existing frame-file-name})
           (reset! last-frame (image-utils/open-py-image frame-file-name)))
-        (let [next-frame (generate-image! @last-frame ref-image pipe prompt new-seed frame-file-name first-image?)]
+        (let [next-frame (generate-image! @last-frame ref-image pipe
+                           prompt new-seed frame-file-name (= frame-number 0))]
           (reset! last-frame next-frame))))))
 
 (defn animate [pipe prompt start-seed frame-count]

@@ -13,16 +13,17 @@
 ;(defonce active-mode ::animation)
 ;(defonce active-mode ::video)
 
-(defonce text "Caliper Remote")
+(defonce text "Extreme Piano Parkour")
 (defonce negative-text "")
-(defonce additions "((photorealistic)) (photo) sharp focused")
-(defonce negative-additions "((blurry)) (drawing) grayscale deformed disfigured")
+(defonce additions "((photo)) (real) sharp focused urban action")
+(defonce negative-additions "(blurry) (drawing) (cgi) grayscale")
 (defonce full-prompt (prompt/->Prompt text negative-text additions negative-additions))
 
 (defonce start-seed 0)
 (defonce number-of-images-to-generate 1000)
 
-(defonce animation-start-seed 0)                            ;choose a good seed by generating ::images first
+;todo make sure seed pic exists
+(defonce animation-start-seed 11)                            ;choose a good seed by generating ::images first
 
 (defn- do-generation! [pipe seed file-name]
   (let [image (pipe-utils/generate-image pipe full-prompt seed)]
