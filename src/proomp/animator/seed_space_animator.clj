@@ -4,11 +4,11 @@
     [clojure.java.io :as io]
     [libpython-clj2.python :refer [py.] :as py]
     [libpython-clj2.require :refer [require-python]]
-    [proomp.constants :as const]
+    [proomp.domain.image.resolution :as res]
+    [proomp.domain.pipe.pipe-setup :as pipe-setup]
     [proomp.util.file-utils :as file-utils]
     [proomp.util.image-utils :as image-utils]
-    [proomp.util.pipe-utils :as pipe-utils]
-    [proomp.domain.image.resolution :as res]))
+    [proomp.util.pipe-utils :as pipe-utils]))
 
 (require-python 'torch '[torch.cuda :as cuda] 'transformers)
 (require-python '[PIL.Image :refer [open new]])
@@ -53,7 +53,9 @@
   (reset! last-frame image)
   (doseq [frame-number (range 0 frame-count)]
     (let [new-seed (+ start-seed frame-number)
-          frame-file-name (file-utils/frame-name (:text prompt) new-seed const/ani-iterations const/ani-scale)
+          iterations (:iterations pipe-setup/i2i-pipe-setup)
+          scale (:scale pipe-setup/i2i-pipe-setup)
+          frame-file-name (file-utils/frame-name (:text prompt) new-seed iterations scale)
           first-image? (= frame-number 0)]
       (if (file-utils/file-exists? frame-file-name)
         (do

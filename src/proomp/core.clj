@@ -1,6 +1,5 @@
 (ns proomp.core
-  (:require [proomp.constants :as const]
-            [proomp.config :as config]                      ;don't remove this
+  (:require [proomp.config :as config]                      ;don't remove this
             [proomp.animator.seed-space-animator :as seed-space-animator]
             [proomp.domain.prompt.prompt :as prompt]
             [proomp.util.file-utils :as file-utils]
@@ -19,6 +18,9 @@
 (defonce additions "((photorealistic)) (photo) sharp focused")
 (defonce negative-additions "((blurry)) (drawing) grayscale deformed disfigured")
 (defonce full-prompt (prompt/->Prompt text negative-text additions negative-additions))
+
+(defonce start-seed 0)
+(defonce number-of-images-to-generate 1000)
 
 (defonce animation-start-seed 0)                            ;choose a good seed by generating ::images first
 
@@ -39,6 +41,6 @@
       (seed-space-animator/animate pipe full-prompt animation-start-seed))
     (if (= active-mode ::images)
       (let [pipe (pipe-utils/->text-to-image-pipeline)]
-        (doseq [seed (const/seed-range animation-start-seed)]
+        (doseq [seed (range start-seed (+ start-seed number-of-images-to-generate))]
           (generate-image! pipe seed)))
       (video-utils/generate-video-from-frames (:text full-prompt)))))
