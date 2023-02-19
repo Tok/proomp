@@ -54,7 +54,7 @@
 (def ^:private fix-color-palette-to-1st-frame? false)       ;otherwise use reference image
 (defn prepare-reference-image [image]
   (let [resolution res/active-animation-resolution
-        ref-file (str config/image-path "DefaultHistogramReference.png")
+        ref-file (str config/image-path "histogram-references/default-black-white.png")
         ref-img (py. (pilimg/open ref-file) "convert" "RGB")]
     (resize (if fix-color-palette-to-1st-frame? image ref-img) (:w resolution) (:h resolution))))
 
