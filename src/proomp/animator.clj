@@ -7,7 +7,8 @@
     [proomp.constants :as const]
     [proomp.util.file-utils :as file-utils]
     [proomp.util.image-utils :as image-utils]
-    [proomp.util.pipe-utils :as pipe-utils]))
+    [proomp.util.pipe-utils :as pipe-utils]
+    [proomp.domain.image.resolution :as res]))
 
 (require-python 'torch '[torch.cuda :as cuda] 'transformers)
 (require-python '[PIL.Image :refer [open new]])
@@ -23,12 +24,12 @@
 (def apply-color-correction? false)
 
 (defn- initial-frame [prompt start-seed]
-  (let [res const/animation-resolution
+  (let [resolution res/active-animation-resolution
         initial-frame-file-name (file-utils/file-name (:text prompt) start-seed)]
     (if (not (file-utils/file-exists? initial-frame-file-name))
       (log/error {:initial-frame-missing initial-frame-file-name})
       (py/with [image (image-utils/open-py-image initial-frame-file-name)]
-               (let [resized (image-utils/resize image (:w res) (:h res))]
+               (let [resized (image-utils/resize image (:w resolution) (:h resolution))]
                  (image-utils/save-py-image! resized initial-frame-file-name)
                  (log/info {:initial-frame-saved initial-frame-file-name})
                  resized)))))
@@ -62,7 +63,7 @@
           (reset! last-frame next-frame))))))
 
 (defn animate [pipe prompt start-seed]
-  (log/info {:resolution const/animation-resolution :frame-count frame-count})
+  (log/info {:resolution res/active-animation-resolution :frame-count frame-count})
   (let [result-dir (file-utils/animation-frame-dir (:text prompt))]
     (log/debug {:result-path result-dir})
     (io/make-parents result-dir)

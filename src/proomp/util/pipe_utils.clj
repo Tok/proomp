@@ -2,6 +2,7 @@
   (:require [proomp.config :as config]
             [proomp.constants :as const]
             [proomp.domain.prompt.prompt :as prom]
+            [proomp.domain.image.resolution :as res]
             [cambium.core :as log]
             [libpython-clj2.require :refer [require-python]]
             [libpython-clj2.python :refer [py. py.-] :as py])
@@ -39,12 +40,12 @@
 
 (defn- extract-first-image [result] (nth (py.- result :images) 0))
 (defn generate-image [pipe ^Prompt prompt seed]
-  (let [^Resolution res const/image-resolution]
+  (let [^Resolution resolution res/active-image-resolution]
     (extract-first-image
       (py/$c pipe (prom/full-prompt prompt)
              :negative_prompt (prom/full-negative-prompt prompt)
              :generator (->generator seed)
-             :height (:h res) :width (:w res)
+             :height (:h resolution) :width (:w resolution)
              :num_inference_steps const/iterations
              :guidance_scale const/scale))))
 

@@ -4,17 +4,11 @@
   (:import (proomp.domain.image.resolution Resolution)))
 
 ;; Prompt to Image Constants
-(defonce ^Resolution image-resolution (res/resolutions :HD-portrait))
-(log/debug {:image-resolution image-resolution})
-
 (def iterations 40)                                         ;default 40
 (def scale 7.5)                                             ;default 7.5
 (log/debug {:iterations iterations :scale scale})
 
 ;; Animation Constants
-(defonce ^Resolution animation-resolution (res/resolutions :HD-portrait))
-(log/debug {:animation-resolution animation-resolution})
-
 (def ani-iterations 40)                                     ;default 40
 (def ani-scale 7.5)                                         ;default 7.5
 (def ani-noise 0.50)                                        ;default 0.55

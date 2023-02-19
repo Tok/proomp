@@ -4,7 +4,7 @@
             [libpython-clj2.python :refer [py. py.-] :as py]
             [libpython-clj2.require :refer [require-python]]
             [proomp.config :as config]
-            [proomp.constants :as const]
+            [proomp.domain.image.resolution :as res]
             [proomp.util.file-utils :as file-utils])
   (:import (java.awt RenderingHints)
            (java.awt.image BufferedImage RenderedImage)
@@ -53,10 +53,10 @@
 
 (def ^:private fix-color-palette-to-1st-frame? false)       ;otherwise use reference image
 (defn prepare-reference-image [image]
-  (let [res const/animation-resolution
+  (let [resolution res/active-animation-resolution
         ref-file (str config/image-path "DefaultHistogramReference.png")
         ref-img (py. (pilimg/open ref-file) "convert" "RGB")]
-    (resize (if fix-color-palette-to-1st-frame? image ref-img) (:w res) (:h res))))
+    (resize (if fix-color-palette-to-1st-frame? image ref-img) (:w resolution) (:h resolution))))
 
 (defn ^RenderedImage ->image [w h] (BufferedImage. w h BufferedImage/TYPE_INT_RGB))
 (defn ^RenderedImage ->pil-image [w h] (PIL.Image/new "RGB" [w h]))
