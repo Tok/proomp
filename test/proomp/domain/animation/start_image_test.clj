@@ -1,4 +1,4 @@
-(ns proomp.domain.animation.reference-image-test
+(ns proomp.domain.animation.start-image-test
   (:require [proomp.domain.animation.start-image :refer :all]
             [proomp.util.image-utils :as image-utils]
             [clojure.test :refer :all]))
