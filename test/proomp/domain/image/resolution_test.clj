@@ -1,4 +1,4 @@
-(ns proomp.domain.resolution-test
+(ns proomp.domain.image.resolution-test
   (:require [proomp.domain.image.resolution :refer :all]
             [clojure.test :refer :all]))
 

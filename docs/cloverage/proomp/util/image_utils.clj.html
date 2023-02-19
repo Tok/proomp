@@ -4,7 +4,7 @@
   <link rel="stylesheet" href="../../coverage.css"/>  <title> proomp/util/image_utils.clj </title>
  </head>
  <body>
-<span class="partial" title="1 out of 129 forms covered">
+<span class="partial" title="1 out of 269 forms covered">
                 001&nbsp;&nbsp;(ns&nbsp;proomp.util.image-utils
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
@@ -64,19 +64,19 @@
 <span class="blank" title="0 out of 0 forms covered">
                 020&nbsp;&nbsp;
                 </span><br/>
-<span class="partial" title="1 out of 10 forms covered">
+<span class="covered" title="10 out of 10 forms covered">
                 021&nbsp;&nbsp;(defn&nbsp;open-py-image&nbsp;[file-name]&nbsp;(py.&nbsp;(PIL.Image&#x2F;open&nbsp;file-name)&nbsp;&quot;convert&quot;&nbsp;&quot;RGB&quot;))
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
                 022&nbsp;&nbsp;
                 </span><br/>
-<span class="covered" title="1 out of 1 forms covered">
+<span class="partial" title="1 out of 2 forms covered">
                 023&nbsp;&nbsp;(defn-&nbsp;do-py-image-save!&nbsp;[image&nbsp;file-name]
                 </span><br/>
-<span class="not-covered" title="0 out of 3 forms covered">
+<span class="not-covered" title="0 out of 6 forms covered">
                 024&nbsp;&nbsp;&nbsp;&nbsp;(io&#x2F;make-parents&nbsp;file-name)
                 </span><br/>
-<span class="not-covered" title="0 out of 1368 forms covered">
+<span class="not-covered" title="0 out of 3219 forms covered">
                 025&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;debug&nbsp;{&quot;Saving&nbsp;image.&quot;&nbsp;file-name})
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
@@ -85,25 +85,25 @@
 <span class="blank" title="0 out of 0 forms covered">
                 027&nbsp;&nbsp;
                 </span><br/>
-<span class="covered" title="1 out of 1 forms covered">
+<span class="partial" title="1 out of 2 forms covered">
                 028&nbsp;&nbsp;(defn&nbsp;save-py-image!
                 </span><br/>
-<span class="not-covered" title="0 out of 5 forms covered">
+<span class="not-covered" title="0 out of 10 forms covered">
                 029&nbsp;&nbsp;&nbsp;&nbsp;([image&nbsp;file-name]&nbsp;(save-py-image!&nbsp;image&nbsp;file-name&nbsp;false))
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
                 030&nbsp;&nbsp;&nbsp;&nbsp;([image&nbsp;file-name&nbsp;overwrite?]
                 </span><br/>
-<span class="not-covered" title="0 out of 2 forms covered">
+<span class="not-covered" title="0 out of 4 forms covered">
                 031&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(if&nbsp;overwrite?
                 </span><br/>
-<span class="not-covered" title="0 out of 4 forms covered">
+<span class="not-covered" title="0 out of 8 forms covered">
                 032&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(do-py-image-save!&nbsp;image&nbsp;file-name)
                 </span><br/>
-<span class="not-covered" title="0 out of 4 forms covered">
+<span class="not-covered" title="0 out of 8 forms covered">
                 033&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(if&nbsp;(file-utils&#x2F;file-exists?&nbsp;file-name)
                 </span><br/>
-<span class="not-covered" title="0 out of 1704 forms covered">
+<span class="not-covered" title="0 out of 3216 forms covered">
                 034&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;warn&nbsp;{&quot;File&nbsp;exists.&nbsp;Skipping.&quot;&nbsp;file-name})
                 </span><br/>
 <span class="not-covered" title="0 out of 1 forms covered">
@@ -173,7 +173,7 @@
                 056&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[resolution&nbsp;res&#x2F;active-animation-resolution
                 </span><br/>
 <span class="not-covered" title="0 out of 4 forms covered">
-                057&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ref-file&nbsp;(str&nbsp;config&#x2F;image-path&nbsp;&quot;DefaultHistogramReference.png&quot;)
+                057&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ref-file&nbsp;(str&nbsp;config&#x2F;image-path&nbsp;&quot;histogram-references&#x2F;default-black-white.png&quot;)
                 </span><br/>
 <span class="not-covered" title="0 out of 9 forms covered">
                 058&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ref-img&nbsp;(py.&nbsp;(pilimg&#x2F;open&nbsp;ref-file)&nbsp;&quot;convert&quot;&nbsp;&quot;RGB&quot;)]

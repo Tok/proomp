@@ -1,0 +1,41 @@
+<html>
+ <head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" href="../../../coverage.css"/>  <title> proomp/domain/animation/start_image.clj </title>
+ </head>
+ <body>
+<span class="covered" title="1 out of 1 forms covered">
+                001&nbsp;&nbsp;(ns&nbsp;proomp.domain.animation.start-image)
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                002&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                003&nbsp;&nbsp;(defrecord&nbsp;StartImage&nbsp;[orientation&nbsp;local-file])
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                004&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                005&nbsp;&nbsp;(def&nbsp;start-images
+                </span><br/>
+<span class="covered" title="2 out of 2 forms covered">
+                006&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[start-images-dir&nbsp;&quot;.&#x2F;images&#x2F;start-images&#x2F;&quot;
+                </span><br/>
+<span class="covered" title="4 out of 4 forms covered">
+                007&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;landscape-dir&nbsp;(str&nbsp;start-images-dir&nbsp;&quot;landscape&#x2F;&quot;)
+                </span><br/>
+<span class="covered" title="4 out of 4 forms covered">
+                008&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;portrait-dir&nbsp;(str&nbsp;start-images-dir&nbsp;&quot;portrait&#x2F;&quot;)]
+                </span><br/>
+<span class="covered" title="5 out of 5 forms covered">
+                009&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{:none&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nil
+                </span><br/>
+<span class="covered" title="7 out of 7 forms covered">
+                010&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:mandelbrot-set-blue&nbsp;(-&gt;StartImage&nbsp;:landscape&nbsp;(str&nbsp;landscape-dir&nbsp;&quot;mandelbrot-set-blue.png&quot;))
+                </span><br/>
+<span class="covered" title="7 out of 7 forms covered">
+                011&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:the-magician&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(-&gt;StartImage&nbsp;:portrait&nbsp;(str&nbsp;portrait-dir&nbsp;&quot;rider-waite-tarot-card-the-magician.png&quot;))}))
+                </span><br/>
+ </body>
+</html>
