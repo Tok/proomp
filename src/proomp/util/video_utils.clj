@@ -88,13 +88,13 @@
     (NIOUtils/closeQuietly channel)
     (Files/readAllBytes (.toPath (.getAbsoluteFile output)))))
 
-(defn generate-video-from-frames [prompt]
+(defn generate-video-from-frames [prompt-text]
   "Generates a video from the frame directory, matching the current prompt."
-  (let [frame-path (file-utils/animation-frame-dir prompt)
+  (let [frame-path (file-utils/animation-frame-dir prompt-text)
         frame-dir (clojure.java.io/file frame-path)
         frames (map image-utils/open-buffered-image-file (.listFiles (io/file frame-dir)))
-        output-file-name (str (file-utils/image-dir prompt) prompt ".mp4")]
-    (log/info {:prompt prompt})
+        output-file-name (str (file-utils/image-dir prompt-text) prompt-text ".mp4")]
+    (log/info {:prompt-text prompt-text})
     (log/info {:frame-path frame-path})
     (log/info {:output-file-name output-file-name})
     (animate-h264 frames output-file-name)
