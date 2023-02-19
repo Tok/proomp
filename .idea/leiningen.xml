@@ -7,6 +7,7 @@
         <option value="user" />
         <option value="provided" />
         <option value="dev" />
+        <option value="test" />
       </list>
     </option>
   </component>

@@ -1,0 +1,198 @@
+<html xmlns:string="xalan://java.lang.String" xmlns:lxslt="http://xml.apache.org/xslt">
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Unit Test Results: proomp.core-test</title>
+        <link rel="stylesheet" type="text/css" title="Style" href="../stylesheet.css">
+        <script type="text/javascript" language="JavaScript">
+        var TestCases = new Array();
+        var cur;
+        
+    cur = TestCases['proomp.core-test'] = new Array();
+    
+        cur['clojure.compile.path'] = 'C:\\Users\\Zir\\Documents\\workspace\\proomp\\target\\classes';
+    
+        cur['clojure.debug'] = 'false';
+    
+        cur['file.encoding'] = 'UTF-8';
+    
+        cur['file.separator'] = '\\';
+    
+        cur['java.class.path'] = 'C:\\Users\\Zir\\Documents\\workspace\\proomp\\test;C:\\Users\\Zir\\Documents\\workspace\\proomp\\src;C:\\Users\\Zir\\Documents\\workspace\\proomp\\dev-resources;C:\\Users\\Zir\\Documents\\workspace\\proomp\\resources;C:\\Users\\Zir\\Documents\\workspace\\proomp\\target\\classes;C:\\Users\\Zir\\.m2\\repository\\org\\apache\\commons\\commons-math3\\3.6.1\\commons-math3-3.6.1.jar;C:\\Users\\Zir\\.m2\\repository\\org\\nrepl\\incomplete\\0.1.0\\incomplete-0.1.0.jar;C:\\Users\\Zir\\.m2\\repository\\org\\slf4j\\slf4j-api\\1.7.32\\slf4j-api-1.7.32.jar;C:\\Users\\Zir\\.m2\\repository\\techascent\\tech.resource\\5.05\\tech.resource-5.05.jar;C:\\Users\\Zir\\.m2\\repository\\pl\\edu\\icm\\JLargeArrays\\1.5\\JLargeArrays-1.5.jar;C:\\Users\\Zir\\.m2\\repository\\com\\github\\wendykierp\\JTransforms\\3.1\\JTransforms-3.1.jar;C:\\Users\\Zir\\.m2\\repository\\ch\\qos\\logback\\logback-core\\1.2.8\\logback-core-1.2.8.jar;C:\\Users\\Zir\\.m2\\repository\\org\\xerial\\larray\\larray-buffer\\0.4.1\\larray-buffer-0.4.1.jar;C:\\Users\\Zir\\.m2\\repository\\org\\clojure\\clojure\\1.11.1\\clojure-1.11.1.jar;C:\\Users\\Zir\\.m2\\repository\\com\\google\\guava\\failureaccess\\1.0.1\\failureaccess-1.0.1.jar;C:\\Users\\Zir\\.m2\\repository\\org\\apache\\ant\\ant\\1.10.13\\ant-1.10.13.jar;C:\\Users\\Zir\\.m2\\repository\\cambium\\cambium.codec-simple\\1.0.0\\cambium.codec-simple-1.0.0.jar;C:\\Users\\Zir\\.m2\\repository\\org\\codehaus\\janino\\commons-compiler\\3.1.2\\commons-compiler-3.1.2.jar;C:\\Users\\Zir\\.m2\\repository\\clj-assorted-utils\\clj-assorted-utils\\1.19.0\\clj-assorted-utils-1.19.0.jar;C:\\Users\\Zir\\.m2\\repository\\robert\\hooke\\1.3.0\\hooke-1.3.0.jar;C:\\Users\\Zir\\.m2\\repository\\clojure-interop\\javax.imageio\\1.0.5\\javax.imageio-1.0.5.jar;C:\\Users\\Zir\\.m2\\repository\\org\\codehaus\\janino\\janino\\3.1.2\\janino-3.1.2.jar;C:\\Users\\Zir\\.m2\\repository\\nrepl\\nrepl\\1.0.0\\nrepl-1.0.0.jar;C:\\Users\\Zir\\.m2\\repository\\org\\roaringbitmap\\shims\\0.9.0\\shims-0.9.0.jar;C:\\Users\\Zir\\.m2\\repository\\camel-snake-kebab\\camel-snake-kebab\\0.4.2\\camel-snake-kebab-0.4.2.jar;C:\\Users\\Zir\\.m2\\repository\\org\\checkerframework\\checker-qual\\3.12.0\\checker-qual-3.12.0.jar;C:\\Users\\Zir\\.m2\\repository\\com\\google\\errorprone\\error_prone_annotations\\2.11.0\\error_prone_annotations-2.11.0.jar;C:\\Users\\Zir\\.m2\\repository\\ch\\qos\\logback\\logback-classic\\1.2.8\\logback-classic-1.2.8.jar;C:\\Users\\Zir\\.m2\\repository\\com\\google\\guava\\listenablefuture\\9999.0-empty-to-avoid-conflict-with-guava\\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar;C:\\Users\\Zir\\.m2\\repository\\com\\google\\guava\\guava\\31.1-jre\\guava-31.1-jre.jar;C:\\Users\\Zir\\.m2\\repository\\cambium\\cambium.logback.core\\0.4.5\\cambium.logback.core-0.4.5.jar;C:\\Users\\Zir\\.m2\\repository\\org\\clojure\\data.json\\1.0.0\\data.json-1.0.0.jar;C:\\Users\\Zir\\.m2\\repository\\org\\clojure\\core.specs.alpha\\0.2.62\\core.specs.alpha-0.2.62.jar;C:\\Users\\Zir\\.m2\\repository\\com\\google\\j2objc\\j2objc-annotations\\1.3\\j2objc-annotations-1.3.jar;C:\\Users\\Zir\\.m2\\repository\\net\\java\\dev\\jna\\jna\\5.12.1\\jna-5.12.1.jar;C:\\Users\\Zir\\.m2\\repository\\org\\clojure\\tools.logging\\1.2.2\\tools.logging-1.2.2.jar;C:\\Users\\Zir\\.m2\\repository\\org\\clojure\\spec.alpha\\0.3.218\\spec.alpha-0.3.218.jar;C:\\Users\\Zir\\.m2\\repository\\it\\unimi\\dsi\\fastutil-core\\8.5.8\\fastutil-core-8.5.8.jar;C:\\Users\\Zir\\.m2\\repository\\org\\ow2\\asm\\asm\\9.0\\asm-9.0.jar;C:\\Users\\Zir\\.m2\\repository\\cnuernber\\dtype-next\\10.000-beta-2\\dtype-next-10.000-beta-2.jar;C:\\Users\\Zir\\.m2\\repository\\test2junit\\test2junit\\1.4.4\\test2junit-1.4.4.jar;C:\\Users\\Zir\\.m2\\repository\\org\\xerial\\larray\\larray-mmap\\0.4.1\\larray-mmap-0.4.1.jar;C:\\Users\\Zir\\.m2\\repository\\cambium\\cambium.core\\1.1.1\\cambium.core-1.1.1.jar;C:\\Users\\Zir\\.m2\\repository\\com\\google\\code\\findbugs\\jsr305\\3.0.2\\jsr305-3.0.2.jar;C:\\Users\\Zir\\.m2\\repository\\com\\cnuernber\\ham-fisted\\1.000-beta-58\\ham-fisted-1.000-beta-58.jar;C:\\Users\\Zir\\.m2\\repository\\org\\jcodec\\jcodec-javase\\0.2.5\\jcodec-javase-0.2.5.jar;C:\\Users\\Zir\\.m2\\repository\\org\\apache\\ant\\ant-launcher\\1.10.13\\ant-launcher-1.10.13.jar;C:\\Users\\Zir\\.m2\\repository\\insn\\insn\\0.5.2\\insn-0.5.2.jar;C:\\Users\\Zir\\.m2\\repository\\org\\roaringbitmap\\RoaringBitmap\\0.9.0\\RoaringBitmap-0.9.0.jar;C:\\Users\\Zir\\.m2\\repository\\clj-python\\libpython-clj\\2.021\\libpython-clj-2.021.jar;C:\\Users\\Zir\\.m2\\repository\\org\\jcodec\\jcodec\\0.2.5\\jcodec-0.2.5.jar';
+    
+        cur['java.class.version'] = '61.0';
+    
+        cur['java.home'] = 'C:\\Program Files\\Eclipse Adoptium\\jdk-17.0.5.8-hotspot';
+    
+        cur['java.io.tmpdir'] = 'C:\\Users\\Zir\\AppData\\Local\\Temp\\';
+    
+        cur['java.library.path'] = 'C:\\Users\\Zir\\AppData\\Local\\Programs\\Python\\Python39\\lib:C:\\Program Files\\Eclipse Adoptium\\jdk-17.0.5.8-hotspot\\bin;C:\\WINDOWS\\Sun\\Java\\bin;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\Program Files\\Eclipse Adoptium\\jdk-17.0.5.8-hotspot\\bin;C:\\Program Files\\Oculus\\Support\\oculus-runtime;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v11.7\\bin;C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\v11.7\\libnvvp;C:\\Program Files\\Eclipse Adoptium\\jdk-18.0.2.9-hotspot\\bin;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\Git\\cmd;C:\\Program Files\\dotnet\\;C:\\Users\\Zir\\AppData\\Local\\Programs\\Python\\Python310;C:\\Users\\Zir\\AppData\\Local\\Programs\\Python\\Python310\\Scripts;C:\\Users\\Zir\\AppData\\Roaming\\Python\\Python310\\Scripts;C:\\Program Files\\NVIDIA Corporation\\Nsight Compute 2022.2.1\\;C:\\Users\\Zir\\anaconda3\\bin;C:\\Users\\Zir\\anaconda3;C:\\Users\\Zir\\AppData\\Local\\Programs\\Python\\Python39\\Scripts\\;C:\\Users\\Zir\\AppData\\Local\\Programs\\Python\\Python39\\;C:\\Users\\Zir\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Program Files\\JetBrains\\IntelliJ IDEA Community Edition 2022.2.1\\bin;;C:\\Users\\Zir\\.dotnet\\tools;C:\\Program Files\\JetBrains\\PyCharm Community Edition 2022.2.2\\bin;;.';
+    
+        cur['java.runtime.name'] = 'OpenJDK Runtime Environment';
+    
+        cur['java.runtime.version'] = '17.0.5+8';
+    
+        cur['java.specification.name'] = 'Java Platform API Specification';
+    
+        cur['java.specification.vendor'] = 'Oracle Corporation';
+    
+        cur['java.specification.version'] = '17';
+    
+        cur['java.vendor'] = 'Eclipse Adoptium';
+    
+        cur['java.vendor.url'] = 'https://adoptium.net/';
+    
+        cur['java.vendor.url.bug'] = 'https://github.com/adoptium/adoptium-support/issues';
+    
+        cur['java.vendor.version'] = 'Temurin-17.0.5+8';
+    
+        cur['java.version'] = '17.0.5';
+    
+        cur['java.version.date'] = '2022-10-18';
+    
+        cur['java.vm.compressedOopsMode'] = 'Zero based';
+    
+        cur['java.vm.info'] = 'mixed mode, sharing';
+    
+        cur['java.vm.name'] = 'OpenJDK 64-Bit Server VM';
+    
+        cur['java.vm.specification.name'] = 'Java Virtual Machine Specification';
+    
+        cur['java.vm.specification.vendor'] = 'Oracle Corporation';
+    
+        cur['java.vm.specification.version'] = '17';
+    
+        cur['java.vm.vendor'] = 'Eclipse Adoptium';
+    
+        cur['java.vm.version'] = '17.0.5+8';
+    
+        cur['jdk.debug'] = 'release';
+    
+        cur['jna.loaded'] = 'true';
+    
+        cur['jnidispatch.path'] = 'C:\\Users\\Zir\\AppData\\Local\\Temp\\jna-89859\\jna8324634889925576444.dll';
+    
+        cur['line.separator'] = ' ';
+    
+        cur['native.encoding'] = 'Cp1252';
+    
+        cur['os.arch'] = 'amd64';
+    
+        cur['os.name'] = 'Windows 10';
+    
+        cur['os.version'] = '10.0';
+    
+        cur['path.separator'] = ';';
+    
+        cur['proomp.version'] = '0.7.0-SNAPSHOT';
+    
+        cur['sun.arch.data.model'] = '64';
+    
+        cur['sun.boot.library.path'] = 'C:\\Program Files\\Eclipse Adoptium\\jdk-17.0.5.8-hotspot\\bin';
+    
+        cur['sun.cpu.endian'] = 'little';
+    
+        cur['sun.cpu.isalist'] = 'amd64';
+    
+        cur['sun.io.unicode.encoding'] = 'UnicodeLittle';
+    
+        cur['sun.java.command'] = 'clojure.main -i C:\\Users\\Zir\\AppData\\Local\\Temp\\form-init6516046611376822221.clj';
+    
+        cur['sun.java.launcher'] = 'SUN_STANDARD';
+    
+        cur['sun.jnu.encoding'] = 'Cp1252';
+    
+        cur['sun.management.compiler'] = 'HotSpot 64-Bit Tiered Compilers';
+    
+        cur['sun.os.patch.level'] = '';
+    
+        cur['user.country'] = 'US';
+    
+        cur['user.dir'] = 'C:\\Users\\Zir\\Documents\\workspace\\proomp';
+    
+        cur['user.home'] = 'C:\\Users\\Zir';
+    
+        cur['user.language'] = 'en';
+    
+        cur['user.name'] = 'Zir';
+    
+        cur['user.script'] = '';
+    
+        cur['user.timezone'] = 'Europe/Zurich';
+    
+        cur['user.variant'] = '';
+    </script><script type="text/javascript" language="JavaScript">
+        function displayProperties (name) {
+          var win = window.open('','JUnitSystemProperties','scrollbars=1,resizable=1');
+          var doc = win.document;
+          doc.open();
+          doc.write("<html><head><title>Properties of " + name + "</title>");
+          doc.write("<style type=\"text/css\">");
+          doc.write("body {font:normal 68% verdana,arial,helvetica; color:#000000; }");
+          doc.write("table tr td, table tr th { font-size: 68%; }");
+          doc.write("table.properties { border-collapse:collapse; border-left:solid 1 #cccccc; border-top:solid 1 #cccccc; padding:5px; }");
+          doc.write("table.properties th { text-align:left; border-right:solid 1 #cccccc; border-bottom:solid 1 #cccccc; background-color:#eeeeee; }");
+          doc.write("table.properties td { font:normal; text-align:left; border-right:solid 1 #cccccc; border-bottom:solid 1 #cccccc; background-color:#fffffff; }");
+          doc.write("h3 { margin-bottom: 0.5em; font: bold 115% verdana,arial,helvetica }");
+          doc.write("</style>");
+          doc.write("</head><body>");
+          doc.write("<h3>Properties of " + name + "</h3>");
+          doc.write("<div align=\"right\"><a href=\"javascript:window.close();\">Close</a></div>");
+          doc.write("<table class='properties'>");
+          doc.write("<tr><th>Name</th><th>Value</th></tr>");
+          for (prop in TestCases[name]) {
+            doc.write("<tr><th>" + prop + "</th><td>" + TestCases[name][prop] + "</td></tr>");
+          }
+          doc.write("</table>");
+          doc.write("</body></html>");
+          doc.close();
+          win.focus();
+        }
+      
+      </script>
+    </head>
+    <body>
+        <h1>Unit Test Results.</h1>
+        <table width="100%">
+            <tr>
+                <td align="left"></td><td align="right">Designed for use with <a href="https://www.junit.org/">JUnit</a> and <a href="https://ant.apache.org/">Ant</a>.</td>
+            </tr>
+        </table>
+        <hr size="1">
+        <h3>Class proomp.core-test</h3>
+        <table class="details" border="0" cellpadding="5" cellspacing="2" width="95%">
+            <tr valign="top">
+                <th width="80%">Name</th><th>Tests</th><th>Errors</th><th>Failures</th><th>Skipped</th><th nowrap>Time(s)</th><th nowrap>Time Stamp</th><th>Host</th>
+            </tr>
+            <tr valign="top" class="Pass">
+                <td><a title="Display all tests" href="0_core-test.html">core-test</a></td><td><a title="Display all tests" href="0_core-test.html">2</a></td><td>0</td><td>0</td><td></td><td>0.007</td><td>2023-02-19_05:36:04+0100</td><td></td>
+            </tr>
+        </table>
+        <h2>Tests</h2>
+        <table class="details" border="0" cellpadding="5" cellspacing="2" width="95%">
+            <tr valign="top">
+                <th>Name</th><th>Status</th><th width="80%">Type</th><th nowrap>Time(s)</th>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a name="torch-test"></a>torch-test</td><td>Success</td><td></td><td>0.003</td>
+            </tr>
+            <tr valign="top" class="TableRowColor">
+                <td><a name="cuda-test"></a>cuda-test</td><td>Success</td><td></td><td>0.000</td>
+            </tr>
+        </table>
+        <div class="Properties">
+            <a href="javascript:displayProperties('proomp.core-test');">
+                    Properties &raquo;
+                </a>
+        </div>
+        <div class="Properties">
+            <a href="./0_core-test-out.html">
+                        System.out &raquo;
+                    </a>
+        </div>
+        <div class="Properties">
+            <a href="./0_core-test-err.html">
+                        System.err &raquo;
+                    </a>
+        </div>
+    </body>
+</html>

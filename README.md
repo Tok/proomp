@@ -3,6 +3,10 @@ A Clojure workspace for Stable Diffusion.
 
 Runs on top of Python 3.9 using PyTorch with CUDA Toolkit 11.7.
 
+## Reports
+* [Unit Test Results](https://tok.github.io/proomp/test-report)
+* [Cloverage Report](https://tok.github.io/proomp/cloverage)
+
 ## Installation
 ### Python
 Install Python 3.9 with Pip https://www.python.org/downloads/.
