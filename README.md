@@ -11,15 +11,8 @@ Runs on top of Python 3.9 using PyTorch with CUDA Toolkit 11.7.
 ### Python
 Install Python 3.9 with Pip https://www.python.org/downloads/.
 
-### Hugging Face Diffusers
-    pip3 install --upgrade git+https://github.com/huggingface/diffusers.git transformers accelerate scipy
-
-### PyTorch
-    pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu117
-
-### Additional Dependencies
-
-    pip3 install scikit-image ftfy pillow imageio
+### Python Dependencies
+    pip install -r requirements.txt
 
 ### Download and prepare Stable Diffusion model
 > &#x26a0;&#xfe0f; Requires an account on https://huggingface.co.
@@ -39,14 +32,14 @@ The Clojure version is set in Leiningens build file `project.clj`.
 Set your `python-dir` and your `workspace-path` in `proomp.config`.
 
 ## Usage
-* Consider tuning the default values in `proomp.constants`
 * Check and adjust the parameters in `proomp.core`.
-  * Set a `prompt`.
-  * Optionally set a `negative-prompt`.
-  * Choose a `mode`
-    * `::images` Generates different images from a prompt. Can be used to find a good start seed.
-    * `::animation` Generates frames for a prompt and a start seed.
-    * `::video` Creates a video from the generated frames.
+  * Set a [active-mode](https://github.com/Tok/proomp/blob/main/src/proomp/core.clj#L11).
+      * `::images` Generates different images from a prompt. Can be used to find a good start seed.
+      * `::animation` Generates frames for a prompt and a start seed.
+      * `::video` Creates a video from the generated frames.
+  * Set the prompt `text`
+  * Optionally provide a `negative-text` prompt and change the additions.
+  * Optionally change active [resolutions](https://github.com/Tok/proomp/blob/main/src/proomp/domain/image/resolution.clj#L46)
 
 Run proomp.core in the context of Leiningen or with the VM arguments:
     --add-modules jdk.incubator.foreign,jdk.incubator.vector
@@ -60,9 +53,7 @@ In case of problems, consider the following:
 - PyTorch needs to be installed with an active cuda toolkit.
 - The console command `nvcc --version` should return `Cuda compilation tools, release 11.7`.
 
-
 ### Workaround for ValueError when instantiating the Stable Diffusion i2i pipeline
-
 Provide feature_extractor and safety_checker from a v1-5 model:
 
     git lfs clone https://huggingface.co/runwayml/stable-diffusion-v1-5

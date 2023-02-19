@@ -4,7 +4,7 @@
   <link rel="stylesheet" href="../../coverage.css"/>  <title> proomp/animator/seed_space_animator.clj </title>
  </head>
  <body>
-<span class="partial" title="1 out of 177 forms covered">
+<span class="partial" title="1 out of 350 forms covered">
                 001&nbsp;&nbsp;(ns&nbsp;proomp.animator.seed-space-animator
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
@@ -76,16 +76,16 @@
 <span class="blank" title="0 out of 0 forms covered">
                 024&nbsp;&nbsp;
                 </span><br/>
-<span class="covered" title="1 out of 1 forms covered">
+<span class="partial" title="1 out of 2 forms covered">
                 025&nbsp;&nbsp;(defn-&nbsp;initial-frame&nbsp;[prompt&nbsp;start-seed&nbsp;initial-frame-file-name]
                 </span><br/>
-<span class="not-covered" title="0 out of 2 forms covered">
+<span class="not-covered" title="0 out of 4 forms covered">
                 026&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[resolution&nbsp;res&#x2F;active-animation-resolution]
                 </span><br/>
-<span class="not-covered" title="0 out of 6 forms covered">
+<span class="not-covered" title="0 out of 12 forms covered">
                 027&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(if&nbsp;(not&nbsp;(file-utils&#x2F;file-exists?&nbsp;initial-frame-file-name))
                 </span><br/>
-<span class="not-covered" title="0 out of 1260 forms covered">
+<span class="not-covered" title="0 out of 2559 forms covered">
                 028&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;error&nbsp;{:initial-frame-missing&nbsp;initial-frame-file-name})
                 </span><br/>
 <span class="not-covered" title="0 out of 1 forms covered">
@@ -148,37 +148,37 @@
 <span class="covered" title="7 out of 7 forms covered">
                 048&nbsp;&nbsp;(def&nbsp;last-frame&nbsp;(atom&nbsp;(image-utils&#x2F;-&gt;pil-image&nbsp;1&nbsp;1)))&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;todo&nbsp;refactor&nbsp;to&nbsp;remove&nbsp;atom
                 </span><br/>
-<span class="covered" title="1 out of 1 forms covered">
+<span class="partial" title="1 out of 2 forms covered">
                 049&nbsp;&nbsp;(defn-&nbsp;generate-frames&nbsp;[pil-image&nbsp;ref-image&nbsp;pipe&nbsp;prompt&nbsp;start-seed&nbsp;frame-count]
                 </span><br/>
-<span class="not-covered" title="0 out of 4 forms covered">
+<span class="not-covered" title="0 out of 8 forms covered">
                 050&nbsp;&nbsp;&nbsp;&nbsp;(reset!&nbsp;last-frame&nbsp;pil-image)
                 </span><br/>
-<span class="not-covered" title="0 out of 19 forms covered">
+<span class="not-covered" title="0 out of 37 forms covered">
                 051&nbsp;&nbsp;&nbsp;&nbsp;(doseq&nbsp;[frame-number&nbsp;(range&nbsp;0&nbsp;frame-count)]
                 </span><br/>
-<span class="not-covered" title="0 out of 4 forms covered">
+<span class="not-covered" title="0 out of 8 forms covered">
                 052&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[new-seed&nbsp;(+&nbsp;start-seed&nbsp;frame-number)
                 </span><br/>
-<span class="not-covered" title="0 out of 3 forms covered">
+<span class="not-covered" title="0 out of 6 forms covered">
                 053&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iterations&nbsp;(:iterations&nbsp;pipe-setup&#x2F;i2i-pipe-setup)
                 </span><br/>
-<span class="not-covered" title="0 out of 3 forms covered">
+<span class="not-covered" title="0 out of 6 forms covered">
                 054&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scale&nbsp;(:scale&nbsp;pipe-setup&#x2F;i2i-pipe-setup)
                 </span><br/>
-<span class="not-covered" title="0 out of 8 forms covered">
+<span class="not-covered" title="0 out of 16 forms covered">
                 055&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;frame-file-name&nbsp;(file-utils&#x2F;frame-name&nbsp;(:text&nbsp;prompt)&nbsp;new-seed&nbsp;iterations&nbsp;scale)
                 </span><br/>
-<span class="not-covered" title="0 out of 3 forms covered">
+<span class="not-covered" title="0 out of 6 forms covered">
                 056&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;first-image?&nbsp;(=&nbsp;frame-number&nbsp;0)]
                 </span><br/>
-<span class="not-covered" title="0 out of 4 forms covered">
+<span class="not-covered" title="0 out of 8 forms covered">
                 057&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(if&nbsp;(file-utils&#x2F;file-exists?&nbsp;frame-file-name)
                 </span><br/>
-<span class="not-covered" title="0 out of 1 forms covered">
+<span class="not-covered" title="0 out of 2 forms covered">
                 058&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(do
                 </span><br/>
-<span class="not-covered" title="0 out of 1644 forms covered">
+<span class="not-covered" title="0 out of 2619 forms covered">
                 059&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;warn&nbsp;{:skip-existing&nbsp;frame-file-name})
                 </span><br/>
 <span class="not-covered" title="0 out of 1 forms covered">
@@ -193,10 +193,10 @@
 <span class="blank" title="0 out of 0 forms covered">
                 063&nbsp;&nbsp;
                 </span><br/>
-<span class="covered" title="1 out of 1 forms covered">
+<span class="partial" title="1 out of 2 forms covered">
                 064&nbsp;&nbsp;(defn&nbsp;animate&nbsp;[pipe&nbsp;prompt&nbsp;start-seed&nbsp;frame-count]
                 </span><br/>
-<span class="not-covered" title="0 out of 1286 forms covered">
+<span class="not-covered" title="0 out of 3141 forms covered">
                 065&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;info&nbsp;{:resolution&nbsp;res&#x2F;active-animation-resolution&nbsp;:frame-count&nbsp;frame-count})
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
