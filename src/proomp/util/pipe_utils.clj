@@ -9,7 +9,8 @@
   (:import (proomp.domain.image.resolution Resolution)
            (proomp.domain.prompt.prompt Prompt)))
 
-(require-python 'torch '[torch.cuda :as cuda] 'transformers)
+(require-python 'torch '[torch.cuda :as cuda])
+(require-python 'transformers)
 (require-python '[diffusers :refer [StableDiffusionPipeline StableDiffusionImg2ImgPipeline]])
 
 (defonce device "cuda")

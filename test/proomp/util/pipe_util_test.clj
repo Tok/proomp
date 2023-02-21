@@ -4,8 +4,8 @@
     [proomp.util.pipe-utils :refer :all]
     [libpython-clj2.require :refer [require-python]]))
 
-(require-python '[diffusers :refer [StableDiffusionPipeline StableDiffusionImg2ImgPipeline]])
 ;todo add StableDiffusionImageVariationPipeline and StableDiffusionUpscalePipeline?
+(require-python '[diffusers :refer [StableDiffusionPipeline StableDiffusionImg2ImgPipeline]])
 
 (deftest ->stable-diffusion-pipeline-test
   (let [pipe (->text-to-image-pipeline)]

@@ -93,8 +93,10 @@ something like the following *may* work:
     pip install --upgrade numpy
     pip install --upgrade Pillow
     pip3 install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu118
-    pip install diffusers["torch"]==0.11.1
+    pip install diffusers[torch]==0.11.0
     pip install --upgrade scikit-image --pre
+    pip install --upgrade transformers
+    pip install --upgrade accelerate
 
 * numpy and Pillow are required to install torch. 
 * torch requires the CUDA compiler (NVCC).

@@ -13,9 +13,9 @@
 ;(defonce active-mode ::animation)
 ;(defonce active-mode ::video)
 
-(defonce text "Extreme Piano Parkour")
+(defonce text "Knobs and Faders")
 (defonce negative-text "")
-(defonce additions "((photo)) (real) sharp focused urban action")
+(defonce additions "((photo)) (real) sharp focused")
 (defonce negative-additions "(blurry) (drawing) (cgi) grayscale")
 (defonce full-prompt (prompt/->Prompt text negative-text additions negative-additions))
 
