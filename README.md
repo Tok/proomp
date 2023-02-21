@@ -101,5 +101,5 @@ something like the following *may* work:
 * numpy and Pillow are required to install torch. 
 * torch requires the CUDA compiler (NVCC).
   * For Python versions > 3.9, try a nightly torch build since there's no official support.
-* diffusers require torch and shouldn't be higher than version 0.11.1 (for now).
+* diffusers require torch and shouldn't be higher than version 0.11.0 (for now).
 * scikit-image depends on numpy and may require VS C++ Build Tools to compile.
