@@ -12,22 +12,24 @@ GPUs from different manufacturers may require some tinkering to get PyTorch work
 ### Git
 Install Git https://git-scm.com/downloads.
 
-### Python
-Install Python 3.9 https://www.python.org/downloads/.
-Newer versions may require some tinkering to install a nightly PyTorch build.
-
 ### Nvidia CUDA compiler (NVCC)
 Check your Nvidia CUDA compiler version with `nvcc --version`.
 If it's missing, see [install NVCC](https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/).
 
-### Python Dependencies
+### Python
+Install Python 3.9 https://www.python.org/downloads/.
+Newer versions may require installation of a nightly PyTorch build.
+
+### Python 3.9 Dependencies
 
     pip install -r requirements-3.9.txt
 
-### Python 3.11 and CUDA 11.8?
-No. But actually, something like the following *may* work.
+### Alternative for Python 3.11 and CUDA 11.8
+Something like the following *may* work:
 
     pip install -r requirements.txt
+
+In case of problems, see `Trouble-Shooting` and `Manual python dependency setup` below.
 
 ### Download and prepare Stable Diffusion model
 > &#x26a0;&#xfe0f; Requires an account on https://huggingface.co.
@@ -77,7 +79,7 @@ and to check if PyTorch bindings are working.
 In case of problems, consider the following:
 - PyTorch needs to be installed with an active cuda toolkit.
 - The console command `nvcc --version` should return `Cuda compilation tools` with version and build number.
-  - make sure to match your CUDA version in `requirements.txt` or [install torch separately](https://pytorch.org/get-started/locally/).
+  - make sure to match your CUDA version in `requirements-3.9.txt` or [install torch separately](https://pytorch.org/get-started/locally/).
 
 ### PyTorch Installation
 
