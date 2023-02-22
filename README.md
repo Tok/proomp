@@ -87,7 +87,7 @@ In case of problems, see: https://pytorch.org/get-started/locally/
 
 ### Manual python dependency setup
 In case of problems with the dependencies in `requirements.txt`,
-something like the following *may* work:
+something like the following *should* work:
 
     pip install --upgrade pip setuptools wheel
     pip install --upgrade numpy

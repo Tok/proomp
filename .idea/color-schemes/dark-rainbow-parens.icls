@@ -1,0 +1,103 @@
+<scheme name="dark-rainbow-parens" version="142" parent_scheme="Darcula">
+  <!-- Dark rainbow parenthesis color scheme for Clojure in IntelliJ with Cursive. -->
+  <!-- Install: File - Settings - Editor - Color Scheme - Clojure - Scheme Actions (cog icon) - Import Scheme - IntelliJ IDEA color scheme (.icls) -->
+  <metaInfo>
+    <property name="created">2023-02-22T01:25:37</property>
+    <property name="ide">Idea</property>
+    <property name="ideVersion">2022.3.2.0.0</property>
+    <property name="modified">2023-02-22T01:27:45</property>
+    <property name="originalScheme">_@user_Darcula</property>
+  </metaInfo>
+  <attributes>
+    <option name="Clojure Atom">
+      <value>
+        <option name="FOREGROUND" value="c4c4c4" />
+      </value>
+    </option>
+    <option name="Clojure Character">
+      <value>
+        <option name="FOREGROUND" value="8d8d8d" />
+      </value>
+    </option>
+    <option name="Clojure Keyword">
+      <value>
+        <option name="FOREGROUND" value="a3a3a3" />
+        <option name="FONT_TYPE" value="2" />
+      </value>
+    </option>
+    <option name="Clojure Literal">
+      <value>
+        <option name="FOREGROUND" value="828282" />
+      </value>
+    </option>
+    <option name="Clojure Numbers">
+      <value>
+        <option name="FOREGROUND" value="b1b1b1" />
+      </value>
+    </option>
+    <option name="Clojure Strings">
+      <value>
+        <option name="FOREGROUND" value="6f6f6f" />
+      </value>
+    </option>
+    <option name="Head symbol">
+      <value>
+        <option name="FOREGROUND" value="ffffff" />
+      </value>
+    </option>
+    <option name="Rainbow Parens Level 1 (outermost)">
+      <value>
+        <option name="FOREGROUND" value="ff0000" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="Rainbow Parens Level 2">
+      <value>
+        <option name="FOREGROUND" value="ff812e" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="Rainbow Parens Level 3">
+      <value>
+        <option name="FOREGROUND" value="ffd500" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="Rainbow Parens Level 4">
+      <value>
+        <option name="FOREGROUND" value="7f00" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="Rainbow Parens Level 5">
+      <value>
+        <option name="FOREGROUND" value="a0cb" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="Rainbow Parens Level 6">
+      <value>
+        <option name="FOREGROUND" value="ff" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="Rainbow Parens Level 7">
+      <value>
+        <option name="FOREGROUND" value="ab02ff" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="Rainbow Parens Level 8">
+      <value>
+        <option name="FOREGROUND" value="fd44db" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+    <option name="Rainbow Parens Level 9">
+      <value>
+        <option name="FOREGROUND" value="ff1964" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+  </attributes>
+</scheme>
