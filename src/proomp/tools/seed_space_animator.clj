@@ -1,4 +1,4 @@
-(ns proomp.animator.seed-space-animator
+(ns proomp.tools.seed-space-animator
   (:require
     [cambium.core :as log]
     [proomp.config :as config]
@@ -29,7 +29,7 @@
   (let [t (trans/active-transformation)
         do-trans? (and (not first-image?) (trans/apply-transformations? t))
         pic (if do-trans? (image-utils/apply-transformations pil-image t) pil-image)]
-    (let [do-correct? (:apply-color-correction? t)
+    (let [do-correct? (:color-correction? t)
           corrected (if do-correct? (image-utils/fix-colors pic reference-image) pic)
           sample (pipe-utils/generate-i2i pipe prompt seed corrected)]
       (image-utils/save-py-image! sample frame-file-name)
@@ -47,8 +47,9 @@
         (do
           (log/warn {:skip-existing frame-file-name})
           (reset! last-frame (image-utils/open-py-image frame-file-name)))
-        (let [next-frame (generate-image! @last-frame ref-image pipe
-                           prompt new-seed frame-file-name (= frame-number 0))]
+        (let [first-image? (if (= frame-number 0) true false)
+              next-frame (generate-image! @last-frame ref-image pipe
+                           prompt new-seed frame-file-name first-image?)]
           (reset! last-frame next-frame))))))
 
 (defn animate [pipe prompt start-seed frame-count]

@@ -10,6 +10,7 @@
 
 (defn image-dir [prompt] (str config/media-path prompt "\\"))
 (defn animation-frame-dir [prompt] (str (image-dir prompt) "frames\\"))
+(defn upscaled-frame-dir [prompt] (str (image-dir prompt) "frames\\upscaled\\"))
 
 (defn file-name [prompt seed]
   (let [padded-seed (format "%04d" seed)]

@@ -10,6 +10,9 @@
 (defonce model-path (str workspace-path "models\\stable-diffusion-2-1\\"))
 (log/debug {:model-path model-path})
 
+(defonce upscaler-model-path (str workspace-path "models\\stable-diffusion-x4-upscaler\\"))
+(log/debug {:upscaler-model-path upscaler-model-path})
+
 (defonce media-path (str workspace-path "generated-media\\"))
 (log/debug {:media-path media-path})
 

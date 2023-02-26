@@ -5,7 +5,8 @@
             [libpython-clj2.require :refer [require-python]]
             [proomp.config :as config]
             [proomp.domain.image.resolution :as res]
-            [proomp.util.file-utils :as file-utils])
+            [proomp.util.file-utils :as file-utils]
+            [proomp.util.image-utils :as image-utils])
   (:import (java.awt RenderingHints)
            (java.awt.image BufferedImage RenderedImage)
            (java.io ByteArrayOutputStream File IOException)
@@ -53,7 +54,8 @@
         np-corrected (py/$c match_histograms np-image np-reference :channel_axis 0)]
     (numpy->pil np-corrected)))
 
-(def ^:private fix-color-palette-to-1st-frame? false)       ;otherwise use reference image
+(def ^:private fix-color-palette-to-1st-frame? true)       ;otherwise use reference image
+
 (defn prepare-reference-image [image]
   (let [resolution res/active-animation-resolution
         ref-file (str config/image-path "histogram-references/default-black-white.png")

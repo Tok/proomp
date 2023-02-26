@@ -12,22 +12,18 @@ GPUs from different manufacturers may require some tinkering to get PyTorch work
 ### Git
 Install Git https://git-scm.com/downloads.
 
-### Nvidia CUDA compiler (NVCC)
+### Nvidia CUDA 11.8 compiler (NVCC)
 Check your Nvidia CUDA compiler version with `nvcc --version`.
-If it's missing, see [install NVCC](https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/).
+Install NVCC with [CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit-archive).
 
 ### Python
-Install Python 3.9 https://www.python.org/downloads/.
-Newer versions may require installation of a nightly PyTorch build.
+Install Python 3.11 https://www.python.org/downloads/.
 
-### Python 3.9 Dependencies
-
-    pip install -r requirements-3.9.txt
-
-### Alternative for Python 3.11 and CUDA 11.8
-Something like the following *may* work:
+### Python 3.11 with CUDA 11.8
 
     pip install -r requirements.txt
+
+> &#x26a0;&#xfe0f; Building xformers may take a long time.
 
 In case of problems, see `Trouble-Shooting` and `Manual python dependency setup` below.
 
@@ -37,6 +33,7 @@ In case of problems, see `Trouble-Shooting` and `Manual python dependency setup`
     cd models
     git lfs install
     git lfs clone https://huggingface.co/stabilityai/stable-diffusion-2-1
+    git lfs clone https://huggingface.co/stabilityai/stable-diffusion-x4-upscaler
 
 ### Leiningen And Clojure
 > &#x2139;  Use JDK 17 or similar, i.e. from https://adoptium.net/.
@@ -78,11 +75,12 @@ and to check if PyTorch bindings are working.
 
 In case of problems, consider the following:
 - PyTorch needs to be installed with an active cuda toolkit.
-- The console command `nvcc --version` should return `Cuda compilation tools` with version and build number.
-  - make sure to match your CUDA version in `requirements-3.9.txt` or [install torch separately](https://pytorch.org/get-started/locally/).
+- The console command `nvcc --version` should return `Cuda compilation tools` with version 11.8.
+  - make sure to match your CUDA version in `requirements.txt` or [install torch separately](https://pytorch.org/get-started/locally/).
 
 ### PyTorch Installation
 
+Pytorch needs to be compiled in context of CUDA 11.8.
 In case of problems, see: https://pytorch.org/get-started/locally/
 
 ### Manual python dependency setup
@@ -97,9 +95,13 @@ something like the following *should* work:
     pip install --upgrade scikit-image --pre
     pip install --upgrade transformers
     pip install --upgrade accelerate
+    pip install --upgrade safetensors
+    pip install --upgrade xformers
 
 * numpy and Pillow are required to install torch. 
 * torch requires the CUDA compiler (NVCC).
-  * For Python versions > 3.9, try a nightly torch build since there's no official support.
+  * Python version 3.11, requires a nightly torch build since there's no official support.
+  * It may also be possible to use CUDA 11.7 with Python 3.9 for a more stable setup.
+    * To do so, manually fix the version numbers in the commands or in `requirements.txt`
 * diffusers require torch and shouldn't be higher than version 0.11.0 (for now).
 * scikit-image depends on numpy and may require VS C++ Build Tools to compile.
