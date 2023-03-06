@@ -60,10 +60,8 @@
     ::generate-audio
     (do
       (riffusion-client/start-riffusion-server)
-      (Thread/sleep 30000)
-      ;(riffusion-client/start-streamlit)
-      (riffusion-client/post-riffusion-request full-prompt riffusion-start-seed)
-    )
+      (Thread/sleep 30000)                                  ;TODO
+      (riffusion-client/post-riffusion-request full-prompt riffusion-start-seed))
 
     ::frames-to-video
     ;(video-utils/generate-video-from-frames (:text full-prompt))
