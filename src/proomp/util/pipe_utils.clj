@@ -15,6 +15,8 @@
                                     StableDiffusionImg2ImgPipeline
                                     StableDiffusionUpscalePipeline]])
 
+;(require-python '[riffusion :refer [RiffusionPipeline]])
+
 (defonce device "cuda")
 (defonce enable-attention-slicing? true)
 (defonce use-memory-efficient-attention? true)
@@ -48,6 +50,7 @@
 (defn ->text-to-image-pipeline [] (->pipeline StableDiffusionPipeline config/model-path))
 (defn ->image-to-image-pipeline [] (->pipeline StableDiffusionImg2ImgPipeline config/model-path))
 (defn ->upscaler-pipeline [] (->pipeline StableDiffusionUpscalePipeline config/upscaler-model-path))
+;(defn ->riffusion-pipeline [] (->pipeline RiffusionPipeline config/riffusion-model-path))
 
 (defn- ->generator [seed] (py. (py/$c torch/Generator device) "manual_seed" seed))
 

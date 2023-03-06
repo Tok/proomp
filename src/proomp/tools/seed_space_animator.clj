@@ -12,7 +12,8 @@
     [proomp.util.image-utils :as image-utils]
     [proomp.util.pipe-utils :as pipe-utils]))
 
-(require-python 'torch '[torch.cuda :as cuda] 'transformers)
+(require-python 'torch '[torch.cuda :as cuda])
+(require-python 'transformers)
 (require-python '[PIL.Image :refer [open new]])
 
 (defn- initial-frame [initial-frame-file-name]

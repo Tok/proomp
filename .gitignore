@@ -17,3 +17,4 @@ pom.xml.asc
 /.lein-*
 /.nrepl-port
 generated-media/
+/riffusion/

@@ -13,6 +13,11 @@
 (defonce upscaler-model-path (str workspace-path "models\\stable-diffusion-x4-upscaler\\"))
 (log/debug {:upscaler-model-path upscaler-model-path})
 
+(defonce riffusion-model-path (str workspace-path "models\\riffusion-model-v1\\"))
+(log/debug {:riffusion-model-path riffusion-model-path})
+(defonce riffusion-path (str workspace-path "riffusion\\"))
+(log/debug {:riffusion-path riffusion-path})
+
 (defonce media-path (str workspace-path "generated-media\\"))
 (log/debug {:media-path media-path})
 
@@ -27,3 +32,5 @@
   :python-executable (str python-home "python.exe")
   :library-path (str python-home "python311.dll")
   :python-verbose true)
+
+(py/import-module "riffusion")

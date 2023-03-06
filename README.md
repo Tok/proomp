@@ -34,6 +34,14 @@ In case of problems, see `Trouble-Shooting` and `Manual python dependency setup`
     git lfs install
     git lfs clone https://huggingface.co/stabilityai/stable-diffusion-2-1
     git lfs clone https://huggingface.co/stabilityai/stable-diffusion-x4-upscaler
+    git lfs clone https://huggingface.co/riffusion/riffusion-model-v1
+
+### Add Riffusion
+See https://github.com/riffusion/riffusion
+
+    git submodule add https://github.com/riffusion/riffusion.git
+
+> &#x2139; Make sure the riffusion directory is available as a python-module.
 
 ### Leiningen And Clojure
 > &#x2139;  Use JDK 17 or similar, i.e. from https://adoptium.net/.
@@ -98,6 +106,10 @@ something like the following *should* work:
     pip install --upgrade safetensors
     pip install --upgrade xformers
 
+install ffmpeg: https://ffmpeg.org/download.html
+  * the ffmpeg version provided by pip may not work without additional tinkering
+install everything in https://raw.githubusercontent.com/riffusion/riffusion/main/requirements.txt
+
 * numpy and Pillow are required to install torch. 
 * torch requires the CUDA compiler (NVCC).
   * Python version 3.11, requires a nightly torch build since there's no official support.
@@ -105,3 +117,5 @@ something like the following *should* work:
     * To do so, manually fix the version numbers in the commands or in `requirements.txt`
 * diffusers require torch and shouldn't be higher than version 0.11.0 (for now).
 * scikit-image depends on numpy and may require VS C++ Build Tools to compile.
+* xformers are used to allow higher resolutions with less VRAM.
+* ffmpeg is used by Riffusion.

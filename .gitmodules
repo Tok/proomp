@@ -1,0 +1,3 @@
+[submodule "riffusion"]
+	path = riffusion
+	url = https://github.com/riffusion/riffusion.git

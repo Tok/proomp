@@ -1,7 +1,9 @@
 (defproject proomp "0.7.0-SNAPSHOT"
   :description "A Clojure workspace for Stable Diffusion"
   :dependencies [[org.clojure/clojure "1.11.1"]
+                 [org.clojure/data.json "2.4.0"]
                  [clojure-interop/javax.imageio "1.0.5"]
+                 [http-kit "2.7.0-SNAPSHOT"]
                  [cambium/cambium.core "1.1.1"]
                  [cambium/cambium.codec-simple "1.0.0"]
                  [cambium/cambium.logback.core "0.4.5"]
