@@ -2,11 +2,12 @@
   (:require
     [cambium.core :as log]
     [clojure.data.json :as json]
+    [clojure.java.io :as io]
     [clojure.java.io :refer [file output-stream]]
     [clojure.string :as str]
     [org.httpkit.client :as http]
     [libpython-clj2.require :refer [require-python]]
-    [proomp.domain.prompt.prompt :as prom])
+    [proomp.util.file-utils :as file-utils])
   (:import (proomp.domain.prompt.prompt Prompt))
   (:import java.util.Base64))
 
@@ -15,6 +16,7 @@
 (defonce riffusion-host "127.0.0.1")
 (defonce riffusion-port 3013)
 
+(defonce duration-s 180)
 (defonce denoising 0.75)
 (defonce guidance 7.0)
 (defonce num-inference-steps 50)
@@ -30,59 +32,66 @@
     (future (os/system command))))
 
 (defn- ->riffusion-prompt [prompt seed]
-  {:prompt          (prom/full-prompt prompt)
-   :negative_prompt (prom/full-negative-prompt prompt)
+  {:prompt          (:text prompt)
+   :negative_prompt (:negative-text prompt)
    :seed            seed
    :denoising       denoising
    :guidance        guidance})
 
-(defn- ->riffusion-request [prompt seed]
+(defn- ->riffusion-request [prompt seed alpha]
   {:start               (->riffusion-prompt prompt seed)
    :end                 (->riffusion-prompt prompt (inc seed))
-   :alpha               0.5                                 ;TODO map range from 0.0 to 1.0
+   :alpha               alpha
    :num_inference_steps num-inference-steps
    :seed_image_id       seed-image-id})
 
 (defn- base64->bin [base64] (.decode (Base64/getDecoder) base64))
-(defn- base64->file! [target-file base64]
-  (let [bytes (base64->bin base64)]
+(defn- base64->file! [target-file-name base64]
+  (let [bytes (base64->bin base64)
+        target-file (file target-file-name)]
+    (io/make-parents target-file-name)
     (log/info (str "Saving: " target-file))
     (with-open [out (output-stream target-file)]
       (.write out bytes))))
 
-(def ^:private audio-out "../generated-media/riffusion.mp3")
-(def ^:private image-out "../generated-media/riffusion.png")
 (defn- extract-base64 [data]
   (str/replace (last (str/split data #",")) #"\n" ""))
-(defn- data->mp3! [data]
-  (base64->file! (file audio-out) (extract-base64 data)))
-(defn- data->image! [data]
-  (base64->file! (file image-out) (extract-base64 data)))
+(defn- data->mp3! [prompt-text data step]
+  (let [file-name (file-utils/audio-name prompt-text step)]
+    (base64->file! file-name (extract-base64 data))))
+(defn- data->image! [prompt-text data step]
+  (let [file-name (file-utils/spectrogram-name prompt-text step)]
+    (base64->file! file-name (extract-base64 data))))
 
 (defn post-riffusion-request [^Prompt prompt seed]
-  (log/debug {:body (json/write-str (->riffusion-request prompt seed))})
   (log/info {:denoising denoising})
   (log/info {:guidance guidance})
   (log/info {:num-inference-steps num-inference-steps})
   (log/info {:seed-image-id seed-image-id})
-  (http/post
-    "http://127.0.0.1:3013/run_inference/"
-    {:body (json/write-str (->riffusion-request prompt seed))}
-    (fn [{:keys [status headers body error opts]}]
-      (try
-        (if error
-          (log/error (str "Fail: " error))
-          (let [response (json/read-str body)
-                image-data (get response "image")
-                audio-data (get response "audio")
-                duration-s (get response "duration_s")]
-            (log/info {:status status :duration-s duration-s})
-            (log/debug {:image-data image-data})
-            (log/debug {:audio-data audio-data})
-            (data->image! image-data)
-            (data->mp3! audio-data)
-            (System/exit 0)))
-        ;If there's not enough memory available,
-        ;Riffusion may respond with an error-xml:
-        ;"JSON error (unexpected character): <"
-        (catch Exception e (log/error {:e e}))))))
+  (let [step-s 5
+        num-steps (inc (int (/ duration-s step-s)))]
+    (doseq [step (range num-steps)]
+      (let [alpha (/ step num-steps)
+            request {:body (json/write-str (->riffusion-request prompt seed alpha))}]
+        (log/debug {:request request})
+        (http/post
+          "http://127.0.0.1:3013/run_inference/"
+          request
+          (fn [{:keys [status headers body error opts]}]
+            (try
+              (if error
+                (log/error (str "Fail: " error))
+                (let [response (json/read-str body)
+                      image-data (get response "image")
+                      audio-data (get response "audio")
+                      duration-s (get response "duration_s")]
+                  (log/info {:status status :duration-s duration-s})
+                  (log/debug {:image-data image-data})
+                  (log/debug {:audio-data audio-data})
+                  (data->image! (:text prompt) image-data step)
+                  (data->mp3! (:text prompt) audio-data step)))
+              ;If there's not enough memory available,
+              ;Riffusion may respond with an error-xml:
+              ;"JSON error (unexpected character): <"
+              (catch Exception e (log/error {:e e})))
+            (if (= (inc step) num-steps) (System/exit 0))))))))
