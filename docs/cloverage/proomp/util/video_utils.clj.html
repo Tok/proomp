@@ -4,7 +4,7 @@
   <link rel="stylesheet" href="../../coverage.css"/>  <title> proomp/util/video_utils.clj </title>
  </head>
  <body>
-<span class="partial" title="1 out of 131 forms covered">
+<span class="partial" title="1 out of 259 forms covered">
                 001&nbsp;&nbsp;(ns&nbsp;proomp.util.video-utils
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
@@ -59,7 +59,7 @@
                 018&nbsp;&nbsp;
                 </span><br/>
 <span class="covered" title="2 out of 2 forms covered">
-                019&nbsp;&nbsp;(def&nbsp;^:const&nbsp;frames-per-second&nbsp;60)
+                019&nbsp;&nbsp;(def&nbsp;^:const&nbsp;frames-per-second&nbsp;30)
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
                 020&nbsp;&nbsp;
@@ -226,25 +226,25 @@
 <span class="blank" title="0 out of 0 forms covered">
                 074&nbsp;&nbsp;
                 </span><br/>
-<span class="partial" title="1 out of 2 forms covered">
+<span class="partial" title="1 out of 4 forms covered">
                 075&nbsp;&nbsp;(defn&nbsp;animate-h264&nbsp;[frames&nbsp;^String&nbsp;file-name]
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
                 076&nbsp;&nbsp;&nbsp;&nbsp;&quot;Creates&nbsp;a&nbsp;soundless&nbsp;H.264&#x2F;MPEG-4&nbsp;AVC&nbsp;video&nbsp;from&nbsp;the&nbsp;frames.&quot;
                 </span><br/>
-<span class="not-covered" title="0 out of 3 forms covered">
+<span class="not-covered" title="0 out of 6 forms covered">
                 077&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[output&nbsp;(File.&nbsp;file-name)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;assert&nbsp;.mp4
                 </span><br/>
-<span class="not-covered" title="0 out of 2 forms covered">
+<span class="not-covered" title="0 out of 4 forms covered">
                 078&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;channel&nbsp;(NIOUtils&#x2F;writableChannel&nbsp;output)
                 </span><br/>
-<span class="not-covered" title="0 out of 3 forms covered">
+<span class="not-covered" title="0 out of 6 forms covered">
                 079&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rat&nbsp;(Rational.&nbsp;frames-per-second&nbsp;1)
                 </span><br/>
-<span class="not-covered" title="0 out of 3 forms covered">
+<span class="not-covered" title="0 out of 6 forms covered">
                 080&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;encoder&nbsp;(SequenceEncoder&#x2F;createWithFps&nbsp;channel&nbsp;rat)]
                 </span><br/>
-<span class="not-covered" title="0 out of 1766 forms covered">
+<span class="not-covered" title="0 out of 3080 forms covered">
                 081&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;info&nbsp;{:frames-per-second&nbsp;frames-per-second})
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
@@ -272,37 +272,55 @@
                 089&nbsp;&nbsp;
                 </span><br/>
 <span class="partial" title="1 out of 2 forms covered">
-                090&nbsp;&nbsp;(defn&nbsp;generate-video-from-frames&nbsp;[prompt-text]
+                090&nbsp;&nbsp;(defn-&nbsp;generate-video&nbsp;[prompt-text&nbsp;frame-path]
+                </span><br/>
+<span class="not-covered" title="0 out of 8 forms covered">
+                091&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[frame-dir&nbsp;(clojure.java.io&#x2F;file&nbsp;frame-path)
+                </span><br/>
+<span class="not-covered" title="0 out of 14 forms covered">
+                092&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;frames&nbsp;(map&nbsp;image-utils&#x2F;open-buffered-image-file&nbsp;(.listFiles&nbsp;(io&#x2F;file&nbsp;frame-dir)))
+                </span><br/>
+<span class="not-covered" title="0 out of 14 forms covered">
+                093&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output-file-name&nbsp;(str&nbsp;(file-utils&#x2F;image-dir&nbsp;prompt-text)&nbsp;prompt-text&nbsp;&quot;.mp4&quot;)]
+                </span><br/>
+<span class="not-covered" title="0 out of 3080 forms covered">
+                094&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;info&nbsp;{:prompt-text&nbsp;prompt-text})
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
-                091&nbsp;&nbsp;&nbsp;&nbsp;&quot;Generates&nbsp;a&nbsp;video&nbsp;from&nbsp;the&nbsp;frame&nbsp;directory,&nbsp;matching&nbsp;the&nbsp;current&nbsp;prompt.&quot;
-                </span><br/>
-<span class="not-covered" title="0 out of 4 forms covered">
-                092&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[frame-path&nbsp;(file-utils&#x2F;animation-frame-dir&nbsp;prompt-text)
-                </span><br/>
-<span class="not-covered" title="0 out of 3 forms covered">
-                093&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;frame-dir&nbsp;(clojure.java.io&#x2F;file&nbsp;frame-path)
-                </span><br/>
-<span class="not-covered" title="0 out of 7 forms covered">
-                094&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;frames&nbsp;(map&nbsp;image-utils&#x2F;open-buffered-image-file&nbsp;(.listFiles&nbsp;(io&#x2F;file&nbsp;frame-dir)))
-                </span><br/>
-<span class="not-covered" title="0 out of 7 forms covered">
-                095&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output-file-name&nbsp;(str&nbsp;(file-utils&#x2F;image-dir&nbsp;prompt-text)&nbsp;prompt-text&nbsp;&quot;.mp4&quot;)]
-                </span><br/>
-<span class="not-covered" title="0 out of 1330 forms covered">
-                096&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;info&nbsp;{:prompt-text&nbsp;prompt-text})
+                095&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;info&nbsp;{:frame-path&nbsp;frame-path})
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
-                097&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;info&nbsp;{:frame-path&nbsp;frame-path})
+                096&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;info&nbsp;{:output-file-name&nbsp;output-file-name})
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
-                098&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;info&nbsp;{:output-file-name&nbsp;output-file-name})
+                097&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(animate-h264&nbsp;frames&nbsp;output-file-name)
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
-                099&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(animate-h264&nbsp;frames&nbsp;output-file-name)
+                098&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;info&nbsp;{:done&nbsp;&quot;Video&nbsp;generation&nbsp;completed.&quot;})))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                099&nbsp;&nbsp;
+                </span><br/>
+<span class="partial" title="1 out of 2 forms covered">
+                100&nbsp;&nbsp;(defn&nbsp;generate-video-from-frames&nbsp;[prompt-text]
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
-                100&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;info&nbsp;{:done&nbsp;&quot;Video&nbsp;generation&nbsp;completed.&quot;})))
+                101&nbsp;&nbsp;&nbsp;&nbsp;&quot;Generates&nbsp;a&nbsp;video&nbsp;from&nbsp;the&nbsp;frame&nbsp;directory,&nbsp;matching&nbsp;the&nbsp;current&nbsp;prompt.&quot;
+                </span><br/>
+<span class="not-covered" title="0 out of 6 forms covered">
+                102&nbsp;&nbsp;&nbsp;&nbsp;(generate-video&nbsp;prompt-text&nbsp;(file-utils&#x2F;animation-frame-dir&nbsp;prompt-text)))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                103&nbsp;&nbsp;
+                </span><br/>
+<span class="partial" title="1 out of 2 forms covered">
+                104&nbsp;&nbsp;(defn&nbsp;generate-video-from-upscaled-frames&nbsp;[prompt-text]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                105&nbsp;&nbsp;&nbsp;&nbsp;&quot;Generates&nbsp;a&nbsp;video&nbsp;from&nbsp;the&nbsp;upscaled&nbsp;frame&nbsp;directory,&nbsp;matching&nbsp;the&nbsp;current&nbsp;prompt.&quot;
+                </span><br/>
+<span class="not-covered" title="0 out of 6 forms covered">
+                106&nbsp;&nbsp;&nbsp;&nbsp;(generate-video&nbsp;prompt-text&nbsp;(file-utils&#x2F;upscaled-frame-dir&nbsp;prompt-text)))
                 </span><br/>
  </body>
 </html>

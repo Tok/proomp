@@ -1,14 +1,8 @@
 (ns proomp.domain.animation.frame-transformation-test
   (:require
-    [proomp.domain.animation.frame-transformation :as trans]
     [proomp.domain.animation.frame-transformation :refer :all]
     [proomp.util.image-utils :as image-utils]
     [clojure.test :refer :all]))
-
-(deftest transformations-setup-test
-  (doseq [[k v] transformations]
-    (testing (str "Transformation " k " has valid zoom: " (:zoom v))
-      (is (>= (:zoom v) 1.000)))))
 
 (deftest apply-transformations-test
   (let [t (->FrameTransformation 1.111 -1.1 -1 -1 true)

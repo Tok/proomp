@@ -4,74 +4,74 @@
   <link rel="stylesheet" href="../coverage.css"/>  <title> proomp/core.clj </title>
  </head>
  <body>
-<span class="partial" title="1 out of 72 forms covered">
+<span class="partial" title="1 out of 259 forms covered">
                 001&nbsp;&nbsp;(ns&nbsp;proomp.core
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
                 002&nbsp;&nbsp;&nbsp;&nbsp;(:require&nbsp;[proomp.config&nbsp;:as&nbsp;config]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;don&#x27;t&nbsp;remove&nbsp;this
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
-                003&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[proomp.animator.seed-space-animator&nbsp;:as&nbsp;seed-space-animator]
+                003&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[proomp.tools.seed-space-animator&nbsp;:as&nbsp;seed-space-animator]
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
-                004&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[proomp.domain.prompt.prompt&nbsp;:as&nbsp;prompt]
+                004&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[proomp.tools.upscaler&nbsp;:as&nbsp;upscaler]
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
-                005&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[proomp.util.file-utils&nbsp;:as&nbsp;file-utils]
+                005&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[proomp.tools.riffusion-client&nbsp;:as&nbsp;riffusion-client]
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
-                006&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[proomp.util.image-utils&nbsp;:as&nbsp;image-utils]
+                006&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[proomp.domain.prompt.prompt&nbsp;:as&nbsp;prompt]
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
-                007&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[proomp.util.pipe-utils&nbsp;:as&nbsp;pipe-utils]
+                007&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[proomp.util.file-utils&nbsp;:as&nbsp;file-utils]
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
-                008&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[proomp.util.video-utils&nbsp;:as&nbsp;video-utils]
+                008&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[proomp.util.image-utils&nbsp;:as&nbsp;image-utils]
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
-                009&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[cambium.core&nbsp;:as&nbsp;log]))
+                009&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[proomp.util.pipe-utils&nbsp;:as&nbsp;pipe-utils]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                010&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[proomp.util.video-utils&nbsp;:as&nbsp;video-utils]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                011&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[cambium.core&nbsp;:as&nbsp;log]))
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
-                010&nbsp;&nbsp;
+                012&nbsp;&nbsp;
                 </span><br/>
-<span class="partial" title="10 out of 11 forms covered">
-                011&nbsp;&nbsp;(defonce&nbsp;^:private&nbsp;modes&nbsp;[::animation&nbsp;::images&nbsp;::video])
+<span class="not-tracked" title="0 out of 0 forms covered">
+                013&nbsp;&nbsp;;(defonce&nbsp;action&nbsp;::generate-seed-images)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                014&nbsp;&nbsp;;(defonce&nbsp;action&nbsp;::generate-frames)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                015&nbsp;&nbsp;;(defonce&nbsp;action&nbsp;::upscale-frames)
                 </span><br/>
 <span class="partial" title="7 out of 8 forms covered">
-                012&nbsp;&nbsp;(defonce&nbsp;active-mode&nbsp;::images)
+                016&nbsp;&nbsp;(defonce&nbsp;action&nbsp;::generate-audio)
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
-                013&nbsp;&nbsp;;(defonce&nbsp;active-mode&nbsp;::animation)
-                </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                014&nbsp;&nbsp;;(defonce&nbsp;active-mode&nbsp;::video)
+                017&nbsp;&nbsp;;(defonce&nbsp;action&nbsp;::frames-to-video)
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
-                015&nbsp;&nbsp;
+                018&nbsp;&nbsp;
                 </span><br/>
 <span class="partial" title="7 out of 8 forms covered">
-                016&nbsp;&nbsp;(defonce&nbsp;text&nbsp;&quot;Extreme&nbsp;Piano&nbsp;Parkour&quot;)
+                019&nbsp;&nbsp;(defonce&nbsp;text&nbsp;&quot;Caliper&nbsp;Remote&quot;)
                 </span><br/>
 <span class="partial" title="7 out of 8 forms covered">
-                017&nbsp;&nbsp;(defonce&nbsp;negative-text&nbsp;&quot;&quot;)
+                020&nbsp;&nbsp;(defonce&nbsp;negative-text&nbsp;&quot;&quot;)
                 </span><br/>
 <span class="partial" title="7 out of 8 forms covered">
-                018&nbsp;&nbsp;(defonce&nbsp;additions&nbsp;&quot;((photo))&nbsp;(real)&nbsp;sharp&nbsp;focused&nbsp;urban&nbsp;action&quot;)
+                021&nbsp;&nbsp;(defonce&nbsp;additions&nbsp;&quot;((sharp))&nbsp;(focussed)&nbsp;(photo)&quot;)
                 </span><br/>
 <span class="partial" title="7 out of 8 forms covered">
-                019&nbsp;&nbsp;(defonce&nbsp;negative-additions&nbsp;&quot;(blurry)&nbsp;(drawing)&nbsp;(cgi)&nbsp;grayscale&quot;)
+                022&nbsp;&nbsp;(defonce&nbsp;negative-additions&nbsp;&quot;(drawing)&nbsp;cgi&nbsp;blurry&nbsp;grayscale&quot;)
                 </span><br/>
 <span class="partial" title="12 out of 13 forms covered">
-                020&nbsp;&nbsp;(defonce&nbsp;full-prompt&nbsp;(prompt&#x2F;-&gt;Prompt&nbsp;text&nbsp;negative-text&nbsp;additions&nbsp;negative-additions))
-                </span><br/>
-<span class="blank" title="0 out of 0 forms covered">
-                021&nbsp;&nbsp;
-                </span><br/>
-<span class="partial" title="7 out of 8 forms covered">
-                022&nbsp;&nbsp;(defonce&nbsp;start-seed&nbsp;0)
-                </span><br/>
-<span class="partial" title="7 out of 8 forms covered">
-                023&nbsp;&nbsp;(defonce&nbsp;number-of-images-to-generate&nbsp;1000)
+                023&nbsp;&nbsp;(defonce&nbsp;full-prompt&nbsp;(prompt&#x2F;-&gt;Prompt&nbsp;text&nbsp;negative-text&nbsp;additions&nbsp;negative-additions))
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
                 024&nbsp;&nbsp;
@@ -80,76 +80,136 @@
                 025&nbsp;&nbsp;;todo&nbsp;make&nbsp;sure&nbsp;seed&nbsp;pic&nbsp;exists
                 </span><br/>
 <span class="partial" title="7 out of 8 forms covered">
-                026&nbsp;&nbsp;(defonce&nbsp;animation-start-seed&nbsp;11)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;choose&nbsp;a&nbsp;good&nbsp;seed&nbsp;by&nbsp;generating&nbsp;::images&nbsp;first
+                026&nbsp;&nbsp;(defonce&nbsp;animation-start-seed&nbsp;21)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;choose&nbsp;a&nbsp;good&nbsp;seed&nbsp;with&nbsp;::generate-seed-images
+                </span><br/>
+<span class="partial" title="7 out of 8 forms covered">
+                027&nbsp;&nbsp;(defonce&nbsp;riffusion-start-seed&nbsp;0)
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
-                027&nbsp;&nbsp;
+                028&nbsp;&nbsp;
                 </span><br/>
 <span class="covered" title="1 out of 1 forms covered">
-                028&nbsp;&nbsp;(defn-&nbsp;do-generation!&nbsp;[pipe&nbsp;seed&nbsp;file-name]
+                029&nbsp;&nbsp;(defn-&nbsp;do-generation!&nbsp;[pipe&nbsp;seed&nbsp;file-name]
                 </span><br/>
 <span class="not-covered" title="0 out of 6 forms covered">
-                029&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[image&nbsp;(pipe-utils&#x2F;generate-image&nbsp;pipe&nbsp;full-prompt&nbsp;seed)]
+                030&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[image&nbsp;(pipe-utils&#x2F;generate-image&nbsp;pipe&nbsp;full-prompt&nbsp;seed)]
                 </span><br/>
 <span class="not-covered" title="0 out of 4 forms covered">
-                030&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(image-utils&#x2F;save-py-image!&nbsp;image&nbsp;file-name)
+                031&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(image-utils&#x2F;save-py-image!&nbsp;image&nbsp;file-name)
                 </span><br/>
 <span class="not-covered" title="0 out of 1 forms covered">
-                031&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image))
+                032&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image))
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
-                032&nbsp;&nbsp;
+                033&nbsp;&nbsp;
                 </span><br/>
-<span class="covered" title="1 out of 1 forms covered">
-                033&nbsp;&nbsp;(defn-&nbsp;generate-image!&nbsp;[pipe&nbsp;seed]
+<span class="partial" title="1 out of 2 forms covered">
+                034&nbsp;&nbsp;(defn-&nbsp;generate-image!&nbsp;[pipe&nbsp;seed]
                 </span><br/>
-<span class="not-covered" title="0 out of 1692 forms covered">
-                034&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;trace&nbsp;{:seed&nbsp;seed})
-                </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                035&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[file-name&nbsp;(file-utils&#x2F;file-name&nbsp;(:text&nbsp;full-prompt)&nbsp;seed)]
+<span class="not-covered" title="0 out of 3087 forms covered">
+                035&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;trace&nbsp;{:seed&nbsp;seed})
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
-                036&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(if&nbsp;(not&nbsp;(file-utils&#x2F;file-exists?&nbsp;file-name))
+                036&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[file-name&nbsp;(file-utils&#x2F;file-name&nbsp;(:text&nbsp;full-prompt)&nbsp;seed)]
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
-                037&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(do-generation!&nbsp;pipe&nbsp;seed&nbsp;file-name)
+                037&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(if&nbsp;(not&nbsp;(file-utils&#x2F;file-exists?&nbsp;file-name))
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
-                038&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;warn&nbsp;{:skip-existing&nbsp;file-name}))))
+                038&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(do-generation!&nbsp;pipe&nbsp;seed&nbsp;file-name)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                039&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;warn&nbsp;{:skip-existing&nbsp;file-name}))))
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
-                039&nbsp;&nbsp;
+                040&nbsp;&nbsp;
                 </span><br/>
-<span class="covered" title="1 out of 1 forms covered">
-                040&nbsp;&nbsp;(defn&nbsp;-main&nbsp;[]
+<span class="partial" title="1 out of 2 forms covered">
+                041&nbsp;&nbsp;(defn&nbsp;-main&nbsp;[]
                 </span><br/>
-<span class="not-covered" title="0 out of 4 forms covered">
-                041&nbsp;&nbsp;&nbsp;&nbsp;(if&nbsp;(=&nbsp;active-mode&nbsp;::animation)
+<span class="not-covered" title="0 out of 68 forms covered">
+                042&nbsp;&nbsp;&nbsp;&nbsp;(condp&nbsp;=&nbsp;action
                 </span><br/>
-<span class="not-covered" title="0 out of 3 forms covered">
-                042&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[pipe&nbsp;(pipe-utils&#x2F;-&gt;image-to-image-pipeline)
-                </span><br/>
-<span class="not-covered" title="0 out of 3 forms covered">
-                043&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;frame-count&nbsp;(*&nbsp;3600&nbsp;5)]
+<span class="not-tracked" title="0 out of 0 forms covered">
+                043&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::generate-frames
                 </span><br/>
 <span class="not-covered" title="0 out of 6 forms covered">
-                044&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(seed-space-animator&#x2F;animate&nbsp;pipe&nbsp;full-prompt&nbsp;animation-start-seed&nbsp;frame-count))
+                044&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[pipe&nbsp;(pipe-utils&#x2F;-&gt;image-to-image-pipeline)
                 </span><br/>
-<span class="not-covered" title="0 out of 4 forms covered">
-                045&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(if&nbsp;(=&nbsp;active-mode&nbsp;::images)
+<span class="not-covered" title="0 out of 6 forms covered">
+                045&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;frame-count&nbsp;(*&nbsp;3600&nbsp;5)]
                 </span><br/>
-<span class="not-covered" title="0 out of 3 forms covered">
-                046&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[pipe&nbsp;(pipe-utils&#x2F;-&gt;text-to-image-pipeline)]
+<span class="not-covered" title="0 out of 12 forms covered">
+                046&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(seed-space-animator&#x2F;animate&nbsp;pipe&nbsp;full-prompt&nbsp;animation-start-seed&nbsp;frame-count))
                 </span><br/>
-<span class="not-covered" title="0 out of 36 forms covered">
-                047&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(doseq&nbsp;[seed&nbsp;(range&nbsp;start-seed&nbsp;(+&nbsp;start-seed&nbsp;number-of-images-to-generate))]
+<span class="blank" title="0 out of 0 forms covered">
+                047&nbsp;&nbsp;
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                048&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::generate-seed-images
+                </span><br/>
+<span class="not-covered" title="0 out of 10 forms covered">
+                049&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[pipe&nbsp;(pipe-utils&#x2F;-&gt;text-to-image-pipeline)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                050&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number-of-images-to-generate&nbsp;1000
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                051&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;start-seed&nbsp;0]
+                </span><br/>
+<span class="not-covered" title="0 out of 72 forms covered">
+                052&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(doseq&nbsp;[seed&nbsp;(range&nbsp;start-seed&nbsp;(+&nbsp;start-seed&nbsp;number-of-images-to-generate))]
+                </span><br/>
+<span class="not-covered" title="0 out of 16 forms covered">
+                053&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(generate-image!&nbsp;pipe&nbsp;seed)))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                054&nbsp;&nbsp;
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                055&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::upscale-frames
+                </span><br/>
+<span class="not-covered" title="0 out of 6 forms covered">
+                056&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[up-pipe&nbsp;(pipe-utils&#x2F;-&gt;upscaler-pipeline)]
                 </span><br/>
 <span class="not-covered" title="0 out of 8 forms covered">
-                048&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(generate-image!&nbsp;pipe&nbsp;seed)))
+                057&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(upscaler&#x2F;upscale-to-full-hd-portrait&nbsp;up-pipe&nbsp;full-prompt))
                 </span><br/>
-<span class="not-covered" title="0 out of 5 forms covered">
-                049&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(video-utils&#x2F;generate-video-from-frames&nbsp;(:text&nbsp;full-prompt)))))
+<span class="not-tracked" title="0 out of 0 forms covered">
+                058&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;(upscaler&#x2F;upscale-to-qhd-portrait&nbsp;up-pipe&nbsp;full-prompt))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                059&nbsp;&nbsp;
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                060&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::generate-audio
+                </span><br/>
+<span class="not-covered" title="0 out of 2 forms covered">
+                061&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(do
+                </span><br/>
+<span class="not-covered" title="0 out of 4 forms covered">
+                062&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(riffusion-client&#x2F;start-riffusion-server)
+                </span><br/>
+<span class="not-covered" title="0 out of 4 forms covered">
+                063&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Thread&#x2F;sleep&nbsp;30000)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;TODO
+                </span><br/>
+<span class="not-covered" title="0 out of 8 forms covered">
+                064&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(riffusion-client&#x2F;post-riffusion-request&nbsp;full-prompt&nbsp;riffusion-start-seed))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                065&nbsp;&nbsp;
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                066&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::frames-to-video
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                067&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;(video-utils&#x2F;generate-video-from-frames&nbsp;(:text&nbsp;full-prompt))
+                </span><br/>
+<span class="not-covered" title="0 out of 10 forms covered">
+                068&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(video-utils&#x2F;generate-video-from-upscaled-frames&nbsp;(:text&nbsp;full-prompt)))
+                </span><br/>
+<span class="not-covered" title="0 out of 3087 forms covered">
+                069&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;info&nbsp;&quot;Done.&quot;))
                 </span><br/>
  </body>
 </html>

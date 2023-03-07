@@ -5,8 +5,7 @@
             [libpython-clj2.require :refer [require-python]]
             [proomp.config :as config]
             [proomp.domain.image.resolution :as res]
-            [proomp.util.file-utils :as file-utils]
-            [proomp.util.image-utils :as image-utils])
+            [proomp.util.file-utils :as file-utils])
   (:import (java.awt RenderingHints)
            (java.awt.image BufferedImage RenderedImage)
            (java.io ByteArrayOutputStream File IOException)

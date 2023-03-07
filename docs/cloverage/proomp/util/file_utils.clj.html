@@ -40,35 +40,62 @@
 <span class="partial" title="1 out of 7 forms covered">
                 012&nbsp;&nbsp;(defn&nbsp;animation-frame-dir&nbsp;[prompt]&nbsp;(str&nbsp;(image-dir&nbsp;prompt)&nbsp;&quot;frames\\&quot;))
                 </span><br/>
+<span class="partial" title="1 out of 7 forms covered">
+                013&nbsp;&nbsp;(defn&nbsp;upscaled-frame-dir&nbsp;[prompt]&nbsp;(str&nbsp;(image-dir&nbsp;prompt)&nbsp;&quot;frames\\upscaled\\&quot;))
+                </span><br/>
+<span class="partial" title="1 out of 7 forms covered">
+                014&nbsp;&nbsp;(defn&nbsp;audio-dir&nbsp;[prompt]&nbsp;(str&nbsp;(image-dir&nbsp;prompt)&nbsp;&quot;riffusion\\audio\\&quot;))
+                </span><br/>
+<span class="partial" title="1 out of 7 forms covered">
+                015&nbsp;&nbsp;(defn&nbsp;spectrogram-dir&nbsp;[prompt]&nbsp;(str&nbsp;(image-dir&nbsp;prompt)&nbsp;&quot;riffusion\\spectrogram\\&quot;))
+                </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
-                013&nbsp;&nbsp;
+                016&nbsp;&nbsp;
                 </span><br/>
 <span class="covered" title="1 out of 1 forms covered">
-                014&nbsp;&nbsp;(defn&nbsp;file-name&nbsp;[prompt&nbsp;seed]
+                017&nbsp;&nbsp;(defn&nbsp;file-name&nbsp;[prompt&nbsp;seed]
                 </span><br/>
 <span class="covered" title="5 out of 5 forms covered">
-                015&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[padded-seed&nbsp;(format&nbsp;&quot;%04d&quot;&nbsp;seed)]
+                018&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[padded-seed&nbsp;(format&nbsp;&quot;%04d&quot;&nbsp;seed)]
                 </span><br/>
 <span class="covered" title="9 out of 9 forms covered">
-                016&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(str&nbsp;(image-dir&nbsp;prompt)&nbsp;padded-seed&nbsp;&quot;_&quot;&nbsp;prompt&nbsp;image-suffix)))
+                019&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(str&nbsp;(image-dir&nbsp;prompt)&nbsp;padded-seed&nbsp;&quot;_&quot;&nbsp;prompt&nbsp;image-suffix)))
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
-                017&nbsp;&nbsp;
+                020&nbsp;&nbsp;
                 </span><br/>
 <span class="covered" title="1 out of 1 forms covered">
-                018&nbsp;&nbsp;(defn&nbsp;frame-name&nbsp;[prompt&nbsp;seed&nbsp;iterations&nbsp;scale]
+                021&nbsp;&nbsp;(defn&nbsp;frame-name&nbsp;[prompt&nbsp;seed&nbsp;iterations&nbsp;scale]
                 </span><br/>
 <span class="not-covered" title="0 out of 9 forms covered">
-                019&nbsp;&nbsp;&nbsp;&nbsp;(str&nbsp;(animation-frame-dir&nbsp;prompt)&nbsp;&quot;\\&quot;
+                022&nbsp;&nbsp;&nbsp;&nbsp;(str&nbsp;(animation-frame-dir&nbsp;prompt)&nbsp;&quot;\\&quot;
                 </span><br/>
 <span class="not-covered" title="0 out of 8 forms covered">
-                020&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(format&nbsp;&quot;%06d&quot;&nbsp;seed)&nbsp;&quot;_&quot;&nbsp;scale&nbsp;&quot;_&quot;&nbsp;iterations&nbsp;&quot;_&quot;&nbsp;prompt&nbsp;image-suffix))
+                023&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(format&nbsp;&quot;%06d&quot;&nbsp;seed)&nbsp;&quot;_&quot;&nbsp;scale&nbsp;&quot;_&quot;&nbsp;iterations&nbsp;&quot;_&quot;&nbsp;prompt&nbsp;image-suffix))
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
-                021&nbsp;&nbsp;
+                024&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                025&nbsp;&nbsp;(defn&nbsp;audio-name&nbsp;[prompt-text&nbsp;step]
+                </span><br/>
+<span class="not-covered" title="0 out of 11 forms covered">
+                026&nbsp;&nbsp;&nbsp;&nbsp;(str&nbsp;(audio-dir&nbsp;prompt-text)&nbsp;&quot;\\&quot;&nbsp;(format&nbsp;&quot;%04d&quot;&nbsp;step)&nbsp;&quot;.mp3&quot;))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                027&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                028&nbsp;&nbsp;(defn&nbsp;spectrogram-name&nbsp;[prompt-text&nbsp;step]
+                </span><br/>
+<span class="not-covered" title="0 out of 11 forms covered">
+                029&nbsp;&nbsp;&nbsp;&nbsp;(str&nbsp;(spectrogram-dir&nbsp;prompt-text)&nbsp;&quot;\\&quot;&nbsp;(format&nbsp;&quot;%04d&quot;&nbsp;step)&nbsp;image-suffix))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                030&nbsp;&nbsp;
                 </span><br/>
 <span class="partial" title="1 out of 12 forms covered">
-                022&nbsp;&nbsp;(defn&nbsp;file-exists?&nbsp;[file-name]&nbsp;(py.&nbsp;(py&#x2F;$c&nbsp;pathlib&#x2F;Path&nbsp;file-name)&nbsp;&quot;is_file&quot;))
+                031&nbsp;&nbsp;(defn&nbsp;file-exists?&nbsp;[file-name]&nbsp;(py.&nbsp;(py&#x2F;$c&nbsp;pathlib&#x2F;Path&nbsp;file-name)&nbsp;&quot;is_file&quot;))
                 </span><br/>
  </body>
 </html>

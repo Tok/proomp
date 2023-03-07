@@ -4,7 +4,7 @@
   <link rel="stylesheet" href="../../coverage.css"/>  <title> proomp/util/pipe_utils.clj </title>
  </head>
  <body>
-<span class="partial" title="1 out of 74 forms covered">
+<span class="partial" title="1 out of 500 forms covered">
                 001&nbsp;&nbsp;(ns&nbsp;proomp.util.pipe-utils
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
@@ -37,152 +37,230 @@
 <span class="blank" title="0 out of 0 forms covered">
                 011&nbsp;&nbsp;
                 </span><br/>
-<span class="covered" title="5 out of 5 forms covered">
-                012&nbsp;&nbsp;(require-python&nbsp;&#x27;torch&nbsp;&#x27;[torch.cuda&nbsp;:as&nbsp;cuda]&nbsp;&#x27;transformers)
+<span class="covered" title="4 out of 4 forms covered">
+                012&nbsp;&nbsp;(require-python&nbsp;&#x27;torch&nbsp;&#x27;[torch.cuda&nbsp;:as&nbsp;cuda])
                 </span><br/>
 <span class="covered" title="3 out of 3 forms covered">
-                013&nbsp;&nbsp;(require-python&nbsp;&#x27;[diffusers&nbsp;:refer&nbsp;[StableDiffusionPipeline&nbsp;StableDiffusionImg2ImgPipeline]])
+                013&nbsp;&nbsp;(require-python&nbsp;&#x27;transformers)
+                </span><br/>
+<span class="covered" title="3 out of 3 forms covered">
+                014&nbsp;&nbsp;(require-python&nbsp;&#x27;[diffusers&nbsp;:refer&nbsp;[StableDiffusionPipeline
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                015&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;StableDiffusionImg2ImgPipeline
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                016&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;StableDiffusionUpscalePipeline]])
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
-                014&nbsp;&nbsp;
+                017&nbsp;&nbsp;
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                018&nbsp;&nbsp;;(require-python&nbsp;&#x27;[riffusion&nbsp;:refer&nbsp;[RiffusionPipeline]])
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                019&nbsp;&nbsp;
                 </span><br/>
 <span class="partial" title="7 out of 8 forms covered">
-                015&nbsp;&nbsp;(defonce&nbsp;device&nbsp;&quot;cuda&quot;)
+                020&nbsp;&nbsp;(defonce&nbsp;device&nbsp;&quot;cuda&quot;)
+                </span><br/>
+<span class="partial" title="7 out of 8 forms covered">
+                021&nbsp;&nbsp;(defonce&nbsp;enable-attention-slicing?&nbsp;true)
+                </span><br/>
+<span class="partial" title="7 out of 8 forms covered">
+                022&nbsp;&nbsp;(defonce&nbsp;use-memory-efficient-attention?&nbsp;true)
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
-                016&nbsp;&nbsp;
+                023&nbsp;&nbsp;
+                </span><br/>
+<span class="partial" title="1 out of 2 forms covered">
+                024&nbsp;&nbsp;(defn-&nbsp;clear-cuda-cache&nbsp;[]
+                </span><br/>
+<span class="not-covered" title="0 out of 4 forms covered">
+                025&nbsp;&nbsp;&nbsp;&nbsp;(cuda&#x2F;empty_cache)
+                </span><br/>
+<span class="not-covered" title="0 out of 3087 forms covered">
+                026&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;trace&nbsp;&quot;Cuda&nbsp;cache&nbsp;cleared.&quot;))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                027&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="8 out of 8 forms covered">
+                028&nbsp;&nbsp;(defn-&nbsp;send-to-device&nbsp;[pipe]&nbsp;(py.&nbsp;pipe&nbsp;&quot;to&quot;&nbsp;device))
+                </span><br/>
+<span class="partial" title="1 out of 2 forms covered">
+                029&nbsp;&nbsp;(defn-&nbsp;enable-attention-slicing&nbsp;[pipe]
+                </span><br/>
+<span class="not-covered" title="0 out of 12 forms covered">
+                030&nbsp;&nbsp;&nbsp;&nbsp;(py.&nbsp;pipe&nbsp;&quot;enable_attention_slicing&quot;)
+                </span><br/>
+<span class="not-covered" title="0 out of 2715 forms covered">
+                031&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;debug&nbsp;&quot;Attention&nbsp;slicing&nbsp;enabled.&quot;))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                032&nbsp;&nbsp;
+                </span><br/>
+<span class="partial" title="1 out of 2 forms covered">
+                033&nbsp;&nbsp;(defn-&nbsp;enable-memory-efficient-attention&nbsp;[pipe]
+                </span><br/>
+<span class="not-covered" title="0 out of 14 forms covered">
+                034&nbsp;&nbsp;&nbsp;&nbsp;(py.&nbsp;pipe&nbsp;&quot;set_use_memory_efficient_attention_xformers&quot;&nbsp;true)
+                </span><br/>
+<span class="not-covered" title="0 out of 3087 forms covered">
+                035&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;debug&nbsp;&quot;Memory&nbsp;efficient&nbsp;attention&nbsp;enabled.&quot;))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                036&nbsp;&nbsp;
+                </span><br/>
+<span class="partial" title="1 out of 2 forms covered">
+                037&nbsp;&nbsp;(defn-&nbsp;-&gt;pipeline&nbsp;[type&nbsp;model-path]
+                </span><br/>
+<span class="not-covered" title="0 out of 3080 forms covered">
+                038&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;debug&nbsp;&quot;Creating&nbsp;Pipeline.&quot;)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                039&nbsp;&nbsp;&nbsp;&nbsp;(clear-cuda-cache)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                040&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[pipe&nbsp;(py.&nbsp;type&nbsp;&quot;from_pretrained&quot;&nbsp;model-path
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                041&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:torch_dtype&nbsp;torch&#x2F;float16)]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                042&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(send-to-device&nbsp;pipe)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                043&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(if&nbsp;enable-attention-slicing?
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                044&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(enable-attention-slicing&nbsp;pipe))
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                045&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(if&nbsp;use-memory-efficient-attention?
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                046&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(enable-memory-efficient-attention&nbsp;pipe))
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                047&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;trace&nbsp;{:pipe&nbsp;pipe})
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                048&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pipe))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                049&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="5 out of 5 forms covered">
+                050&nbsp;&nbsp;(defn&nbsp;-&gt;text-to-image-pipeline&nbsp;[]&nbsp;(-&gt;pipeline&nbsp;StableDiffusionPipeline&nbsp;config&#x2F;model-path))
+                </span><br/>
+<span class="covered" title="5 out of 5 forms covered">
+                051&nbsp;&nbsp;(defn&nbsp;-&gt;image-to-image-pipeline&nbsp;[]&nbsp;(-&gt;pipeline&nbsp;StableDiffusionImg2ImgPipeline&nbsp;config&#x2F;model-path))
+                </span><br/>
+<span class="partial" title="1 out of 5 forms covered">
+                052&nbsp;&nbsp;(defn&nbsp;-&gt;upscaler-pipeline&nbsp;[]&nbsp;(-&gt;pipeline&nbsp;StableDiffusionUpscalePipeline&nbsp;config&#x2F;upscaler-model-path))
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                053&nbsp;&nbsp;;(defn&nbsp;-&gt;riffusion-pipeline&nbsp;[]&nbsp;(-&gt;pipeline&nbsp;RiffusionPipeline&nbsp;config&#x2F;riffusion-model-path))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                054&nbsp;&nbsp;
+                </span><br/>
+<span class="partial" title="1 out of 13 forms covered">
+                055&nbsp;&nbsp;(defn-&nbsp;-&gt;generator&nbsp;[seed]&nbsp;(py.&nbsp;(py&#x2F;$c&nbsp;torch&#x2F;Generator&nbsp;device)&nbsp;&quot;manual_seed&quot;&nbsp;seed))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                056&nbsp;&nbsp;
+                </span><br/>
+<span class="partial" title="1 out of 7 forms covered">
+                057&nbsp;&nbsp;(defn-&nbsp;extract-first-image&nbsp;[result]&nbsp;(nth&nbsp;(py.-&nbsp;result&nbsp;:images)&nbsp;0))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                058&nbsp;&nbsp;
                 </span><br/>
 <span class="covered" title="1 out of 1 forms covered">
-                017&nbsp;&nbsp;(defn-&nbsp;clear-cuda-cache&nbsp;[]
+                059&nbsp;&nbsp;(defn&nbsp;generate-image&nbsp;[pipe&nbsp;^Prompt&nbsp;prompt&nbsp;seed]
                 </span><br/>
 <span class="not-covered" title="0 out of 2 forms covered">
-                018&nbsp;&nbsp;&nbsp;&nbsp;(cuda&#x2F;empty_cache)
+                060&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[^Resolution&nbsp;resolution&nbsp;res&#x2F;active-image-resolution]
                 </span><br/>
-<span class="not-covered" title="0 out of 1740 forms covered">
-                019&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;trace&nbsp;&quot;Cuda&nbsp;cache&nbsp;cleared.&quot;))
+<span class="not-covered" title="0 out of 2 forms covered">
+                061&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(extract-first-image
                 </span><br/>
-<span class="blank" title="0 out of 0 forms covered">
-                020&nbsp;&nbsp;
+<span class="not-covered" title="0 out of 14 forms covered">
+                062&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(py&#x2F;$c&nbsp;pipe&nbsp;(prom&#x2F;full-prompt&nbsp;prompt)
                 </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                021&nbsp;&nbsp;(defn-&nbsp;send-to-device&nbsp;[pipe]&nbsp;(py.&nbsp;pipe&nbsp;&quot;to&quot;&nbsp;device))
+<span class="not-covered" title="0 out of 3 forms covered">
+                063&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:negative_prompt&nbsp;(prom&#x2F;full-negative-prompt&nbsp;prompt)
                 </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                022&nbsp;&nbsp;(defn-&nbsp;enable-attention-slicing&nbsp;[pipe]
+<span class="not-covered" title="0 out of 3 forms covered">
+                064&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:generator&nbsp;(-&gt;generator&nbsp;seed)
                 </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                023&nbsp;&nbsp;&nbsp;&nbsp;(py.&nbsp;pipe&nbsp;&quot;enable_attention_slicing&quot;)
+<span class="not-covered" title="0 out of 6 forms covered">
+                065&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:height&nbsp;(:h&nbsp;resolution)&nbsp;:width&nbsp;(:w&nbsp;resolution)
                 </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                024&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;debug&nbsp;&quot;Attention&nbsp;slicing&nbsp;enabled.&quot;))
+<span class="not-covered" title="0 out of 3 forms covered">
+                066&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:num_inference_steps&nbsp;(:iterations&nbsp;pipe-setup&#x2F;image-pipe-setup)
                 </span><br/>
-<span class="blank" title="0 out of 0 forms covered">
-                025&nbsp;&nbsp;
-                </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                026&nbsp;&nbsp;(defn-&nbsp;-&gt;pipeline&nbsp;[type&nbsp;model-path]
-                </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                027&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;debug&nbsp;&quot;Creating&nbsp;Pipeline.&quot;)
-                </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                028&nbsp;&nbsp;&nbsp;&nbsp;(clear-cuda-cache)
-                </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                029&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[pipe&nbsp;(py.&nbsp;type&nbsp;&quot;from_pretrained&quot;&nbsp;model-path
-                </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                030&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:torch_dtype&nbsp;torch&#x2F;float16)]
-                </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                031&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(send-to-device&nbsp;pipe)
-                </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                032&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(enable-attention-slicing&nbsp;pipe)
-                </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                033&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;trace&nbsp;{:pipe&nbsp;pipe})
-                </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                034&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pipe))
+<span class="not-covered" title="0 out of 3 forms covered">
+                067&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:guidance_scale&nbsp;(:scale&nbsp;pipe-setup&#x2F;image-pipe-setup)))))
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
-                035&nbsp;&nbsp;
+                068&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                069&nbsp;&nbsp;(defn&nbsp;generate-upscale&nbsp;[up-pipe&nbsp;^Prompt&nbsp;prompt&nbsp;image]
+                </span><br/>
+<span class="not-covered" title="0 out of 2 forms covered">
+                070&nbsp;&nbsp;&nbsp;&nbsp;(extract-first-image
+                </span><br/>
+<span class="not-covered" title="0 out of 16 forms covered">
+                071&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(py&#x2F;$c&nbsp;up-pipe&nbsp;(prom&#x2F;full-prompt&nbsp;prompt)
+                </span><br/>
+<span class="not-covered" title="0 out of 3 forms covered">
+                072&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:negative_prompt&nbsp;(prom&#x2F;full-negative-prompt&nbsp;prompt)
+                </span><br/>
+<span class="not-covered" title="0 out of 1 forms covered">
+                073&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:image&nbsp;image
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
-                036&nbsp;&nbsp;(defn&nbsp;-&gt;text-to-image-pipeline&nbsp;[]&nbsp;(-&gt;pipeline&nbsp;StableDiffusionPipeline&nbsp;config&#x2F;model-path))
+                074&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:num_inference_steps&nbsp;75
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
-                037&nbsp;&nbsp;(defn&nbsp;-&gt;image-to-image-pipeline&nbsp;[]&nbsp;(-&gt;pipeline&nbsp;StableDiffusionImg2ImgPipeline&nbsp;config&#x2F;model-path))
+                075&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:guidance_scale&nbsp;9.0
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                076&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:noise_level&nbsp;20)))
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
-                038&nbsp;&nbsp;
+                077&nbsp;&nbsp;
                 </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                039&nbsp;&nbsp;(defn-&nbsp;-&gt;generator&nbsp;[seed]&nbsp;(py.&nbsp;(py&#x2F;$c&nbsp;torch&#x2F;Generator&nbsp;device)&nbsp;&quot;manual_seed&quot;&nbsp;seed))
+<span class="covered" title="1 out of 1 forms covered">
+                078&nbsp;&nbsp;(defn&nbsp;generate-i2i&nbsp;[pipe&nbsp;^Prompt&nbsp;prompt&nbsp;seed&nbsp;init-image]
                 </span><br/>
-<span class="blank" title="0 out of 0 forms covered">
-                040&nbsp;&nbsp;
+<span class="not-covered" title="0 out of 2 forms covered">
+                079&nbsp;&nbsp;&nbsp;&nbsp;(extract-first-image
                 </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                041&nbsp;&nbsp;(defn-&nbsp;extract-first-image&nbsp;[result]&nbsp;(nth&nbsp;(py.-&nbsp;result&nbsp;:images)&nbsp;0))
+<span class="not-covered" title="0 out of 14 forms covered">
+                080&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(py&#x2F;$c&nbsp;pipe&nbsp;(prom&#x2F;full-prompt&nbsp;prompt)
                 </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                042&nbsp;&nbsp;(defn&nbsp;generate-image&nbsp;[pipe&nbsp;^Prompt&nbsp;prompt&nbsp;seed]
+<span class="not-covered" title="0 out of 3 forms covered">
+                081&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:negative_prompt&nbsp;(prom&#x2F;full-negative-prompt&nbsp;prompt)
                 </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                043&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[^Resolution&nbsp;resolution&nbsp;res&#x2F;active-image-resolution]
+<span class="not-covered" title="0 out of 1 forms covered">
+                082&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:init_image&nbsp;init-image
                 </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                044&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(extract-first-image
+<span class="not-covered" title="0 out of 3 forms covered">
+                083&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:strength&nbsp;(:noise&nbsp;pipe-setup&#x2F;i2i-pipe-setup)
                 </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                045&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(py&#x2F;$c&nbsp;pipe&nbsp;(prom&#x2F;full-prompt&nbsp;prompt)
+<span class="not-covered" title="0 out of 3 forms covered">
+                084&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:generator&nbsp;(-&gt;generator&nbsp;seed)
                 </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                046&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:negative_prompt&nbsp;(prom&#x2F;full-negative-prompt&nbsp;prompt)
+<span class="not-covered" title="0 out of 3 forms covered">
+                085&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:num_inference_steps&nbsp;(:iterations&nbsp;pipe-setup&#x2F;i2i-pipe-setup)
                 </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                047&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:generator&nbsp;(-&gt;generator&nbsp;seed)
-                </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                048&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:height&nbsp;(:h&nbsp;resolution)&nbsp;:width&nbsp;(:w&nbsp;resolution)
-                </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                049&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:num_inference_steps&nbsp;(:iterations&nbsp;pipe-setup&#x2F;image-pipe-setup)
-                </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                050&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:guidance_scale&nbsp;(:scale&nbsp;pipe-setup&#x2F;image-pipe-setup)))))
-                </span><br/>
-<span class="blank" title="0 out of 0 forms covered">
-                051&nbsp;&nbsp;
-                </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                052&nbsp;&nbsp;(defn&nbsp;generate-i2i&nbsp;[pipe&nbsp;^Prompt&nbsp;prompt&nbsp;seed&nbsp;init-image]
-                </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                053&nbsp;&nbsp;&nbsp;&nbsp;(extract-first-image
-                </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                054&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(py&#x2F;$c&nbsp;pipe&nbsp;(prom&#x2F;full-prompt&nbsp;prompt)
-                </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                055&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:negative_prompt&nbsp;(prom&#x2F;full-negative-prompt&nbsp;prompt)
-                </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                056&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:init_image&nbsp;init-image
-                </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                057&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:strength&nbsp;(:noise&nbsp;pipe-setup&#x2F;i2i-pipe-setup)
-                </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                058&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:generator&nbsp;(-&gt;generator&nbsp;seed)
-                </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                059&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:num_inference_steps&nbsp;(:iterations&nbsp;pipe-setup&#x2F;i2i-pipe-setup)
-                </span><br/>
-<span class="not-tracked" title="0 out of 0 forms covered">
-                060&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:guidance_scale&nbsp;(:scale&nbsp;pipe-setup&#x2F;i2i-pipe-setup))))
+<span class="not-covered" title="0 out of 3 forms covered">
+                086&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:guidance_scale&nbsp;(:scale&nbsp;pipe-setup&#x2F;i2i-pipe-setup))))
                 </span><br/>
  </body>
 </html>

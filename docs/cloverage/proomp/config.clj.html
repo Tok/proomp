@@ -4,7 +4,7 @@
   <link rel="stylesheet" href="../coverage.css"/>  <title> proomp/config.clj </title>
  </head>
  <body>
-<span class="partial" title="1 out of 372 forms covered">
+<span class="partial" title="1 out of 1117 forms covered">
                 001&nbsp;&nbsp;(ns&nbsp;proomp.config
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
@@ -16,14 +16,14 @@
 <span class="blank" title="0 out of 0 forms covered">
                 004&nbsp;&nbsp;
                 </span><br/>
-<span class="partial" title="1 out of 1598 forms covered">
+<span class="partial" title="1 out of 2792 forms covered">
                 005&nbsp;&nbsp;(log&#x2F;info&nbsp;&quot;Loading&nbsp;config.&quot;)
                 </span><br/>
 <span class="covered" title="2 out of 2 forms covered">
-                006&nbsp;&nbsp;(def&nbsp;^:private&nbsp;python-dir&nbsp;&quot;C:\\Users\\Zir\\AppData\\Local\\Programs\\Python\\&quot;)
+                006&nbsp;&nbsp;(def&nbsp;^:private&nbsp;python-home&nbsp;&quot;C:\\Users\\Zir\\AppData\\Local\\Programs\\Python\\Python311\\&quot;)
                 </span><br/>
-<span class="partial" title="1 out of 1438 forms covered">
-                007&nbsp;&nbsp;(log&#x2F;trace&nbsp;{:python-dir&nbsp;python-dir})
+<span class="partial" title="1 out of 2618 forms covered">
+                007&nbsp;&nbsp;(log&#x2F;info&nbsp;{:python-home&nbsp;python-home})
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
                 008&nbsp;&nbsp;
@@ -34,50 +34,83 @@
 <span class="partial" title="10 out of 11 forms covered">
                 010&nbsp;&nbsp;(defonce&nbsp;model-path&nbsp;(str&nbsp;workspace-path&nbsp;&quot;models\\stable-diffusion-2-1\\&quot;))
                 </span><br/>
-<span class="partial" title="1 out of 1858 forms covered">
+<span class="partial" title="1 out of 3276 forms covered">
                 011&nbsp;&nbsp;(log&#x2F;debug&nbsp;{:model-path&nbsp;model-path})
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
                 012&nbsp;&nbsp;
                 </span><br/>
 <span class="partial" title="10 out of 11 forms covered">
-                013&nbsp;&nbsp;(defonce&nbsp;media-path&nbsp;(str&nbsp;workspace-path&nbsp;&quot;generated-media\\&quot;))
+                013&nbsp;&nbsp;(defonce&nbsp;upscaler-model-path&nbsp;(str&nbsp;workspace-path&nbsp;&quot;models\\stable-diffusion-x4-upscaler\\&quot;))
                 </span><br/>
-<span class="partial" title="1 out of 1378 forms covered">
-                014&nbsp;&nbsp;(log&#x2F;debug&nbsp;{:media-path&nbsp;media-path})
+<span class="partial" title="1 out of 3277 forms covered">
+                014&nbsp;&nbsp;(log&#x2F;debug&nbsp;{:upscaler-model-path&nbsp;upscaler-model-path})
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
                 015&nbsp;&nbsp;
                 </span><br/>
 <span class="partial" title="10 out of 11 forms covered">
-                016&nbsp;&nbsp;(defonce&nbsp;temp-media-path&nbsp;(str&nbsp;media-path&nbsp;&quot;temp\\&quot;))
+                016&nbsp;&nbsp;(defonce&nbsp;riffusion-model-path&nbsp;(str&nbsp;workspace-path&nbsp;&quot;models\\riffusion-model-v1\\&quot;))
                 </span><br/>
-<span class="partial" title="1 out of 1858 forms covered">
-                017&nbsp;&nbsp;(log&#x2F;debug&nbsp;{:temp-media-path&nbsp;temp-media-path})
-                </span><br/>
-<span class="blank" title="0 out of 0 forms covered">
-                018&nbsp;&nbsp;
+<span class="partial" title="1 out of 3317 forms covered">
+                017&nbsp;&nbsp;(log&#x2F;debug&nbsp;{:riffusion-model-path&nbsp;riffusion-model-path})
                 </span><br/>
 <span class="partial" title="10 out of 11 forms covered">
-                019&nbsp;&nbsp;(defonce&nbsp;image-path&nbsp;(str&nbsp;workspace-path&nbsp;&quot;images\\&quot;))
+                018&nbsp;&nbsp;(defonce&nbsp;riffusion-path&nbsp;(str&nbsp;workspace-path&nbsp;&quot;riffusion\\&quot;))
                 </span><br/>
-<span class="partial" title="1 out of 1444 forms covered">
-                020&nbsp;&nbsp;(log&#x2F;debug&nbsp;{:image-path&nbsp;image-path})
+<span class="partial" title="1 out of 3392 forms covered">
+                019&nbsp;&nbsp;(log&#x2F;debug&nbsp;{:riffusion-path&nbsp;riffusion-path})
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
-                021&nbsp;&nbsp;
+                020&nbsp;&nbsp;
                 </span><br/>
-<span class="covered" title="6 out of 6 forms covered">
-                022&nbsp;&nbsp;(py&#x2F;initialize!
+<span class="partial" title="10 out of 11 forms covered">
+                021&nbsp;&nbsp;(defonce&nbsp;media-path&nbsp;(str&nbsp;workspace-path&nbsp;&quot;generated-media\\&quot;))
+                </span><br/>
+<span class="partial" title="1 out of 3396 forms covered">
+                022&nbsp;&nbsp;(log&#x2F;debug&nbsp;{:media-path&nbsp;media-path})
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                023&nbsp;&nbsp;
+                </span><br/>
+<span class="partial" title="10 out of 11 forms covered">
+                024&nbsp;&nbsp;(defonce&nbsp;temp-media-path&nbsp;(str&nbsp;media-path&nbsp;&quot;temp\\&quot;))
+                </span><br/>
+<span class="partial" title="1 out of 3396 forms covered">
+                025&nbsp;&nbsp;(log&#x2F;debug&nbsp;{:temp-media-path&nbsp;temp-media-path})
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                026&nbsp;&nbsp;
+                </span><br/>
+<span class="partial" title="10 out of 11 forms covered">
+                027&nbsp;&nbsp;(defonce&nbsp;image-path&nbsp;(str&nbsp;workspace-path&nbsp;&quot;images\\&quot;))
+                </span><br/>
+<span class="partial" title="1 out of 3396 forms covered">
+                028&nbsp;&nbsp;(log&#x2F;debug&nbsp;{:image-path&nbsp;image-path})
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                029&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="7 out of 7 forms covered">
+                030&nbsp;&nbsp;(py&#x2F;initialize!
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                031&nbsp;&nbsp;&nbsp;&nbsp;:python-home&nbsp;python-home
                 </span><br/>
 <span class="covered" title="4 out of 4 forms covered">
-                023&nbsp;&nbsp;&nbsp;&nbsp;:library-path&nbsp;(str&nbsp;python-dir&nbsp;&quot;Python39\\python39.dll&quot;)
+                032&nbsp;&nbsp;&nbsp;&nbsp;:python-executable&nbsp;(str&nbsp;python-home&nbsp;&quot;python.exe&quot;)
                 </span><br/>
 <span class="covered" title="4 out of 4 forms covered">
-                024&nbsp;&nbsp;&nbsp;&nbsp;:python-executable&nbsp;(str&nbsp;python-dir&nbsp;&quot;Python39\\python.exe&quot;)
+                033&nbsp;&nbsp;&nbsp;&nbsp;:library-path&nbsp;(str&nbsp;python-home&nbsp;&quot;python311.dll&quot;)
                 </span><br/>
 <span class="not-tracked" title="0 out of 0 forms covered">
-                025&nbsp;&nbsp;&nbsp;&nbsp;:python-verbose&nbsp;true)
+                034&nbsp;&nbsp;&nbsp;&nbsp;:python-verbose&nbsp;true)
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                035&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="3 out of 3 forms covered">
+                036&nbsp;&nbsp;(py&#x2F;import-module&nbsp;&quot;riffusion&quot;)
                 </span><br/>
  </body>
 </html>

@@ -20,7 +20,7 @@
                 005&nbsp;&nbsp;&nbsp;&nbsp;&quot;Choice&nbsp;of&nbsp;quality&nbsp;vs.&nbsp;speed.&quot;
                 </span><br/>
 <span class="partial" title="27 out of 45 forms covered">
-                006&nbsp;&nbsp;&nbsp;&nbsp;(condp&nbsp;=&nbsp;k&nbsp;:fastest&nbsp;10&nbsp;:fast&nbsp;20&nbsp;:default&nbsp;30&nbsp;:quality&nbsp;40&nbsp;:high-quality&nbsp;50&nbsp;:else&nbsp;40))
+                006&nbsp;&nbsp;&nbsp;&nbsp;(condp&nbsp;=&nbsp;k&nbsp;:faster&nbsp;10&nbsp;:fast&nbsp;20&nbsp;:default&nbsp;30&nbsp;:quality&nbsp;40&nbsp;:high-quality&nbsp;50&nbsp;:else&nbsp;40))
                 </span><br/>
 <span class="covered" title="2 out of 2 forms covered">
                 007&nbsp;&nbsp;(defn&nbsp;k-&gt;noise&nbsp;[k]
@@ -62,7 +62,7 @@
                 019&nbsp;&nbsp;(def&nbsp;i2i-pipes
                 </span><br/>
 <span class="covered" title="24 out of 24 forms covered">
-                020&nbsp;&nbsp;&nbsp;&nbsp;{:fastest&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(-&gt;PipeSetup&nbsp;(k-&gt;iters&nbsp;:fastest)&nbsp;(k-&gt;scale&nbsp;:default)&nbsp;(k-&gt;noise&nbsp;:default))
+                020&nbsp;&nbsp;&nbsp;&nbsp;{:faster&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(-&gt;PipeSetup&nbsp;(k-&gt;iters&nbsp;:faster)&nbsp;(k-&gt;scale&nbsp;:default)&nbsp;(k-&gt;noise&nbsp;:default))
                 </span><br/>
 <span class="covered" title="11 out of 11 forms covered">
                 021&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:fast&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(-&gt;PipeSetup&nbsp;(k-&gt;iters&nbsp;:fast)&nbsp;(k-&gt;scale&nbsp;:default)&nbsp;(k-&gt;noise&nbsp;:default))
@@ -74,7 +74,7 @@
                 023&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:quality&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(-&gt;PipeSetup&nbsp;(k-&gt;iters&nbsp;:quality)&nbsp;(k-&gt;scale&nbsp;:default)&nbsp;(k-&gt;noise&nbsp;:default))
                 </span><br/>
 <span class="covered" title="11 out of 11 forms covered">
-                024&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:fastest-calm&nbsp;&nbsp;(-&gt;PipeSetup&nbsp;(k-&gt;iters&nbsp;:fastest)&nbsp;(k-&gt;scale&nbsp;:default)&nbsp;(k-&gt;noise&nbsp;:calm))
+                024&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:fastest-calm&nbsp;&nbsp;(-&gt;PipeSetup&nbsp;(k-&gt;iters&nbsp;:faster)&nbsp;(k-&gt;scale&nbsp;:default)&nbsp;(k-&gt;noise&nbsp;:calm))
                 </span><br/>
 <span class="covered" title="11 out of 11 forms covered">
                 025&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:fast-calm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(-&gt;PipeSetup&nbsp;(k-&gt;iters&nbsp;:fast)&nbsp;(k-&gt;scale&nbsp;:default)&nbsp;(k-&gt;noise&nbsp;:calm))
@@ -86,7 +86,7 @@
                 027&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:quality-calm&nbsp;&nbsp;(-&gt;PipeSetup&nbsp;(k-&gt;iters&nbsp;:quality)&nbsp;(k-&gt;scale&nbsp;:default)&nbsp;(k-&gt;noise&nbsp;:calm))
                 </span><br/>
 <span class="covered" title="11 out of 11 forms covered">
-                028&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:fastest-noisy&nbsp;(-&gt;PipeSetup&nbsp;(k-&gt;iters&nbsp;:fastest)&nbsp;(k-&gt;scale&nbsp;:default)&nbsp;(k-&gt;noise&nbsp;:noisy))
+                028&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:fastest-noisy&nbsp;(-&gt;PipeSetup&nbsp;(k-&gt;iters&nbsp;:faster)&nbsp;(k-&gt;scale&nbsp;:default)&nbsp;(k-&gt;noise&nbsp;:noisy))
                 </span><br/>
 <span class="covered" title="11 out of 11 forms covered">
                 029&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:fast-noisy&nbsp;&nbsp;&nbsp;&nbsp;(-&gt;PipeSetup&nbsp;(k-&gt;iters&nbsp;:fast)&nbsp;(k-&gt;scale&nbsp;:default)&nbsp;(k-&gt;noise&nbsp;:noisy))

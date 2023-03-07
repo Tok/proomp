@@ -10,10 +10,10 @@
             [proomp.util.video-utils :as video-utils]
             [cambium.core :as log]))
 
-(defonce action ::generate-seed-images)
+;(defonce action ::generate-seed-images)
 ;(defonce action ::generate-frames)
 ;(defonce action ::upscale-frames)
-;(defonce action ::generate-audio)
+(defonce action ::generate-audio)
 ;(defonce action ::frames-to-video)
 
 (defonce text "Caliper Remote")

@@ -103,47 +103,62 @@
 <span class="not-tracked" title="0 out of 0 forms covered">
                 033&nbsp;&nbsp;&nbsp;&nbsp;&quot;See&nbsp;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Graphics_display_resolution&quot;
                 </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                034&nbsp;&nbsp;&nbsp;&nbsp;;VRAM&nbsp;requirements&nbsp;do&nbsp;not&nbsp;apply&nbsp;with&nbsp;xformers&nbsp;memory&nbsp;efficient&nbsp;attention&nbsp;enabled,
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                035&nbsp;&nbsp;&nbsp;&nbsp;;but&nbsp;for&nbsp;potentially&nbsp;better&nbsp;results,&nbsp;it&#x27;s&nbsp;suggested&nbsp;generate&nbsp;the&nbsp;original&nbsp;images&nbsp;with&nbsp;a
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                036&nbsp;&nbsp;&nbsp;&nbsp;;resolution&nbsp;closer&nbsp;to&nbsp;that&nbsp;of&nbsp;the&nbsp;used&nbsp;model&nbsp;(ie&nbsp;:WSVGA-landscape)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                037&nbsp;&nbsp;&nbsp;&nbsp;;and&nbsp;then&nbsp;use&nbsp;the&nbsp;upscaler&nbsp;to&nbsp;generate&nbsp;higher&nbsp;resolution&nbsp;images&nbsp;im&nbsp;a&nbsp;second&nbsp;step.
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                038&nbsp;&nbsp;&nbsp;&nbsp;;higher&nbsp;resolutions&nbsp;tend&nbsp;to&nbsp;generate&nbsp;multiple&nbsp;objects&nbsp;while&nbsp;lower&nbsp;resolutions&nbsp;may&nbsp;generate&nbsp;more&nbsp;patterns.
+                </span><br/>
 <span class="covered" title="13 out of 13 forms covered">
-                034&nbsp;&nbsp;&nbsp;&nbsp;{:4K-UHD-landscape&nbsp;&nbsp;(-&gt;Resolution&nbsp;&quot;4K&nbsp;UHD&quot;&nbsp;3840&nbsp;2160&nbsp;:16:9)&nbsp;;requires&nbsp;more&nbsp;than&nbsp;10GB&nbsp;VRAM
+                039&nbsp;&nbsp;&nbsp;&nbsp;{:4K-UHD-landscape&nbsp;&nbsp;(-&gt;Resolution&nbsp;&quot;4K&nbsp;UHD&quot;&nbsp;3840&nbsp;2160&nbsp;:16:9)&nbsp;;requires&nbsp;more&nbsp;than&nbsp;10GB&nbsp;VRAM
                 </span><br/>
 <span class="covered" title="6 out of 6 forms covered">
-                035&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:QHD-landscape&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(-&gt;Resolution&nbsp;&quot;QHD&quot;&nbsp;2560&nbsp;1440&nbsp;:16:9)&nbsp;&nbsp;;may&nbsp;require&nbsp;more&nbsp;than&nbsp;10GB&nbsp;VRAM
+                040&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:QHD-landscape&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(-&gt;Resolution&nbsp;&quot;QHD&quot;&nbsp;2560&nbsp;1440&nbsp;:16:9)&nbsp;&nbsp;;may&nbsp;require&nbsp;more&nbsp;than&nbsp;10GB&nbsp;VRAM
                 </span><br/>
 <span class="covered" title="6 out of 6 forms covered">
-                036&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:Full-HD-landscape&nbsp;(-&gt;Resolution&nbsp;&quot;Full&nbsp;HD&quot;&nbsp;1920&nbsp;1080&nbsp;:16:9)&nbsp;;may&nbsp;not&nbsp;work&nbsp;with&nbsp;10GB&nbsp;VRAM
+                041&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:Full-HD-landscape&nbsp;(-&gt;Resolution&nbsp;&quot;Full&nbsp;HD&quot;&nbsp;1920&nbsp;1080&nbsp;:16:9)&nbsp;;may&nbsp;not&nbsp;work&nbsp;with&nbsp;10GB&nbsp;VRAM
                 </span><br/>
 <span class="covered" title="6 out of 6 forms covered">
-                037&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:HD-landscape&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(-&gt;Resolution&nbsp;&quot;HD&quot;&nbsp;1280&nbsp;720&nbsp;:16:9)
+                042&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:HD-landscape&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(-&gt;Resolution&nbsp;&quot;HD&quot;&nbsp;1280&nbsp;720&nbsp;:16:9)
                 </span><br/>
 <span class="covered" title="6 out of 6 forms covered">
-                038&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:WSVGA-landscape&nbsp;&nbsp;&nbsp;(-&gt;Resolution&nbsp;&quot;WSVGA&quot;&nbsp;1024&nbsp;576&nbsp;:16:9)
+                043&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:WSVGA-landscape&nbsp;&nbsp;&nbsp;(-&gt;Resolution&nbsp;&quot;WSVGA&quot;&nbsp;1024&nbsp;576&nbsp;:16:9)
                 </span><br/>
 <span class="covered" title="6 out of 6 forms covered">
-                039&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:NHD-landscape&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(-&gt;Resolution&nbsp;&quot;nHD&quot;&nbsp;640&nbsp;360&nbsp;:16:9)})&nbsp;&nbsp;;may&nbsp;work&nbsp;with&nbsp;6GB&nbsp;VRAM
-                </span><br/>
-<span class="blank" title="0 out of 0 forms covered">
-                040&nbsp;&nbsp;
-                </span><br/>
-<span class="covered" title="9 out of 9 forms covered">
-                041&nbsp;&nbsp;(def&nbsp;^:private&nbsp;switch-orientation&nbsp;(fn&nbsp;[[k&nbsp;v]]&nbsp;(MapEntry.&nbsp;(change-keyword-orientation&nbsp;k)&nbsp;(flip-orientation&nbsp;v))))
-                </span><br/>
-<span class="covered" title="1 out of 1 forms covered">
-                042&nbsp;&nbsp;(def&nbsp;resolutions
-                </span><br/>
-<span class="covered" title="8 out of 8 forms covered">
-                043&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[nine-to-sixteen-resolutions&nbsp;(into&nbsp;{}&nbsp;(map&nbsp;switch-orientation&nbsp;sixteen-to-nine-resolutions))]
-                </span><br/>
-<span class="covered" title="5 out of 5 forms covered">
-                044&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(merge&nbsp;square-resolutions&nbsp;sixteen-to-nine-resolutions&nbsp;nine-to-sixteen-resolutions)))
+                044&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:NHD-landscape&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(-&gt;Resolution&nbsp;&quot;nHD&quot;&nbsp;640&nbsp;360&nbsp;:16:9)})&nbsp;&nbsp;;may&nbsp;work&nbsp;with&nbsp;6GB&nbsp;VRAM
                 </span><br/>
 <span class="blank" title="0 out of 0 forms covered">
                 045&nbsp;&nbsp;
                 </span><br/>
-<span class="partial" title="9 out of 10 forms covered">
-                046&nbsp;&nbsp;(defonce&nbsp;^Resolution&nbsp;active-image-resolution&nbsp;(resolutions&nbsp;:HD-landscape))
+<span class="covered" title="9 out of 9 forms covered">
+                046&nbsp;&nbsp;(def&nbsp;^:private&nbsp;switch-orientation&nbsp;(fn&nbsp;[[k&nbsp;v]]&nbsp;(MapEntry.&nbsp;(change-keyword-orientation&nbsp;k)&nbsp;(flip-orientation&nbsp;v))))
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                047&nbsp;&nbsp;(def&nbsp;resolutions
+                </span><br/>
+<span class="covered" title="8 out of 8 forms covered">
+                048&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[nine-to-sixteen-resolutions&nbsp;(into&nbsp;{}&nbsp;(map&nbsp;switch-orientation&nbsp;sixteen-to-nine-resolutions))]
+                </span><br/>
+<span class="covered" title="5 out of 5 forms covered">
+                049&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(merge&nbsp;square-resolutions&nbsp;sixteen-to-nine-resolutions&nbsp;nine-to-sixteen-resolutions)))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                050&nbsp;&nbsp;
                 </span><br/>
 <span class="partial" title="9 out of 10 forms covered">
-                047&nbsp;&nbsp;(defonce&nbsp;^Resolution&nbsp;active-animation-resolution&nbsp;(resolutions&nbsp;:HD-landscape))
+                051&nbsp;&nbsp;(defonce&nbsp;^Resolution&nbsp;active-image-resolution&nbsp;(resolutions&nbsp;:WSVGA-portrait))
+                </span><br/>
+<span class="partial" title="9 out of 10 forms covered">
+                052&nbsp;&nbsp;(defonce&nbsp;^Resolution&nbsp;active-animation-resolution&nbsp;(resolutions&nbsp;:WSVGA-portrait))
                 </span><br/>
  </body>
 </html>

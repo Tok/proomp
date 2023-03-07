@@ -1,0 +1,299 @@
+<html>
+ <head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" href="../../coverage.css"/>  <title> proomp/tools/riffusion_client.clj </title>
+ </head>
+ <body>
+<span class="partial" title="1 out of 231 forms covered">
+                001&nbsp;&nbsp;(ns&nbsp;proomp.tools.riffusion-client
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                002&nbsp;&nbsp;&nbsp;&nbsp;(:require
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                003&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[cambium.core&nbsp;:as&nbsp;log]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                004&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[clojure.data.json&nbsp;:as&nbsp;json]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                005&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[clojure.java.io&nbsp;:as&nbsp;io]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                006&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[clojure.java.io&nbsp;:refer&nbsp;[file&nbsp;output-stream]]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                007&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[clojure.string&nbsp;:as&nbsp;str]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                008&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[org.httpkit.client&nbsp;:as&nbsp;http]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                009&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[libpython-clj2.require&nbsp;:refer&nbsp;[require-python]]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                010&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[proomp.util.file-utils&nbsp;:as&nbsp;file-utils])
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                011&nbsp;&nbsp;&nbsp;&nbsp;(:import&nbsp;(proomp.domain.prompt.prompt&nbsp;Prompt))
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                012&nbsp;&nbsp;&nbsp;&nbsp;(:import&nbsp;java.util.Base64))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                013&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="3 out of 3 forms covered">
+                014&nbsp;&nbsp;(require-python&nbsp;&#x27;os)
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                015&nbsp;&nbsp;
+                </span><br/>
+<span class="partial" title="7 out of 8 forms covered">
+                016&nbsp;&nbsp;(defonce&nbsp;riffusion-host&nbsp;&quot;127.0.0.1&quot;)
+                </span><br/>
+<span class="partial" title="7 out of 8 forms covered">
+                017&nbsp;&nbsp;(defonce&nbsp;riffusion-port&nbsp;3013)
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                018&nbsp;&nbsp;
+                </span><br/>
+<span class="partial" title="7 out of 8 forms covered">
+                019&nbsp;&nbsp;(defonce&nbsp;duration-s&nbsp;180)
+                </span><br/>
+<span class="partial" title="7 out of 8 forms covered">
+                020&nbsp;&nbsp;(defonce&nbsp;denoising&nbsp;0.75)
+                </span><br/>
+<span class="partial" title="7 out of 8 forms covered">
+                021&nbsp;&nbsp;(defonce&nbsp;guidance&nbsp;7.0)
+                </span><br/>
+<span class="partial" title="7 out of 8 forms covered">
+                022&nbsp;&nbsp;(defonce&nbsp;num-inference-steps&nbsp;50)
+                </span><br/>
+<span class="partial" title="7 out of 8 forms covered">
+                023&nbsp;&nbsp;(defonce&nbsp;seed-image-id&nbsp;&quot;og_beat&quot;)
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                024&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                025&nbsp;&nbsp;(defn&nbsp;start-riffusion-server&nbsp;[]
+                </span><br/>
+<span class="not-covered" title="0 out of 3 forms covered">
+                026&nbsp;&nbsp;&nbsp;&nbsp;(os&#x2F;chdir&nbsp;&quot;riffusion&quot;)
+                </span><br/>
+<span class="not-covered" title="0 out of 2 forms covered">
+                027&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[module&nbsp;&quot;riffusion.server&quot;
+                </span><br/>
+<span class="not-covered" title="0 out of 5 forms covered">
+                028&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;args&nbsp;[&quot;python&nbsp;-m&quot;&nbsp;module
+                </span><br/>
+<span class="not-covered" title="0 out of 1 forms covered">
+                029&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;--host&quot;&nbsp;riffusion-host
+                </span><br/>
+<span class="not-covered" title="0 out of 1 forms covered">
+                030&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;--port&quot;&nbsp;riffusion-port]
+                </span><br/>
+<span class="not-covered" title="0 out of 4 forms covered">
+                031&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;command&nbsp;(clojure.string&#x2F;join&nbsp;&quot;&nbsp;&quot;&nbsp;args)]
+                </span><br/>
+<span class="not-covered" title="0 out of 6 forms covered">
+                032&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(future&nbsp;(os&#x2F;system&nbsp;command))))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                033&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                034&nbsp;&nbsp;(defn-&nbsp;-&gt;riffusion-prompt&nbsp;[prompt&nbsp;seed]
+                </span><br/>
+<span class="not-covered" title="0 out of 9 forms covered">
+                035&nbsp;&nbsp;&nbsp;&nbsp;{:prompt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(:text&nbsp;prompt)
+                </span><br/>
+<span class="not-covered" title="0 out of 3 forms covered">
+                036&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:negative_prompt&nbsp;(:negative-text&nbsp;prompt)
+                </span><br/>
+<span class="not-covered" title="0 out of 1 forms covered">
+                037&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:seed&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;seed
+                </span><br/>
+<span class="not-covered" title="0 out of 1 forms covered">
+                038&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:denoising&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;denoising
+                </span><br/>
+<span class="not-covered" title="0 out of 1 forms covered">
+                039&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:guidance&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;guidance})
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                040&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                041&nbsp;&nbsp;(defn-&nbsp;-&gt;riffusion-request&nbsp;[prompt&nbsp;seed&nbsp;alpha]
+                </span><br/>
+<span class="not-covered" title="0 out of 10 forms covered">
+                042&nbsp;&nbsp;&nbsp;&nbsp;{:start&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(-&gt;riffusion-prompt&nbsp;prompt&nbsp;seed)
+                </span><br/>
+<span class="not-covered" title="0 out of 5 forms covered">
+                043&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:end&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(-&gt;riffusion-prompt&nbsp;prompt&nbsp;(inc&nbsp;seed))
+                </span><br/>
+<span class="not-covered" title="0 out of 1 forms covered">
+                044&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:alpha&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alpha
+                </span><br/>
+<span class="not-covered" title="0 out of 1 forms covered">
+                045&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:num_inference_steps&nbsp;num-inference-steps
+                </span><br/>
+<span class="not-covered" title="0 out of 1 forms covered">
+                046&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:seed_image_id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;seed-image-id})
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                047&nbsp;&nbsp;
+                </span><br/>
+<span class="partial" title="1 out of 4 forms covered">
+                048&nbsp;&nbsp;(defn-&nbsp;base64-&gt;bin&nbsp;[base64]&nbsp;(.decode&nbsp;(Base64&#x2F;getDecoder)&nbsp;base64))
+                </span><br/>
+<span class="partial" title="1 out of 2 forms covered">
+                049&nbsp;&nbsp;(defn-&nbsp;base64-&gt;file!&nbsp;[target-file-name&nbsp;base64]
+                </span><br/>
+<span class="not-covered" title="0 out of 8 forms covered">
+                050&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[bytes&nbsp;(base64-&gt;bin&nbsp;base64)
+                </span><br/>
+<span class="not-covered" title="0 out of 6 forms covered">
+                051&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;target-file&nbsp;(file&nbsp;target-file-name)]
+                </span><br/>
+<span class="not-covered" title="0 out of 6 forms covered">
+                052&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(io&#x2F;make-parents&nbsp;target-file-name)
+                </span><br/>
+<span class="not-covered" title="0 out of 2604 forms covered">
+                053&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;info&nbsp;(str&nbsp;&quot;Saving:&nbsp;&quot;&nbsp;target-file))
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                054&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(with-open&nbsp;[out&nbsp;(output-stream&nbsp;target-file)]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                055&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(.write&nbsp;out&nbsp;bytes))))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                056&nbsp;&nbsp;
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                057&nbsp;&nbsp;(defn-&nbsp;extract-base64&nbsp;[data]
+                </span><br/>
+<span class="not-covered" title="0 out of 10 forms covered">
+                058&nbsp;&nbsp;&nbsp;&nbsp;(str&#x2F;replace&nbsp;(last&nbsp;(str&#x2F;split&nbsp;data&nbsp;#&quot;,&quot;))&nbsp;#&quot;\n&quot;&nbsp;&quot;&quot;))
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                059&nbsp;&nbsp;(defn-&nbsp;data-&gt;mp3!&nbsp;[prompt-text&nbsp;data&nbsp;step]
+                </span><br/>
+<span class="not-covered" title="0 out of 5 forms covered">
+                060&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[file-name&nbsp;(file-utils&#x2F;audio-name&nbsp;prompt-text&nbsp;step)]
+                </span><br/>
+<span class="not-covered" title="0 out of 6 forms covered">
+                061&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(base64-&gt;file!&nbsp;file-name&nbsp;(extract-base64&nbsp;data))))
+                </span><br/>
+<span class="covered" title="1 out of 1 forms covered">
+                062&nbsp;&nbsp;(defn-&nbsp;data-&gt;image!&nbsp;[prompt-text&nbsp;data&nbsp;step]
+                </span><br/>
+<span class="not-covered" title="0 out of 5 forms covered">
+                063&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[file-name&nbsp;(file-utils&#x2F;spectrogram-name&nbsp;prompt-text&nbsp;step)]
+                </span><br/>
+<span class="not-covered" title="0 out of 6 forms covered">
+                064&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(base64-&gt;file!&nbsp;file-name&nbsp;(extract-base64&nbsp;data))))
+                </span><br/>
+<span class="blank" title="0 out of 0 forms covered">
+                065&nbsp;&nbsp;
+                </span><br/>
+<span class="partial" title="1 out of 2 forms covered">
+                066&nbsp;&nbsp;(defn&nbsp;post-riffusion-request&nbsp;[^Prompt&nbsp;prompt&nbsp;seed]
+                </span><br/>
+<span class="not-covered" title="0 out of 2894 forms covered">
+                067&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;info&nbsp;{:denoising&nbsp;denoising})
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                068&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;info&nbsp;{:guidance&nbsp;guidance})
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                069&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;info&nbsp;{:num-inference-steps&nbsp;num-inference-steps})
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                070&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;info&nbsp;{:seed-image-id&nbsp;seed-image-id})
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                071&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[step-s&nbsp;5
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                072&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num-steps&nbsp;(inc&nbsp;(int&nbsp;(&#x2F;&nbsp;duration-s&nbsp;step-s)))]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                073&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(doseq&nbsp;[step&nbsp;(range&nbsp;num-steps)]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                074&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[alpha&nbsp;(&#x2F;&nbsp;step&nbsp;num-steps)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                075&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;request&nbsp;{:body&nbsp;(json&#x2F;write-str&nbsp;(-&gt;riffusion-request&nbsp;prompt&nbsp;seed&nbsp;alpha))}]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                076&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;debug&nbsp;{:request&nbsp;request})
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                077&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(http&#x2F;post
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                078&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;http:&#x2F;&#x2F;127.0.0.1:3013&#x2F;run_inference&#x2F;&quot;
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                079&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;request
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                080&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(fn&nbsp;[{:keys&nbsp;[status&nbsp;headers&nbsp;body&nbsp;error&nbsp;opts]}]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                081&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(try
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                082&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(if&nbsp;error
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                083&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;error&nbsp;(str&nbsp;&quot;Fail:&nbsp;&quot;&nbsp;error))
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                084&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(let&nbsp;[response&nbsp;(json&#x2F;read-str&nbsp;body)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                085&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image-data&nbsp;(get&nbsp;response&nbsp;&quot;image&quot;)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                086&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;audio-data&nbsp;(get&nbsp;response&nbsp;&quot;audio&quot;)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                087&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;duration-s&nbsp;(get&nbsp;response&nbsp;&quot;duration_s&quot;)]
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                088&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;info&nbsp;{:status&nbsp;status&nbsp;:duration-s&nbsp;duration-s})
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                089&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;debug&nbsp;{:image-data&nbsp;image-data})
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                090&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(log&#x2F;debug&nbsp;{:audio-data&nbsp;audio-data})
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                091&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(data-&gt;image!&nbsp;(:text&nbsp;prompt)&nbsp;image-data&nbsp;step)
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                092&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(data-&gt;mp3!&nbsp;(:text&nbsp;prompt)&nbsp;audio-data&nbsp;step)))
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                093&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;If&nbsp;there&#x27;s&nbsp;not&nbsp;enough&nbsp;memory&nbsp;available,
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                094&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;Riffusion&nbsp;may&nbsp;respond&nbsp;with&nbsp;an&nbsp;error-xml:
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                095&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;&quot;JSON&nbsp;error&nbsp;(unexpected&nbsp;character):&nbsp;&lt;&quot;
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                096&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(catch&nbsp;Exception&nbsp;e&nbsp;(log&#x2F;error&nbsp;{:e&nbsp;e})))
+                </span><br/>
+<span class="not-tracked" title="0 out of 0 forms covered">
+                097&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(if&nbsp;(=&nbsp;(inc&nbsp;step)&nbsp;num-steps)&nbsp;(System&#x2F;exit&nbsp;0))))))))
+                </span><br/>
+ </body>
+</html>
